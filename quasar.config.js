@@ -2,6 +2,30 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
 import { defineConfig } from '#q-app/wrappers'
+import fs from 'node:fs'
+import path from 'node:path'
+
+// Auto-copy step images on reload
+try {
+  const srcDir = 'C:\\Users\\refqi\\.gemini\\antigravity-ide\\brain\\c60824a8-3421-435a-be04-33daa7543ead';
+  const destDir = path.resolve('public/images');
+  const filesToCopy = [
+    { src: 'tahap_konsultasi_1782878348608.png', dest: 'tahap_konsultasi.png' },
+    { src: 'tahap_survei_1782878361716.png', dest: 'tahap_survei.png' },
+    { src: 'tahap_penawaran_1782878372142.png', dest: 'tahap_penawaran.png' },
+    { src: 'tahap_beres_1782878384557.png', dest: 'tahap_beres.png' }
+  ];
+  for (const f of filesToCopy) {
+    const srcPath = path.join(srcDir, f.src);
+    const destPath = path.join(destDir, f.dest);
+    if (fs.existsSync(srcPath)) {
+      fs.copyFileSync(srcPath, destPath);
+      console.log(`[Agra Copier] Copied ${f.src} to ${f.dest}`);
+    }
+  }
+} catch (err) {
+  console.error('[Agra Copier] Error copying assets:', err);
+}
 
 export default defineConfig((/* ctx */) => {
   return {
