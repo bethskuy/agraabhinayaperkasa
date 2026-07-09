@@ -12,3 +12,21 @@ body {
 h1, h2, h3, h4, h5, h6, .font-heading {
   font-family: 'Montserrat', sans-serif !important;
 }
+
+/* Hide scrollbar globally for elements with scrollbar-none class */
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+}
+.scrollbar-none {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;      /* Firefox */
+}
+
+/* Hide scrollbars for Quasar dialog wrapper globally */
+.q-dialog__inner::-webkit-scrollbar {
+  display: none !important;
+}
+.q-dialog__inner {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}

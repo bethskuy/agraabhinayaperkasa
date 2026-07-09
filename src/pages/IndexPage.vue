@@ -684,6 +684,109 @@
       </div>
     </section>
 
+    <!-- Visitor Counter Showcase Section -->
+    <section
+      ref="statsRef"
+      id="statistik-kunjungan"
+      class="bg-slate-50 py-12 border-b border-slate-100 relative overflow-hidden"
+    >
+      <div class="max-w-6xl mx-auto px-6 relative z-10 flex justify-center">
+        <div class="bg-white rounded-[32px] p-8 md:p-10 shadow-lg border border-slate-100/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-center text-center max-w-sm w-full">
+          <span class="text-red-600 font-extrabold text-5xl md:text-6xl leading-none">
+            {{ visitorCount }}+
+          </span>
+          <span class="text-[#0B192C] font-extrabold text-sm sm:text-base mt-4 uppercase tracking-wider">
+            Telah dikunjungi orang hari ini
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kantor Kami Section -->
+    <section
+      ref="officeRef"
+      id="kantor-kami"
+      class="py-24 bg-white border-b border-slate-100 relative overflow-hidden"
+    >
+      <div class="max-w-6xl mx-auto px-6 relative z-10">
+        <div
+          class="transition-all duration-1000 transform ease-out"
+          :class="officeVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <!-- Left: Stacked Photos Showcase -->
+            <div class="md:col-span-6 flex justify-center relative">
+              <div class="relative w-full max-w-[450px] aspect-[4/3]">
+                <!-- Bottom stacked layer (Navy Panel) -->
+                <div class="absolute inset-0 bg-[#0B192C] opacity-5 rounded-[32px] rotate-[6deg] scale-[0.94] border border-slate-200/50 shadow-md transition-all duration-500 ease-out"></div>
+                <!-- Middle stacked layer (Red Panel) -->
+                <div class="absolute inset-0 bg-red-600 opacity-[0.04] rounded-[32px] -rotate-[3deg] scale-[0.98] border border-red-500/10 shadow-md transition-all duration-500 ease-out"></div>
+                
+                <!-- Main/Top layer: Active Image Card -->
+                <div class="relative z-10 w-full h-full rounded-[32px] overflow-hidden shadow-2xl border-4 border-white bg-white">
+                  <transition name="fade" mode="out-in">
+                    <img
+                      :key="officeIndex"
+                      :src="currentOfficeSlide.image"
+                      :alt="currentOfficeSlide.title"
+                      class="w-full h-full object-cover select-none pointer-events-none"
+                    />
+                  </transition>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Office Details & Custom Sliding Controls -->
+            <div class="md:col-span-6 space-y-6 text-left">
+              <div>
+                <p class="text-xs font-bold text-red-600 uppercase tracking-widest mb-4">
+                  Workspace Kami
+                </p>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0B192C] leading-tight">
+                  Kantor Pusat <span class="text-red-600">PT Agra</span>
+                </h2>
+                <p class="text-slate-500 text-xs sm:text-sm mt-3 leading-relaxed font-semibold">
+                  Suasana ruang kerja yang kondusif dan profesional untuk mendiskusikan rencana proyek pembangunan Anda.
+                </p>
+              </div>
+
+              <!-- Divider line -->
+              <div class="border-t border-slate-100"></div>
+
+              <!-- Active Slide Details -->
+              <div class="min-h-[120px] transition-all duration-300">
+                <h3 class="text-xl font-extrabold text-[#0B192C] font-heading m-0">
+                  {{ currentOfficeSlide.title }}
+                </h3>
+                <p class="text-slate-600 text-sm leading-relaxed mt-2.5 font-medium">
+                  {{ currentOfficeSlide.desc }}
+                </p>
+              </div>
+
+              <!-- Custom Sliding Navigation Buttons -->
+              <div class="flex items-center gap-3 pt-2">
+                <button
+                  @click="prevOfficeSlide"
+                  class="w-11 h-11 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-md border border-red-600 hover:border-red-700 hover:scale-105 transition-all duration-300 focus:outline-none cursor-pointer"
+                >
+                  <q-icon name="arrow_back" size="18px" />
+                </button>
+                <button
+                  @click="nextOfficeSlide"
+                  class="w-11 h-11 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-md border border-red-600 hover:border-red-700 hover:scale-105 transition-all duration-300 focus:outline-none cursor-pointer"
+                >
+                  <q-icon name="arrow_forward" size="18px" />
+                </button>
+                <span class="text-xs font-bold text-slate-400 ml-2 select-none">
+                  0{{ officeIndex + 1 }} / 0{{ officeSlides.length }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Mengapa Memilih Kami Section -->
     <section
       ref="choosingUsRef"
@@ -1758,6 +1861,96 @@
       </div>
     </section>
 
+    <!-- Portofolio Section -->
+    <section
+      ref="portfolioRef"
+      id="portofolio"
+      class="py-24 bg-white border-t border-slate-100 relative overflow-hidden"
+    >
+      <!-- Subtle Red Accent Top Boundary line -->
+      <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-red-600 to-rose-600 opacity-60"></div>
+      
+      <div class="max-w-6xl mx-auto px-6 relative z-10">
+        <div
+          class="transition-all duration-1000 transform ease-out"
+          :class="portfolioVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+        >
+          <!-- Section Title -->
+          <div class="text-center max-w-3xl mx-auto mb-12">
+            <p class="text-xs font-bold text-red-600 uppercase tracking-widest mb-3">Portofolio Kami</p>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0B192C] leading-tight">
+              Galeri Proyek & <span class="text-red-600">Konstruksi Terbaik</span>
+            </h2>
+            <p class="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed max-w-2xl mx-auto font-medium">
+              Lihat hasil kerja nyata kami yang mengedepankan presisi struktur, estetika premium, dan kepuasan klien.
+            </p>
+          </div>
+
+          <!-- Project Gallery Slider -->
+          <div class="relative w-full overflow-visible mt-12">
+            <!-- Left Floating Arrow Button -->
+            <button
+              v-show="canScrollLeft"
+              @click="scrollPortfolioLeft"
+              class="absolute -left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full slider-nav-btn flex items-center justify-center shadow-lg cursor-pointer"
+            >
+              <q-icon name="chevron_left" size="24px" />
+            </button>
+
+            <!-- Right Floating Arrow Button -->
+            <button
+              v-show="canScrollRight"
+              @click="scrollPortfolioRight"
+              class="absolute -right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full slider-nav-btn flex items-center justify-center shadow-lg cursor-pointer"
+            >
+              <q-icon name="chevron_right" size="24px" />
+            </button>
+
+            <!-- Scroll container -->
+            <div
+              ref="portfolioScrollContainer"
+              @scroll="updateScrollState"
+              class="flex flex-row flex-nowrap gap-6 overflow-x-auto scroll-smooth pb-8 px-4 scrollbar-none snap-x snap-mandatory"
+            >
+              <div
+                v-for="project in portfolioItems"
+                :key="project.id"
+                class="flex-shrink-0 w-[290px] sm:w-[330px] snap-start bg-white rounded-3xl overflow-hidden shadow-lg border border-slate-100/80 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group flex flex-col justify-between cursor-pointer"
+                @click="router.push('/portofolio/' + project.id)"
+              >
+                <!-- Image Container -->
+                <div class="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+                  <img
+                    :src="project.image"
+                    :alt="project.title"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <!-- Card Content -->
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+                      <q-icon name="place" size="14px" class="mr-1 text-red-500" />
+                      <span>{{ project.location }}</span>
+                    </div>
+                    <h3 class="text-base sm:text-lg font-extrabold text-[#0B192C] leading-snug mb-2 group-hover:text-red-600 transition-colors duration-300 min-h-[2.85em] line-clamp-2">
+                      {{ project.title }}
+                    </h3>
+                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed mb-4 font-medium min-h-[4.5em] line-clamp-3">
+                      {{ project.desc }}
+                    </p>
+                  </div>
+                  <div class="text-xs font-bold text-red-600">
+                    <span>Lihat Selengkapnya</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Qualified Artisans Section (Tukang Terkualifikasi) -->
     <section
       ref="artisansRef"
@@ -2227,13 +2420,54 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
 const activeSlide = ref('konstruksi')
 const expandedStat = ref(0)
+
+const statsVisible = ref(false)
+const statsRef = ref(null)
+const visitorCount = ref(0)
+const hasAnimatedCount = ref(false)
+
+const startVisitorCounter = () => {
+  if (hasAnimatedCount.value) return
+  hasAnimatedCount.value = true
+  
+  const target = 50
+  const duration = 1500 // 1.5 seconds
+  const startTime = performance.now()
+  
+  const animate = (currentTime) => {
+    const elapsed = currentTime - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    
+    // Ease out quad animation
+    const easeProgress = progress * (2 - progress)
+    
+    visitorCount.value = Math.floor(easeProgress * target)
+    
+    if (progress < 1) {
+      requestAnimationFrame(animate)
+    } else {
+      visitorCount.value = target
+    }
+  }
+  
+  requestAnimationFrame(animate)
+}
+
+watch(
+  () => statsVisible.value,
+  (visible) => {
+    if (visible) {
+      startVisitorCounter()
+    }
+  }
+)
 const sectionVisible = ref(false)
 const sectionRef = ref(null)
 const servicesVisible = ref(false)
@@ -2248,6 +2482,70 @@ const socialVisible = ref(false)
 const socialRef = ref(null)
 const anekaSolusiVisible = ref(false)
 const anekaSolusiRef = ref(null)
+
+const portfolioVisible = ref(false)
+const portfolioRef = ref(null)
+
+const officeVisible = ref(false)
+const officeRef = ref(null)
+const officeIndex = ref(0)
+
+const officeSlides = [
+  {
+    image: 'images/halamandepan.jpeg',
+    title: 'Halaman Depan Kantor',
+    desc: 'Area halaman dan akses masuk utama kantor pusat PT Agra Abhinaya Perkasa yang bersih, rapi, dan berlokasi strategis di Cikarang Timur.'
+  },
+  {
+    image: 'images/ruang meeting.jpeg',
+    title: 'Ruang Rapat & Kolaborasi',
+    desc: 'Ruang meeting yang representatif untuk berdiskusi dengan klien, membahas detail teknis gambar kerja, serta visualisasi rencana pembangunan.'
+  },
+  {
+    image: 'images/ruangadmin.jpeg',
+    title: 'Ruang Admin & Operasional',
+    desc: 'Area operasional administrasi untuk pengelolaan dokumen proyek, estimasi anggaran biaya (RAB), dan layanan pelanggan.'
+  },
+  {
+    image: 'images/ruangkoridor.jpeg',
+    title: 'Ruang Koridor Kantor',
+    desc: 'Koridor penghubung antar ruangan kerja di dalam kantor pusat kami yang bersih dan tertata rapi demi kenyamanan aktivitas harian.'
+  }
+]
+
+const currentOfficeSlide = computed(() => officeSlides[officeIndex.value])
+
+const prevOfficeSlide = () => {
+  officeIndex.value = (officeIndex.value - 1 + officeSlides.length) % officeSlides.length
+}
+
+const nextOfficeSlide = () => {
+  officeIndex.value = (officeIndex.value + 1) % officeSlides.length
+}
+
+import { portfolioItems } from 'src/data/portfolio.js'
+
+const portfolioScrollContainer = ref(null)
+const canScrollLeft = ref(false)
+const canScrollRight = ref(true)
+
+const scrollPortfolioLeft = () => {
+  if (portfolioScrollContainer.value) {
+    portfolioScrollContainer.value.scrollBy({ left: -340, behavior: 'smooth' })
+  }
+}
+const scrollPortfolioRight = () => {
+  if (portfolioScrollContainer.value) {
+    portfolioScrollContainer.value.scrollBy({ left: 340, behavior: 'smooth' })
+  }
+}
+const updateScrollState = () => {
+  if (portfolioScrollContainer.value) {
+    canScrollLeft.value = portfolioScrollContainer.value.scrollLeft > 10
+    const maxScroll = portfolioScrollContainer.value.scrollWidth - portfolioScrollContainer.value.clientWidth
+    canScrollRight.value = portfolioScrollContainer.value.scrollLeft < maxScroll - 10
+  }
+}
 
 const showKonstruksiInCard = ref(false)
 const showBoronganInCard = ref(false)
@@ -2298,6 +2596,12 @@ onMounted(() => {
             socialVisible.value = true
           } else if (entry.target.id === 'aneka-solusi') {
             anekaSolusiVisible.value = true
+          } else if (entry.target.id === 'portofolio') {
+            portfolioVisible.value = true
+          } else if (entry.target.id === 'kantor-kami') {
+            officeVisible.value = true
+          } else if (entry.target.id === 'statistik-kunjungan') {
+            statsVisible.value = true
           }
           observer.unobserve(entry.target)
         }
@@ -2330,6 +2634,19 @@ onMounted(() => {
   if (anekaSolusiRef.value) {
     observer.observe(anekaSolusiRef.value)
   }
+  if (portfolioRef.value) {
+    observer.observe(portfolioRef.value)
+  }
+  if (officeRef.value) {
+    observer.observe(officeRef.value)
+  }
+  if (statsRef.value) {
+    observer.observe(statsRef.value)
+  }
+
+  setTimeout(() => {
+    updateScrollState()
+  }, 300)
 })
 </script>
 
@@ -2342,7 +2659,9 @@ onMounted(() => {
 }
 
 .artisan-carousel :deep(.q-carousel__prev-arrow .q-btn),
-.artisan-carousel :deep(.q-carousel__next-arrow .q-btn) {
+.artisan-carousel :deep(.q-carousel__next-arrow .q-btn),
+.office-carousel :deep(.q-carousel__prev-arrow .q-btn),
+.office-carousel :deep(.q-carousel__next-arrow .q-btn) {
   background-color: #ffffff !important;
   color: #0b192c !important;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12) !important;
@@ -2350,12 +2669,15 @@ onMounted(() => {
 }
 
 .artisan-carousel :deep(.q-carousel__prev-arrow .q-btn:hover),
-.artisan-carousel :deep(.q-carousel__next-arrow .q-btn:hover) {
+.artisan-carousel :deep(.q-carousel__next-arrow .q-btn:hover),
+.office-carousel :deep(.q-carousel__prev-arrow .q-btn:hover),
+.office-carousel :deep(.q-carousel__next-arrow .q-btn:hover) {
   background-color: #f8fafc !important;
   transform: scale(1.05);
 }
 
-.artisan-carousel :deep(.q-carousel__navigation .q-btn) {
+.artisan-carousel :deep(.q-carousel__navigation .q-btn),
+.office-carousel :deep(.q-carousel__navigation .q-btn) {
   color: #0b192c !important;
 }
 
@@ -2522,5 +2844,24 @@ onMounted(() => {
 }
 .grid > div[style="transition-delay: 320ms"] {
   transition-delay: 800ms !important;
+}
+
+/* Custom slider navigation buttons styling */
+.slider-nav-btn {
+  background-color: #ffffff !important;
+  color: #0b192c !important;
+  border: 1px solid #e2e8f0 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.slider-nav-btn:hover {
+  background-color: #dc2626 !important; /* red-600 */
+  color: #ffffff !important;           /* white text/icon */
+  border-color: #dc2626 !important;
+  transform: translateY(-50%) scale(1.1) !important;
+}
+
+.slider-nav-btn .q-icon {
+  color: inherit !important;
 }
 </style>

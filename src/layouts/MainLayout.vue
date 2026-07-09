@@ -390,6 +390,8 @@
         </svg>
       </a>
     </q-page-container>
+
+
   </q-layout>
 </template>
 
@@ -404,6 +406,7 @@ const isScrolled = ref(false)
 const mobileMenuOpen = ref(false)
 const mobileLayananOpen = ref(false)
 const isMobile = ref(false)
+
 
 const checkScreenSize = () => {
   // Gunakan breakpoint 1024px (standard md/lg screen laptop) untuk berganti menu
@@ -445,6 +448,7 @@ const navigateToAnchor = (anchorId) => {
 }
 
 onMounted(() => {
+
   checkScreenSize()
   window.addEventListener('resize', checkScreenSize)
   window.addEventListener('scroll', handleScroll)
@@ -456,3 +460,15 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 </script>
+
+<style scoped>
+/* Premium fade transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

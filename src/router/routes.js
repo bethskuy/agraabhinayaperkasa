@@ -6,7 +6,8 @@ const routes = [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: 'borongan', component: () => import('pages/BoronganPage.vue') },
       { path: 'konstruksi', component: () => import('pages/KonstruksiPage.vue') },
-      { path: 'tukang-harian', component: () => import('pages/TukangHarianPage.vue') }
+      { path: 'tukang-harian', component: () => import('pages/TukangHarianPage.vue') },
+      { path: 'portofolio/:id', component: () => import('pages/PortfolioDetailPage.vue') }
     ],
   },
 
