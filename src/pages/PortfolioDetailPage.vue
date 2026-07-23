@@ -112,16 +112,23 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { portfolioItems } from 'src/data/portfolio.js'
+import { useWebsiteStore } from 'src/stores/websiteStore'
 
 const route = useRoute()
 const router = useRouter()
+const store = useWebsiteStore()
+
+onMounted(() => {
+  store.initializeStore()
+})
+
+const portfolioItems = computed(() => store.portfolioItems)
 
 const project = computed(() => {
   const id = parseInt(route.params.id, 10)
-  return portfolioItems.find(item => item.id === id)
+  return portfolioItems.value.find(item => item.id === id)
 })
 
 const activeImage = ref('')
@@ -139,7 +146,7 @@ watch(
 
 const otherProjects = computed(() => {
   if (!project.value) return []
-  return portfolioItems.filter(item => item.id !== project.value.id).slice(0, 3)
+  return portfolioItems.value.filter(item => item.id !== project.value.id).slice(0, 3)
 })
 
 const navigateToProject = (id) => {

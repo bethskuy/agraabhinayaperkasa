@@ -14,15 +14,16 @@
         infinite
         :autoplay="5000"
         height="100vh"
-        class="bg-slate-950 text-white"
+        class="bg-[#0B192C] text-white"
       >
-        <!-- Slide 1: Konstruksi -->
         <q-carousel-slide
-          name="konstruksi"
-          img-src="images/construction_hero.png"
+          v-for="(slide, sIdx) in store.heroSlides"
+          :key="sIdx"
+          :name="slide.name"
+          :img-src="slide.image"
           class="p-0 overflow-hidden relative flex items-center justify-center"
         >
-          <div class="absolute inset-0 bg-slate-950/70 z-0"></div>
+          <div class="absolute inset-0 bg-[#0B192C]/70 z-0"></div>
           <div
             class="absolute inset-0 opacity-5 bg-[radial-gradient(#f43f5e_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"
           ></div>
@@ -31,78 +32,12 @@
           >
             <h2
               class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight"
-            >
-              Pembangunan Gedung & <br class="hidden sm:inline" />
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-600"
-                >Rumah Berkualitas</span
-              >
-            </h2>
+              v-html="slide.title"
+            ></h2>
             <p
               class="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
             >
-              Mulai dari pondasi hingga finishing akhir, kami membangun dengan struktur kokoh,
-              material terbaik, dan pengawasan profesional dari tim ahli kami.
-            </p>
-          </div>
-        </q-carousel-slide>
-
-        <!-- Slide 2: Renovasi -->
-        <q-carousel-slide
-          name="renovasi"
-          img-src="images/renovation_hero.png"
-          class="p-0 overflow-hidden relative flex items-center justify-center"
-        >
-          <div class="absolute inset-0 bg-slate-950/70 z-0"></div>
-          <div
-            class="absolute inset-0 opacity-5 bg-[radial-gradient(#f43f5e_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"
-          ></div>
-          <div
-            class="max-w-4xl mx-auto px-6 md:px-12 lg:px-16 text-center pt-16 space-y-6 relative z-10"
-          >
-            <h2
-              class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight"
-            >
-              Renovasi Rumah & Ruko
-              <br class="hidden sm:inline" />
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-600"
-                >Secara Transparan</span
-              >
-            </h2>
-            <p
-              class="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
-            >
-              Perbaikan kebocoran, pengecatan ulang, perluasan lantai, hingga sekat interior ruang
-              dengan rincian Rencana Anggaran Biaya (RAB) yang transparan dan jujur.
-            </p>
-          </div>
-        </q-carousel-slide>
-
-        <!-- Slide 3: Stamp Concrete -->
-        <q-carousel-slide
-          name="concrete"
-          img-src="images/stamp_concrete_hero.png"
-          class="p-0 overflow-hidden relative flex items-center justify-center"
-        >
-          <div class="absolute inset-0 bg-slate-950/70 z-0"></div>
-          <div
-            class="absolute inset-0 opacity-5 bg-[radial-gradient(#f43f5e_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"
-          ></div>
-          <div
-            class="max-w-4xl mx-auto px-6 md:px-12 lg:px-16 text-center pt-16 space-y-6 relative z-10"
-          >
-            <h2
-              class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight"
-            >
-              Lantai Beton Dekoratif <br class="hidden sm:inline" />
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-600"
-                >Motif Batu</span
-              >
-            </h2>
-            <p
-              class="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
-            >
-              Solusi lantai carport, teras, halaman, dan pedestrian yang indah bermotif batu alam
-              dengan daya tahan beton cor yang kokoh.
+              {{ slide.subtitle }}
             </p>
           </div>
         </q-carousel-slide>
@@ -112,7 +47,7 @@
     <!-- Client Section -->
     <section
       id="klien"
-      class="py-16 bg-white border-b border-slate-200/50 relative overflow-hidden"
+      class="py-16 bg-slate-50 border-b border-slate-200/50 relative overflow-hidden"
     >
       <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 text-center">
         <p class="text-[10px] sm:text-xs font-bold text-[#E63946] uppercase tracking-widest mb-10">
@@ -121,158 +56,36 @@
 
         <!-- Infinite Marquee Container with Vignette Overlays -->
         <div
-          class="relative w-full overflow-hidden before:absolute before:left-0 before:top-0 before:bottom-0 before:w-16 before:bg-gradient-to-r before:from-white before:to-transparent before:z-10 after:absolute after:right-0 after:top-0 after:bottom-0 after:w-16 after:bg-gradient-to-l after:from-white after:to-transparent after:z-10"
+          class="relative w-full overflow-hidden before:absolute before:left-0 before:top-0 before:bottom-0 before:w-16 before:bg-gradient-to-r before:from-slate-50 before:to-transparent before:z-10 after:absolute after:right-0 after:top-0 after:bottom-0 after:w-16 after:bg-gradient-to-l after:from-slate-50 after:to-transparent after:z-10"
         >
           <div
             class="flex flex-row items-center gap-6 animate-marquee hover:[animation-play-state:paused] py-2"
           >
-            <!-- Original List (8 Items) -->
+            <!-- Original List -->
             <div class="flex flex-row items-center gap-6 shrink-0">
               <div
+                v-for="client in store.clients"
+                :key="client.id"
                 class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
               >
                 <img
-                  src="images/abipraya.png"
-                  alt="PT Brantas Abipraya"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/apg.png"
-                  alt="APG"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/lippo.png"
-                  alt="Lippo Group"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/agc.png"
-                  alt="AGC Group"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/kaiproperti.png"
-                  alt="KAI Properti"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/meiji.png"
-                  alt="Meiji"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/nie.png"
-                  alt="NIE"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/mastertama.png"
-                  alt="PT Mastertama Adhi Propertindo"
+                  :src="client.image"
+                  :alt="client.name"
                   class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
                 />
               </div>
             </div>
 
-            <!-- Duplicated List for seamless looping (8 Items) -->
+            <!-- Duplicated List for seamless looping -->
             <div class="flex flex-row items-center gap-6 shrink-0">
               <div
+                v-for="client in store.clients"
+                :key="'dup-' + client.id"
                 class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
               >
                 <img
-                  src="images/abipraya.png"
-                  alt="PT Brantas Abipraya"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/apg.png"
-                  alt="APG"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/lippo.png"
-                  alt="Lippo Group"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/agc.png"
-                  alt="AGC Group"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/kaiproperti.png"
-                  alt="KAI Properti"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/meiji.png"
-                  alt="Meiji"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/nie.png"
-                  alt="NIE"
-                  class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
-                />
-              </div>
-              <div
-                class="bg-white border border-slate-200/40 rounded-2xl p-3 h-24 w-44 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-red-500/10 group select-none"
-              >
-                <img
-                  src="images/mastertama.png"
-                  alt="PT Mastertama Adhi Propertindo"
+                  :src="client.image"
+                  :alt="client.name"
                   class="max-w-[80%] max-h-14 object-contain transition-all duration-300"
                 />
               </div>
@@ -294,160 +107,47 @@
             <p class="text-xs font-bold text-red-600 uppercase tracking-widest mb-3">
               Profil Perusahaan
             </p>
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
-              General Contractor & Supplier <br />
-              <span class="text-red-600">PT Agra Abhinaya Perkasa</span>
-            </h2>
-            <div class="mt-6 text-slate-600 leading-relaxed text-sm sm:text-base space-y-4">
-              <p>
-                <strong>PT AGRA ABHINAYA PERKASA</strong> adalah perusahaan yang bergerak di bidang
-                <em>General Contractor</em> dan <em>General Supplier</em>, didirikan pada tahun
-                2022.
-              </p>
-              <p>
-                Kami menyediakan layanan pelaksanaan konstruksi serta pengadaan barang dan material
-                pendukung proyek dengan mengutamakan kualitas, ketepatan waktu, dan keselamatan
-                kerja.
-              </p>
-              <p>
-                Dengan dukungan sumber daya manusia yang kompeten dan manajemen yang profesional,
-                <strong>PT AGRA ABHINAYA PERKASA</strong> berkomitmen menjadi mitra terpercaya bagi
-                klien dari sektor swasta maupun pemerintah.
-              </p>
-            </div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight" v-html="store.aboutTitle"></h2>
+            <div class="mt-6 text-slate-600 leading-relaxed text-sm sm:text-base" style="white-space: pre-wrap;">{{ store.aboutText }}</div>
           </div>
 
           <!-- Right Column (Stats Grid Container) -->
           <div class="space-y-4">
-            <!-- Stat 1: Proyek Selesai -->
             <div
-              class="space-y-1 transition-all duration-1000 transform ease-out delay-[100ms]"
-              :class="sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+              v-for="(stat, idx) in store.companyStats"
+              :key="idx"
+              class="space-y-1 transition-all duration-1000 transform ease-out"
+              :class="[
+                sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12',
+                idx === 1 ? 'delay-[250ms]' : idx === 2 ? 'delay-[400ms]' : 'delay-[100ms]'
+              ]"
             >
               <div
-                @click="toggleStat(0)"
+                @click="toggleStat(idx)"
                 class="p-4 bg-gradient-to-r from-red-800 to-red-600 rounded-2xl border border-red-700/30 flex flex-row flex-nowrap items-center justify-between transition-all duration-300 hover:shadow-xl hover:shadow-red-600/20 hover:-translate-y-1 hover:scale-[1.015] cursor-pointer select-none"
               >
                 <div class="flex items-center space-x-4 flex-1 min-w-0">
                   <div
                     class="w-12 h-12 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-sm"
                   >
-                    <svg
-                      class="w-6 h-6 text-red-600 shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 01.553-.894L9 2l6 3 6-3v11.382a1 1 0 01-.553.894L15 20l-6-3-6 3z"
-                      />
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 2v18M15 5v15" />
-                    </svg>
+                    <q-icon
+                      :name="stat.icon"
+                      class="text-red-600 shrink-0"
+                      size="24px"
+                    />
                   </div>
                   <span
                     class="block text-base font-extrabold text-white uppercase tracking-wider font-heading leading-none truncate"
-                    >Proyek Selesai</span
+                    >{{ stat.title }}</span
                   >
                 </div>
               </div>
               <div
                 class="transition-all duration-300 overflow-hidden pl-16"
-                :style="{ maxHeight: expandedStat === 0 ? '100px' : '0px' }"
+                :style="{ maxHeight: expandedStat === idx ? '120px' : '0px' }"
               >
                 <p class="text-sm sm:text-base text-slate-600 leading-relaxed pt-1.5 pb-3 pr-2">
-                  Berbagai proyek konstruksi rumah mewah, ruko, gedung, dan perkerasan jalan di area
-                  Jabodetabek.
-                </p>
-              </div>
-            </div>
-
-            <!-- Stat 2: Kepuasan Klien -->
-            <div
-              class="space-y-1 transition-all duration-1000 transform ease-out delay-[250ms]"
-              :class="sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
-            >
-              <div
-                @click="toggleStat(1)"
-                class="p-4 bg-gradient-to-r from-red-800 to-red-600 rounded-2xl border border-red-700/30 flex flex-row flex-nowrap items-center justify-between transition-all duration-300 hover:shadow-xl hover:shadow-red-600/20 hover:-translate-y-1 hover:scale-[1.015] cursor-pointer select-none"
-              >
-                <div class="flex items-center space-x-4 flex-1 min-w-0">
-                  <div
-                    class="w-12 h-12 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-sm"
-                  >
-                    <svg
-                      class="w-6 h-6 text-red-600 shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                      />
-                    </svg>
-                  </div>
-                  <span
-                    class="block text-base font-extrabold text-white uppercase tracking-wider font-heading leading-none truncate"
-                    >Kepuasan Klien</span
-                  >
-                </div>
-              </div>
-              <div
-                class="transition-all duration-300 overflow-hidden pl-16"
-                :style="{ maxHeight: expandedStat === 1 ? '100px' : '0px' }"
-              >
-                <p class="text-sm sm:text-base text-slate-600 leading-relaxed pt-1.5 pb-3 pr-2">
-                  Mengutamakan kualitas material terbaik, pengawasan ketat, serta rencana anggaran
-                  biaya yang transparan.
-                </p>
-              </div>
-            </div>
-
-            <!-- Stat 3: Spesialis Stamp Concrete -->
-            <div
-              class="space-y-1 transition-all duration-1000 transform ease-out delay-[400ms]"
-              :class="sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
-            >
-              <div
-                @click="toggleStat(2)"
-                class="p-4 bg-gradient-to-r from-red-800 to-red-600 rounded-2xl border border-red-700/30 flex flex-row flex-nowrap items-center justify-between transition-all duration-300 hover:shadow-xl hover:shadow-red-600/20 hover:-translate-y-1 hover:scale-[1.015] cursor-pointer select-none"
-              >
-                <div class="flex items-center space-x-4 flex-1 min-w-0">
-                  <div
-                    class="w-12 h-12 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-sm"
-                  >
-                    <svg
-                      class="w-6 h-6 text-red-600 shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4 6h16M4 12h16M4 18h16M10 6v6M14 12v6M8 12v6M16 6v6"
-                      />
-                    </svg>
-                  </div>
-                  <span
-                    class="block text-base font-extrabold text-white uppercase tracking-wider font-heading leading-none truncate"
-                    >Stamp Concrete</span
-                  >
-                </div>
-              </div>
-              <div
-                class="transition-all duration-300 overflow-hidden pl-16"
-                :style="{ maxHeight: expandedStat === 2 ? '100px' : '0px' }"
-              >
-                <p class="text-sm sm:text-base text-slate-600 leading-relaxed pt-1.5 pb-3 pr-2">
-                  Pakar pengerjaan lantai beton dekoratif bermotif batu alam dan kayu yang kokoh,
-                  berestetika tinggi, dan awet.
+                  {{ stat.desc }}
                 </p>
               </div>
             </div>
@@ -501,9 +201,7 @@
                 <p
                   class="text-lg sm:text-xl md:text-2xl font-medium leading-relaxed italic font-heading text-slate-100"
                 >
-                  "Menjadi perusahaan General Contractor dan General Supplier yang profesional,
-                  terpercaya, dan berdaya saing, serta berkontribusi dalam pembangunan berkelanjutan
-                  di Indonesia"
+                  "{{ store.visiMisi.visi }}"
                 </p>
               </div>
 
@@ -526,9 +224,7 @@
                 </svg>
               </div>
             </div>
-          </div>
-
-          <!-- Card Misi (Right Column - Vertical Floating Offset Cards) -->
+          </div>          <!-- Card Misi (Right Column - Vertical Floating Offset Cards) -->
           <div class="flex flex-col justify-center space-y-6">
             <span
               class="inline-block px-3 py-1 bg-[#0B192C] text-white font-extrabold text-[10px] uppercase tracking-wider rounded-full self-start text-slate-800 mb-2"
@@ -536,9 +232,14 @@
               Misi Perusahaan
             </span>
 
-            <!-- Misi 1 -->
             <div
+              v-for="(misi, idx) in store.visiMisi.misi"
+              :key="idx"
               class="bg-white border border-slate-200/50 shadow-md p-5 rounded-2xl flex flex-row flex-nowrap items-center space-x-5 transition-all duration-300 hover:shadow-xl hover:border-red-500/30 hover:-translate-y-1 hover:scale-[1.02] relative overflow-hidden group"
+              :class="{
+                'sm:translate-x-6': idx === 1 || idx === 3,
+                'sm:translate-x-12': idx === 2
+              }"
             >
               <!-- Full background subtle wave/dot elements -->
               <div
@@ -562,121 +263,14 @@
               >
                 <span
                   class="text-red-600 font-extrabold text-xl font-heading group-hover:text-white transition-colors duration-300"
-                  >01</span
                 >
+                  {{ String(idx + 1).padStart(2, '0') }}
+                </span>
               </div>
               <p
                 class="relative z-10 text-slate-700 font-extrabold text-sm sm:text-base leading-snug"
               >
-                Memberikan layanan berkualitas dan tepat waktu
-              </p>
-            </div>
-
-            <!-- Misi 2 -->
-            <div
-              class="bg-white border border-slate-200/50 shadow-md p-5 rounded-2xl flex flex-row flex-nowrap items-center space-x-5 transition-all duration-300 hover:shadow-xl hover:border-red-500/30 hover:-translate-y-1 hover:scale-[1.02] sm:translate-x-6 relative overflow-hidden group"
-            >
-              <!-- Full background subtle wave/dot elements -->
-              <div
-                class="absolute inset-0 pointer-events-none z-0 opacity-[0.04] text-[#0B192C] group-hover:opacity-[0.18] group-hover:text-red-600 transition-all duration-500 ease-out transform group-hover:translate-x-3 group-hover:scale-[1.02]"
-              >
-                <svg
-                  class="w-full h-full transition-all duration-300 group-hover:stroke-[1.6]"
-                  viewBox="0 0 400 100"
-                  preserveAspectRatio="none"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1"
-                >
-                  <path d="M 0,30 Q 100,70 200,30 T 400,60" />
-                  <path d="M 0,50 Q 120,20 240,80 T 400,40" stroke-dasharray="4 4" />
-                  <path d="M 0,70 Q 80,90 200,40 T 400,80" />
-                </svg>
-              </div>
-              <div
-                class="relative z-10 w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center shrink-0 shadow-sm border border-red-100 group-hover:bg-red-600 transition-colors duration-300"
-              >
-                <span
-                  class="text-red-600 font-extrabold text-xl font-heading group-hover:text-white transition-colors duration-300"
-                  >02</span
-                >
-              </div>
-              <p
-                class="relative z-10 text-slate-700 font-extrabold text-sm sm:text-base leading-snug"
-              >
-                Mengutamakan keselamatan kerja dan mutu
-              </p>
-            </div>
-
-            <!-- Misi 3 -->
-            <div
-              class="bg-white border border-slate-200/50 shadow-md p-5 rounded-2xl flex flex-row flex-nowrap items-center space-x-5 transition-all duration-300 hover:shadow-xl hover:border-red-500/30 hover:-translate-y-1 hover:scale-[1.02] sm:translate-x-12 relative overflow-hidden group"
-            >
-              <!-- Full background subtle wave/dot elements -->
-              <div
-                class="absolute inset-0 pointer-events-none z-0 opacity-[0.04] text-[#0B192C] group-hover:opacity-[0.18] group-hover:text-red-600 transition-all duration-500 ease-out transform group-hover:translate-x-3 group-hover:scale-[1.02]"
-              >
-                <svg
-                  class="w-full h-full transition-all duration-300 group-hover:stroke-[1.6]"
-                  viewBox="0 0 400 100"
-                  preserveAspectRatio="none"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1"
-                >
-                  <path d="M 0,30 Q 100,70 200,30 T 400,60" />
-                  <path d="M 0,50 Q 120,20 240,80 T 400,40" stroke-dasharray="4 4" />
-                  <path d="M 0,70 Q 80,90 200,40 T 400,80" />
-                </svg>
-              </div>
-              <div
-                class="relative z-10 w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center shrink-0 shadow-sm border border-red-100 group-hover:bg-red-600 transition-colors duration-300"
-              >
-                <span
-                  class="text-red-600 font-extrabold text-xl font-heading group-hover:text-white transition-colors duration-300"
-                  >03</span
-                >
-              </div>
-              <p
-                class="relative z-10 text-slate-700 font-extrabold text-sm sm:text-base leading-snug"
-              >
-                Meningkatkan kompetensi SDM
-              </p>
-            </div>
-
-            <!-- Misi 4 -->
-            <div
-              class="bg-white border border-slate-200/50 shadow-md p-5 rounded-2xl flex flex-row flex-nowrap items-center space-x-5 transition-all duration-300 hover:shadow-xl hover:border-red-500/30 hover:-translate-y-1 hover:scale-[1.02] sm:translate-x-6 relative overflow-hidden group"
-            >
-              <!-- Full background subtle wave/dot elements -->
-              <div
-                class="absolute inset-0 pointer-events-none z-0 opacity-[0.04] text-[#0B192C] group-hover:opacity-[0.18] group-hover:text-red-600 transition-all duration-500 ease-out transform group-hover:translate-x-3 group-hover:scale-[1.02]"
-              >
-                <svg
-                  class="w-full h-full transition-all duration-300 group-hover:stroke-[1.6]"
-                  viewBox="0 0 400 100"
-                  preserveAspectRatio="none"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1"
-                >
-                  <path d="M 0,30 Q 100,70 200,30 T 400,60" />
-                  <path d="M 0,50 Q 120,20 240,80 T 400,40" stroke-dasharray="4 4" />
-                  <path d="M 0,70 Q 80,90 200,40 T 400,80" />
-                </svg>
-              </div>
-              <div
-                class="relative z-10 w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center shrink-0 shadow-sm border border-red-100 group-hover:bg-red-600 transition-colors duration-300"
-              >
-                <span
-                  class="text-red-600 font-extrabold text-xl font-heading group-hover:text-white transition-colors duration-300"
-                  >04</span
-                >
-              </div>
-              <p
-                class="relative z-10 text-slate-700 font-extrabold text-sm sm:text-base leading-snug"
-              >
-                Menjaga kepercayaan dan kepuasan klien
+                {{ misi }}
               </p>
             </div>
           </div>
@@ -721,7 +315,7 @@
                 <div class="absolute inset-0 bg-[#0B192C] opacity-5 rounded-[32px] rotate-[6deg] scale-[0.94] border border-slate-200/50 shadow-md transition-all duration-500 ease-out"></div>
                 <!-- Middle stacked layer (Red Panel) -->
                 <div class="absolute inset-0 bg-red-600 opacity-[0.04] rounded-[32px] -rotate-[3deg] scale-[0.98] border border-red-500/10 shadow-md transition-all duration-500 ease-out"></div>
-                
+
                 <!-- Main/Top layer: Active Image Card -->
                 <div class="relative z-10 w-full h-full rounded-[32px] overflow-hidden shadow-2xl border-4 border-white bg-white">
                   <transition name="fade" mode="out-in">
@@ -777,7 +371,7 @@
                 >
                   <q-icon name="arrow_forward" size="18px" />
                 </button>
-                <span class="text-xs font-bold text-slate-400 ml-2 select-none">
+                <span class="text-xs font-bold text-slate-400 ml-2 select-none" v-if="officeSlides && officeSlides.length">
                   0{{ officeIndex + 1 }} / 0{{ officeSlides.length }}
                 </span>
               </div>
@@ -818,8 +412,7 @@
               >
                 <!-- Text -->
                 <p class="text-xs font-extrabold text-[#0B192C] leading-relaxed text-center">
-                  "Halo! Saya siap membantu mewujudkan proyek impian Anda dengan kualitas terbaik.
-                  Yuk, lihat keunggulan kami di samping!"
+                  "{{ store.advantagesBubble }}"
                 </p>
                 <!-- Speech Bubble Tail/Triangle pointing down -->
                 <div
@@ -844,7 +437,7 @@
                 class="relative z-10 w-full overflow-hidden rounded-3xl border border-slate-200/60 shadow-xl bg-white transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
               >
                 <img
-                  src="images/mascot_illustration.jpg"
+                  :src="store.advantagesMascot"
                   alt="Maskot PT Agra Abhinaya Perkasa"
                   class="w-full h-auto object-cover block"
                 />
@@ -885,8 +478,9 @@
             class="lg:col-span-7 space-y-6 transition-all duration-1000 transform ease-out delay-[300ms]"
             :class="choosingUsVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'"
           >
-            <!-- 1. Profesional & Berpengalaman -->
             <div
+              v-for="(adv, idx) in store.advantagesList"
+              :key="idx"
               class="border border-slate-200/50 shadow-md p-5 rounded-2xl flex flex-row flex-nowrap items-center space-x-4 transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/15 hover:border-red-500/30 hover:-translate-y-2 hover:scale-[1.015] group relative overflow-hidden"
             >
               <!-- Custom Watermark: Layered Waves background matching the mockup exactly -->
@@ -914,183 +508,14 @@
               <div
                 class="relative z-10 w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center shrink-0 border border-red-100 text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all duration-300"
               >
-                <q-icon name="group" size="20px" />
+                <q-icon :name="getIconForTitle(adv.title, adv.icon)" size="20px" />
               </div>
               <div class="relative z-10 col-span-1 flex-1 min-w-0 pr-2">
                 <h4 class="text-base font-extrabold text-[#0B192C] mb-1">
-                  Profesional & Berpengalaman
+                  {{ adv.title }}
                 </h4>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                  Didukung oleh tim yang kompeten dan berpengalaman dalam pelaksanaan pekerjaan
-                  konstruksi dan pengadaan.
-                </p>
-              </div>
-            </div>
-
-            <!-- 2. Kualitas & Ketepatan Waktu -->
-            <div
-              class="border border-slate-200/50 shadow-md p-5 rounded-2xl flex flex-row flex-nowrap items-center space-x-4 transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/15 hover:border-red-500/30 hover:-translate-y-2 hover:scale-[1.015] group relative overflow-hidden"
-            >
-              <!-- Custom Watermark: Layered Waves background matching the mockup exactly -->
-              <svg
-                class="absolute inset-0 w-full h-full pointer-events-none z-0"
-                viewBox="0 0 400 120"
-                preserveAspectRatio="none"
-              >
-                <!-- Base card background light pink -->
-                <rect width="400" height="120" fill="#FFF6F6" />
-                <!-- Middle wave layer -->
-                <path
-                  d="M 0 85 C 150 75, 280 55, 400 45 L 400 120 L 0 120 Z"
-                  fill="#FFEAEA"
-                  opacity="0.8"
-                />
-                <!-- Bottom wave layer -->
-                <path d="M 0 102 C 160 98, 290 85, 400 75 L 400 120 L 0 120 Z" fill="#FFDCDC" />
-              </svg>
-              <!-- Gradient glow overlay on hover -->
-              <div
-                class="absolute inset-0 pointer-events-none z-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-red-500/[0.05] via-rose-500/[0.02] to-transparent transition-all duration-500"
-              ></div>
-
-              <div
-                class="relative z-10 w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center shrink-0 border border-red-100 text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all duration-300"
-              >
-                <q-icon name="schedule" size="20px" />
-              </div>
-              <div class="relative z-10 col-span-1 flex-1 min-w-0 pr-2">
-                <h4 class="text-base font-extrabold text-[#0B192C] mb-1">
-                  Kualitas & Ketepatan Waktu
-                </h4>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                  Setiap pekerjaan dilaksanakan sesuai standar mutu dengan komitmen penyelesaian
-                  tepat waktu.
-                </p>
-              </div>
-            </div>
-
-            <!-- 3. Komitmen Keselamatan Kerja (K3) -->
-            <div
-              class="border border-slate-200/50 shadow-md p-5 rounded-2xl flex flex-row flex-nowrap items-center space-x-4 transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/15 hover:border-red-500/30 hover:-translate-y-2 hover:scale-[1.015] group relative overflow-hidden"
-            >
-              <!-- Custom Watermark: Layered Waves background matching the mockup exactly -->
-              <svg
-                class="absolute inset-0 w-full h-full pointer-events-none z-0"
-                viewBox="0 0 400 120"
-                preserveAspectRatio="none"
-              >
-                <!-- Base card background light pink -->
-                <rect width="400" height="120" fill="#FFF6F6" />
-                <!-- Middle wave layer -->
-                <path
-                  d="M 0 85 C 150 75, 280 55, 400 45 L 400 120 L 0 120 Z"
-                  fill="#FFEAEA"
-                  opacity="0.8"
-                />
-                <!-- Bottom wave layer -->
-                <path d="M 0 102 C 160 98, 290 85, 400 75 L 400 120 L 0 120 Z" fill="#FFDCDC" />
-              </svg>
-              <!-- Gradient glow overlay on hover -->
-              <div
-                class="absolute inset-0 pointer-events-none z-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-red-500/[0.05] via-rose-500/[0.02] to-transparent transition-all duration-500"
-              ></div>
-
-              <div
-                class="relative z-10 w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center shrink-0 border border-red-100 text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all duration-300"
-              >
-                <q-icon name="health_and_safety" size="20px" />
-              </div>
-              <div class="relative z-10 col-span-1 flex-1 min-w-0 pr-2">
-                <h4 class="text-base font-extrabold text-[#0B192C] mb-1">
-                  Komitmen Keselamatan Kerja (K3)
-                </h4>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                  Keselamatan dan kesehatan kerja menjadi prioritas utama dalam seluruh aktivitas
-                  proyek.
-                </p>
-              </div>
-            </div>
-
-            <!-- 4. Manajemen Proyek yang Terstruktur -->
-            <div
-              class="border border-slate-200/50 shadow-md p-5 rounded-2xl flex flex-row flex-nowrap items-center space-x-4 transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/15 hover:border-red-500/30 hover:-translate-y-2 hover:scale-[1.015] group relative overflow-hidden"
-            >
-              <!-- Custom Watermark: Layered Waves background matching the mockup exactly -->
-              <svg
-                class="absolute inset-0 w-full h-full pointer-events-none z-0"
-                viewBox="0 0 400 120"
-                preserveAspectRatio="none"
-              >
-                <!-- Base card background light pink -->
-                <rect width="400" height="120" fill="#FFF6F6" />
-                <!-- Middle wave layer -->
-                <path
-                  d="M 0 85 C 150 75, 280 55, 400 45 L 400 120 L 0 120 Z"
-                  fill="#FFEAEA"
-                  opacity="0.8"
-                />
-                <!-- Bottom wave layer -->
-                <path d="M 0 102 C 160 98, 290 85, 400 75 L 400 120 L 0 120 Z" fill="#FFDCDC" />
-              </svg>
-              <!-- Gradient glow overlay on hover -->
-              <div
-                class="absolute inset-0 pointer-events-none z-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-red-500/[0.05] via-rose-500/[0.02] to-transparent transition-all duration-500"
-              ></div>
-
-              <div
-                class="relative z-10 w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center shrink-0 border border-red-100 text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all duration-300"
-              >
-                <q-icon name="task_alt" size="20px" />
-              </div>
-              <div class="relative z-10 col-span-1 flex-1 min-w-0 pr-2">
-                <h4 class="text-base font-extrabold text-[#0B192C] mb-1">
-                  Manajemen Proyek yang Terstruktur
-                </h4>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                  Perencanaan, pelaksanaan, dan pengawasan proyek dilakukan secara sistematis dan
-                  terkontrol.
-                </p>
-              </div>
-            </div>
-
-            <!-- 5. Mitra yang Dapat Dipercaya -->
-            <div
-              class="border border-slate-200/50 shadow-md p-5 rounded-2xl flex flex-row flex-nowrap items-center space-x-4 transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/15 hover:border-red-500/30 hover:-translate-y-2 hover:scale-[1.015] group relative overflow-hidden"
-            >
-              <!-- Custom Watermark: Layered Waves background matching the mockup exactly -->
-              <svg
-                class="absolute inset-0 w-full h-full pointer-events-none z-0"
-                viewBox="0 0 400 120"
-                preserveAspectRatio="none"
-              >
-                <!-- Base card background light pink -->
-                <rect width="400" height="120" fill="#FFF6F6" />
-                <!-- Middle wave layer -->
-                <path
-                  d="M 0 85 C 150 75, 280 55, 400 45 L 400 120 L 0 120 Z"
-                  fill="#FFEAEA"
-                  opacity="0.8"
-                />
-                <!-- Bottom wave layer -->
-                <path d="M 0 102 C 160 98, 290 85, 400 75 L 400 120 L 0 120 Z" fill="#FFDCDC" />
-              </svg>
-              <!-- Gradient glow overlay on hover -->
-              <div
-                class="absolute inset-0 pointer-events-none z-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-red-500/[0.05] via-rose-500/[0.02] to-transparent transition-all duration-500"
-              ></div>
-
-              <div
-                class="relative z-10 w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center shrink-0 border border-red-100 text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all duration-300"
-              >
-                <q-icon name="handshake" size="20px" />
-              </div>
-              <div class="relative z-10 col-span-1 flex-1 min-w-0 pr-2">
-                <h4 class="text-base font-extrabold text-[#0B192C] mb-1">
-                  Mitra yang Dapat Dipercaya
-                </h4>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                  Kami membangun hubungan kerja jangka panjang berdasarkan kepercayaan dan
-                  komunikasi yang baik dengan klien.
+                  {{ adv.desc }}
                 </p>
               </div>
             </div>
@@ -1107,25 +532,25 @@
       >
         <div class="text-center max-w-3xl mx-auto mb-16">
           <p class="text-xs font-bold text-red-600 uppercase tracking-widest mb-3">Layanan Kami</p>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0B192C] leading-tight">
-            Solusi Konstruksi Terbaik <br />Untuk Kebutuhan Anda
-          </h2>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0B192C] leading-tight" v-html="store.servicesTitle"></h2>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
-          <!-- Service Card 1: Konstruksi -->
+          <!-- Service Card Loop -->
           <div
+            v-for="(service, idx) in store.servicesList"
+            :key="idx"
             class="transition-all duration-500 relative rounded-3xl overflow-hidden flex flex-col justify-between min-h-[420px] sm:min-h-[460px] shadow-xl hover:shadow-2xl hover:-translate-y-1 group flex-1 w-full"
             :class="
-              showKonstruksiInCard
-                ? 'bg-[#0B192C] border-none p-5 text-white shadow-2xl'
+              activeDetailCardIdx === idx
+                ? getServiceBg(idx) + ' border-none p-5 text-white shadow-2xl'
                 : 'bg-white/80 backdrop-blur-md border border-white/40 p-0 hover:bg-white/95 text-slate-800'
             "
           >
             <transition name="fade" mode="out-in">
-              <!-- Tampilan Detail (Navy Gelap) -->
+              <!-- Tampilan Detail (Dark Navy / Custom BG) -->
               <div
-                v-if="showKonstruksiInCard"
+                v-if="activeDetailCardIdx === idx"
                 key="detail"
                 class="flex flex-col justify-between h-full flex-1"
               >
@@ -1133,10 +558,10 @@
                   <!-- Header: Title & Close Button -->
                   <div class="flex items-center justify-between text-white mb-6">
                     <h3 class="font-heading font-extrabold text-2xl tracking-tight m-0">
-                      Konstruksi
+                      {{ service.detailTitle || service.title }}
                     </h3>
                     <button
-                      @click="showKonstruksiInCard = false"
+                      @click="activeDetailCardIdx = null"
                       class="bg-transparent border-none text-white/70 hover:text-white cursor-pointer flex items-center justify-center p-1 focus:outline-none shadow-none"
                     >
                       <svg
@@ -1157,22 +582,27 @@
 
                   <!-- Description text -->
                   <p class="text-white text-sm leading-relaxed mb-6 font-medium pr-1">
-                    Melayani pembangunan baru dari nol untuk rumah tinggal, ruko komersial, gedung
-                    perkantoran, dan gudang industri dengan standar mutu tinggi.
+                    {{ service.detailDesc || service.desc }}
                   </p>
 
                   <!-- Bullets list -->
-                  <ul class="text-white text-sm space-y-3.5 pl-5 list-disc font-semibold">
-                    <li>Struktur SNI Kokoh</li>
-                    <li>RAB Transparan</li>
-                    <li>Arsitek & Sipil Profesional</li>
+                  <ul 
+                    v-if="service.bulletsText"
+                    class="text-white text-sm space-y-3.5 pl-5 list-disc font-semibold"
+                  >
+                    <li 
+                      v-for="(bullet, bIdx) in service.bulletsText.split('\n').filter(b => b.trim())" 
+                      :key="bIdx"
+                    >
+                      {{ bullet }}
+                    </li>
                   </ul>
                 </div>
 
                 <!-- Action Button -->
                 <div class="mt-8">
                   <button
-                    @click="navigateToKonstruksiDetail"
+                    @click="navigateToServiceDetail(service, idx)"
                     class="w-full bg-white hover:bg-slate-100 text-red-600 font-extrabold py-3.5 px-6 rounded-full transition-all duration-300 border-none cursor-pointer shadow-md hover:shadow-lg text-center block text-sm focus:outline-none animate-pulse-subtle"
                   >
                     Lihat Detail
@@ -1187,8 +617,8 @@
                     class="relative h-[160px] sm:h-[200px] w-full rounded-2xl overflow-hidden mb-4"
                   >
                     <img
-                      src="images/kontruksi.png"
-                      alt="Konstruksi Bangunan"
+                      :src="service.image"
+                      :alt="service.title"
                       class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
@@ -1196,227 +626,22 @@
                     <h3
                       class="font-heading font-extrabold text-lg sm:text-xl text-slate-900 mb-2.5 flex items-center justify-center"
                     >
-                      Konstruksi
-                    </h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                      Agra melayani pembangunan baru rumah, ruko, gedung, dan gudang dengan struktur
-                      kokoh, material teruji, serta pengawasan mandor berpengalaman.
-                    </p>
-                  </div>
-                </div>
-                <div class="p-5 pt-3 text-center">
-                  <button
-                    @click="showKonstruksiInCard = true"
-                    class="inline-block bg-red-600 hover:bg-red-700 text-white border border-transparent font-bold text-xs sm:text-sm px-6 py-2.5 rounded-full transition-all duration-300 cursor-pointer focus:outline-none shadow-sm hover:shadow-md"
-                  >
-                    Selengkapnya
-                  </button>
-                </div>
-              </div>
-            </transition>
-          </div>
-
-          <!-- Service Card 2: Borongan -->
-          <div
-            class="transition-all duration-500 relative rounded-3xl overflow-hidden flex flex-col justify-between min-h-[420px] sm:min-h-[460px] shadow-xl hover:shadow-2xl hover:-translate-y-1 group flex-1 w-full"
-            :class="
-              showBoronganInCard
-                ? 'bg-[#4E201B] border-none p-5 text-white shadow-2xl'
-                : 'bg-white/80 backdrop-blur-md border border-white/40 p-0 hover:bg-white/95 text-slate-800'
-            "
-          >
-            <transition name="fade" mode="out-in">
-              <!-- Tampilan Detail (Cokelat Gelap) -->
-              <div
-                v-if="showBoronganInCard"
-                key="detail"
-                class="flex flex-col justify-between h-full flex-1"
-              >
-                <div>
-                  <!-- Header: Title & Close Button -->
-                  <div class="flex items-center justify-between text-white mb-6">
-                    <h3 class="font-heading font-extrabold text-2xl tracking-tight m-0">
-                      Borongan
-                    </h3>
-                    <button
-                      @click="showBoronganInCard = false"
-                      class="bg-transparent border-none text-white/70 hover:text-white cursor-pointer flex items-center justify-center p-1 focus:outline-none shadow-none"
-                    >
-                      <svg
-                        class="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.5"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-
-                  <!-- Description text -->
-                  <p class="text-white text-sm leading-relaxed mb-6 font-medium pr-1">
-                    Mengerjakan perbaikan bangunan secara borongan untuk rumah, kantor, ruko,
-                    apartemen dan lainnya. Termasuk survey + jasa + material + pengawasan.
-                  </p>
-
-                  <!-- Bullets list -->
-                  <ul class="text-white text-sm space-y-3.5 pl-5 list-disc font-semibold">
-                    <li>Harga Transparan</li>
-                    <li>Bertanggung jawab</li>
-                    <li>Bergaransi</li>
-                  </ul>
-                </div>
-
-                <!-- Action Button (White Pill with Red Text) -->
-                <div class="mt-8">
-                  <button
-                    @click="navigateToDetail"
-                    class="w-full bg-white hover:bg-slate-100 text-red-600 font-extrabold py-3.5 px-6 rounded-full transition-all duration-300 border-none cursor-pointer shadow-md hover:shadow-lg text-center block text-sm focus:outline-none animate-pulse-subtle"
-                  >
-                    Lihat Detail
-                  </button>
-                </div>
-              </div>
-
-              <!-- Tampilan Standar (Putih dengan Gambar) -->
-              <div v-else key="standard" class="flex flex-col justify-between h-full flex-1">
-                <div class="p-5 pb-0">
-                  <div
-                    class="relative h-[160px] sm:h-[200px] w-full rounded-2xl overflow-hidden mb-4"
-                  >
-                    <img
-                      src="images/borongan.png"
-                      alt="Layanan Borongan"
-                      class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div class="text-center px-2">
-                    <h3
-                      class="font-heading font-extrabold text-lg sm:text-xl text-slate-900 mb-2.5 flex items-center justify-center"
-                    >
-                      Borongan
+                      {{ service.title }}
                       <span
+                        v-if="service.badge"
                         class="ml-2 text-[9px] font-extrabold bg-red-600 text-white px-2 py-0.5 rounded-full uppercase tracking-wider"
-                        >Full Service</span
                       >
+                        {{ service.badge }}
+                      </span>
                     </h3>
                     <p class="text-slate-600 text-sm leading-relaxed">
-                      Agra menyediakan solusi layanan borongan menyeluruh untuk kelancaran
-                      pembangunan dan renovasi besar agar prosesnya jadi mudah.
+                      {{ service.desc }}
                     </p>
                   </div>
                 </div>
                 <div class="p-5 pt-3 text-center">
                   <button
-                    @click="showBoronganInCard = true"
-                    class="inline-block bg-red-600 hover:bg-red-700 text-white border border-transparent font-bold text-xs sm:text-sm px-6 py-2.5 rounded-full transition-all duration-300 cursor-pointer focus:outline-none shadow-sm hover:shadow-md"
-                  >
-                    Selengkapnya
-                  </button>
-                </div>
-              </div>
-            </transition>
-          </div>
-
-          <!-- Service Card 3: Tukang Harian -->
-          <div
-            class="transition-all duration-500 relative rounded-3xl overflow-hidden flex flex-col justify-between min-h-[420px] sm:min-h-[460px] shadow-xl hover:shadow-2xl hover:-translate-y-1 group flex-1 w-full"
-            :class="
-              showTukangHarianInCard
-                ? 'bg-[#6B1D1D] border-none p-5 text-white shadow-2xl'
-                : 'bg-white/80 backdrop-blur-md border border-white/40 p-0 hover:bg-white/95 text-slate-800'
-            "
-          >
-            <transition name="fade" mode="out-in">
-              <!-- Tampilan Detail (Merah Gelap) -->
-              <div
-                v-if="showTukangHarianInCard"
-                key="detail"
-                class="flex flex-col justify-between h-full flex-1"
-              >
-                <div>
-                  <!-- Header: Title & Close Button -->
-                  <div class="flex items-center justify-between text-white mb-6">
-                    <h3 class="font-heading font-extrabold text-2xl tracking-tight m-0">
-                      Tukang Harian
-                    </h3>
-                    <button
-                      @click="showTukangHarianInCard = false"
-                      class="bg-transparent border-none text-white/70 hover:text-white cursor-pointer flex items-center justify-center p-1 focus:outline-none shadow-none"
-                    >
-                      <svg
-                        class="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.5"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-
-                  <!-- Description text -->
-                  <p class="text-white text-sm leading-relaxed mb-6 font-medium pr-1">
-                    Penyediaan tenaga tukang terampil harian untuk perbaikan kecil/besar, perapihan
-                    dinding, kusen pintu, pipa bocor, instalasi listrik, dan lainnya.
-                  </p>
-
-                  <!-- Bullets list -->
-                  <ul class="text-white text-sm space-y-3.5 pl-5 list-disc font-semibold">
-                    <li>Tenaga Tukang Profesional</li>
-                    <li>Harga Flat Transparan</li>
-                    <li>Tanpa Minimum Order</li>
-                  </ul>
-                </div>
-
-                <!-- Action Button -->
-                <div class="mt-8">
-                  <button
-                    @click="navigateToTukangHarianDetail"
-                    class="w-full bg-white hover:bg-slate-100 text-red-600 font-extrabold py-3.5 px-6 rounded-full transition-all duration-300 border-none cursor-pointer shadow-md hover:shadow-lg text-center block text-sm focus:outline-none animate-pulse-subtle"
-                  >
-                    Lihat Detail
-                  </button>
-                </div>
-              </div>
-
-              <!-- Tampilan Standar (Putih dengan Gambar) -->
-              <div v-else key="standard" class="flex flex-col justify-between h-full flex-1">
-                <div class="p-5 pb-0">
-                  <div
-                    class="relative h-[160px] sm:h-[200px] w-full rounded-2xl overflow-hidden mb-4"
-                  >
-                    <img
-                      src="images/harian.png"
-                      alt="Tukang Harian"
-                      class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div class="text-center px-2">
-                    <h3
-                      class="font-heading font-extrabold text-lg sm:text-xl text-slate-900 mb-2.5"
-                    >
-                      Tukang Harian
-                    </h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                      Agra menyediakan solusi perbaikan rumah terencana oleh tenaga tukang
-                      berpengalaman agar kamu dan keluarga dapat hidup nyaman.
-                    </p>
-                  </div>
-                </div>
-                <div class="p-5 pt-3 text-center">
-                  <button
-                    @click="showTukangHarianInCard = true"
+                    @click="activeDetailCardIdx = idx"
                     class="inline-block bg-red-600 hover:bg-red-700 text-white border border-transparent font-bold text-xs sm:text-sm px-6 py-2.5 rounded-full transition-all duration-300 cursor-pointer focus:outline-none shadow-sm hover:shadow-md"
                   >
                     Selengkapnya
@@ -1869,7 +1094,7 @@
     >
       <!-- Subtle Red Accent Top Boundary line -->
       <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-red-600 to-rose-600 opacity-60"></div>
-      
+
       <div class="max-w-6xl mx-auto px-6 relative z-10">
         <div
           class="transition-all duration-1000 transform ease-out"
@@ -2224,6 +1449,204 @@
       </div>
     </section>
 
+    <!-- Ulasan & Rating Section -->
+    <section
+      ref="reviewsRef"
+      id="ulasan-klien"
+      class="py-24 bg-slate-50 border-t border-slate-100 relative overflow-hidden"
+    >
+      <!-- Decorative Background elements -->
+      <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(220,38,38,0.02),transparent_45%)] pointer-events-none"
+      ></div>
+
+      <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 relative z-10">
+        <div
+          class="transition-all duration-1000 transform ease-out"
+          :class="reviewsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+        >
+          <!-- Section Header -->
+          <div class="text-center max-w-2xl mx-auto mb-16">
+            <span class="text-xs font-bold tracking-widest text-red-600 uppercase"
+              >Ulasan & Feedback</span
+            >
+            <h2
+              class="font-heading text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 tracking-tight"
+            >
+              Apa Kata Mitra & Klien Kami?
+            </h2>
+            <p class="text-sm sm:text-base text-slate-600 mt-4 leading-relaxed">
+              Kepuasan klien adalah prioritas utama kami. Berikan ulasan atau baca testimoni dari mitra yang telah bekerja sama dengan kami.
+            </p>
+          </div>
+
+          <!-- Review Form & Marquee Layout -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto">
+            <!-- Left: Add Review Form (col-span-5) -->
+            <div class="lg:col-span-5 bg-white border border-slate-200/60 rounded-3xl p-6 sm:p-8 shadow-md">
+              <h3 class="text-xl font-extrabold text-[#0B192C] mb-6 flex items-center">
+                <q-icon name="rate_review" class="text-red-600 mr-2" size="24px" />
+                Kirim Ulasan Anda
+              </h3>
+
+              <form @submit.prevent="submitReview" class="space-y-5">
+                <!-- Name Input -->
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nama Lengkap</label>
+                  <input
+                    v-model="newReview.name"
+                    type="text"
+                    required
+                    placeholder="Masukkan nama Anda..."
+                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500 focus:bg-white transition-all duration-200"
+                  />
+                </div>
+
+                <!-- Rating Selector (Interactive Stars) -->
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Rating</label>
+                  <div class="flex items-center space-x-1.5 py-1">
+                    <button
+                      v-for="star in 5"
+                      :key="star"
+                      type="button"
+                      @click="newReview.rating = star"
+                      @mouseover="hoveredStar = star"
+                      @mouseleave="hoveredStar = 0"
+                      class="bg-transparent border-none cursor-pointer p-0 focus:outline-none transition-transform duration-200 hover:scale-125"
+                    >
+                      <q-icon
+                        :name="star <= (hoveredStar || newReview.rating) ? 'star' : 'star_border'"
+                        :class="star <= (hoveredStar || newReview.rating) ? 'text-amber-400' : 'text-slate-300'"
+                        size="32px"
+                      />
+                    </button>
+                    <span class="text-sm font-bold text-slate-500 ml-3">
+                      ({{ newReview.rating }} / 5)
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Comment Input -->
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Ulasan / Komentar</label>
+                  <textarea
+                    v-model="newReview.comment"
+                    required
+                    rows="4"
+                    placeholder="Tulis ulasan Anda mengenai pelayanan kami..."
+                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500 focus:bg-white transition-all duration-200 resize-none"
+                  ></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button
+                  type="submit"
+                  class="w-full inline-flex items-center justify-center px-6 py-3.5 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold text-sm rounded-xl hover:-translate-y-0.5 hover:shadow-lg hover:shadow-red-600/20 active:translate-y-0 transition-all duration-200 border-none cursor-pointer focus:outline-none"
+                >
+                  Kirim Ulasan
+                </button>
+              </form>
+            </div>
+
+            <!-- Right: Auto-Scrolling Reviews Marquee (col-span-7) -->
+            <div class="lg:col-span-7 space-y-6 self-center w-full overflow-hidden">
+              <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider px-2">Ulasan Terbaru</h4>
+
+              <!-- Infinite Marquee -->
+              <div class="relative w-full overflow-hidden before:absolute before:left-0 before:top-0 before:bottom-0 before:w-12 before:bg-gradient-to-r before:from-slate-50 before:to-transparent before:z-10 after:absolute after:right-0 after:top-0 after:bottom-0 after:w-12 after:bg-gradient-to-l after:from-slate-50 after:to-transparent after:z-10 py-2">
+                <div class="flex flex-row items-stretch gap-6 animate-marquee hover:[animation-play-state:paused] py-4">
+                  <!-- Original List -->
+                  <div class="flex flex-row items-stretch gap-6 shrink-0">
+                    <div
+                      v-for="review in reviews"
+                      :key="review.id"
+                      class="w-[280px] sm:w-[320px] bg-white border border-slate-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-red-500/10 transition-all duration-300 select-none"
+                    >
+                      <div>
+                        <!-- Header: Avatar, Name & Rating -->
+                        <div class="flex items-center space-x-3.5 mb-4">
+                          <div
+                            class="w-10 h-10 rounded-full flex items-center justify-center text-white font-extrabold text-sm shadow-sm"
+                            :style="{ backgroundColor: getAvatarColor(review.name) }"
+                          >
+                            {{ getInitial(review.name) }}
+                          </div>
+                          <div>
+                            <h5 class="text-sm font-extrabold text-[#0B192C] leading-none mb-1">{{ review.name }}</h5>
+                            <div class="flex items-center space-x-0.5">
+                              <q-icon
+                                v-for="star in 5"
+                                :key="star"
+                                :name="star <= review.rating ? 'star' : 'star_border'"
+                                class="text-amber-400"
+                                size="14px"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Review Text -->
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium line-clamp-4">
+                          "{{ review.comment }}"
+                        </p>
+                      </div>
+                      <!-- Date -->
+                      <div class="text-[10px] font-bold text-slate-400 tracking-wider mt-4">
+                        {{ review.date }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Duplicated List -->
+                  <div class="flex flex-row items-stretch gap-6 shrink-0">
+                    <div
+                      v-for="review in reviews"
+                      :key="'dup-' + review.id"
+                      class="w-[280px] sm:w-[320px] bg-white border border-slate-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-red-500/10 transition-all duration-300 select-none"
+                    >
+                      <div>
+                        <!-- Header: Avatar, Name & Rating -->
+                        <div class="flex items-center space-x-3.5 mb-4">
+                          <div
+                            class="w-10 h-10 rounded-full flex items-center justify-center text-white font-extrabold text-sm shadow-sm"
+                            :style="{ backgroundColor: getAvatarColor(review.name) }"
+                          >
+                            {{ getInitial(review.name) }}
+                          </div>
+                          <div>
+                            <h5 class="text-sm font-extrabold text-[#0B192C] leading-none mb-1">{{ review.name }}</h5>
+                            <div class="flex items-center space-x-0.5">
+                              <q-icon
+                                v-for="star in 5"
+                                :key="star"
+                                :name="star <= review.rating ? 'star' : 'star_border'"
+                                class="text-amber-400"
+                                size="14px"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Review Text -->
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium line-clamp-4">
+                          "{{ review.comment }}"
+                        </p>
+                      </div>
+                      <!-- Date -->
+                      <div class="text-[10px] font-bold text-slate-400 tracking-wider mt-4">
+                        {{ review.date }}
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Media Sosial Section -->
     <section
       ref="socialRef"
@@ -2416,13 +1839,24 @@
         </div>
       </div>
     </section>
+
+    <!-- Toast Notification -->
+    <div
+      v-if="showToast"
+      class="fixed bottom-6 right-6 z-50 bg-slate-900 border border-slate-800 text-white rounded-2xl px-6 py-4 shadow-2xl flex items-center space-x-3 transition-all duration-300 transform translate-y-0"
+    >
+      <q-icon name="check_circle" class="text-emerald-500" size="24px" />
+      <span class="text-sm font-bold">{{ toastMessage }}</span>
+    </div>
   </q-page>
 </template>
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { useWebsiteStore } from 'src/stores/websiteStore'
 
+const store = useWebsiteStore()
 const router = useRouter()
 
 const activeSlide = ref('konstruksi')
@@ -2432,31 +1866,32 @@ const statsVisible = ref(false)
 const statsRef = ref(null)
 const visitorCount = ref(0)
 const hasAnimatedCount = ref(false)
+const fetchedTarget = ref(128) // Nilai fallback jika API gagal
 
 const startVisitorCounter = () => {
   if (hasAnimatedCount.value) return
   hasAnimatedCount.value = true
-  
-  const target = 50
+
+  const target = fetchedTarget.value
   const duration = 1500 // 1.5 seconds
   const startTime = performance.now()
-  
+
   const animate = (currentTime) => {
     const elapsed = currentTime - startTime
     const progress = Math.min(elapsed / duration, 1)
-    
+
     // Ease out quad animation
     const easeProgress = progress * (2 - progress)
-    
+
     visitorCount.value = Math.floor(easeProgress * target)
-    
+
     if (progress < 1) {
       requestAnimationFrame(animate)
     } else {
       visitorCount.value = target
     }
   }
-  
+
   requestAnimationFrame(animate)
 }
 
@@ -2480,6 +1915,67 @@ const contactVisible = ref(false)
 const contactRef = ref(null)
 const socialVisible = ref(false)
 const socialRef = ref(null)
+
+const reviewsVisible = ref(false)
+const reviewsRef = ref(null)
+
+const hoveredStar = ref(0)
+const newReview = ref({
+  name: '',
+  rating: 5,
+  comment: ''
+})
+
+const reviews = computed(() => store.reviews)
+
+const getInitial = (name) => {
+  if (!name) return '?'
+  return name.trim().charAt(0).toUpperCase()
+}
+
+const getAvatarColor = (name) => {
+  const colors = ['#dc2626', '#0B192C', '#1e3a8a', '#0d9488', '#b45309', '#6d28d9', '#be185d']
+  let hash = 0
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash)
+  }
+  const index = Math.abs(hash % colors.length)
+  return colors[index]
+}
+
+const showToast = ref(false)
+const toastMessage = ref('')
+const triggerToast = (message) => {
+  toastMessage.value = message
+  showToast.value = true
+  setTimeout(() => {
+    showToast.value = false
+  }, 4000)
+}
+
+const submitReview = () => {
+  if (!newReview.value.name.trim() || !newReview.value.comment.trim()) return
+
+  const now = new Date()
+  const months = [
+    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+  ]
+  const formattedDate = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`
+
+  store.addReview({
+    name: newReview.value.name.trim(),
+    rating: newReview.value.rating,
+    comment: newReview.value.comment.trim(),
+    date: formattedDate
+  })
+
+  newReview.value.name = ''
+  newReview.value.rating = 5
+  newReview.value.comment = ''
+
+  triggerToast('Terima kasih! Ulasan Anda berhasil dikirim.')
+}
 const anekaSolusiVisible = ref(false)
 const anekaSolusiRef = ref(null)
 
@@ -2490,40 +1986,21 @@ const officeVisible = ref(false)
 const officeRef = ref(null)
 const officeIndex = ref(0)
 
-const officeSlides = [
-  {
-    image: 'images/halamandepan.jpeg',
-    title: 'Halaman Depan Kantor',
-    desc: 'Area halaman dan akses masuk utama kantor pusat PT Agra Abhinaya Perkasa yang bersih, rapi, dan berlokasi strategis di Cikarang Timur.'
-  },
-  {
-    image: 'images/ruang meeting.jpeg',
-    title: 'Ruang Rapat & Kolaborasi',
-    desc: 'Ruang meeting yang representatif untuk berdiskusi dengan klien, membahas detail teknis gambar kerja, serta visualisasi rencana pembangunan.'
-  },
-  {
-    image: 'images/ruangadmin.jpeg',
-    title: 'Ruang Admin & Operasional',
-    desc: 'Area operasional administrasi untuk pengelolaan dokumen proyek, estimasi anggaran biaya (RAB), dan layanan pelanggan.'
-  },
-  {
-    image: 'images/ruangkoridor.jpeg',
-    title: 'Ruang Koridor Kantor',
-    desc: 'Koridor penghubung antar ruangan kerja di dalam kantor pusat kami yang bersih dan tertata rapi demi kenyamanan aktivitas harian.'
-  }
-]
+const officeSlides = computed(() => store.officeSlides)
 
-const currentOfficeSlide = computed(() => officeSlides[officeIndex.value])
+const currentOfficeSlide = computed(() => officeSlides.value[officeIndex.value] || { image: '', title: '', desc: '' })
 
 const prevOfficeSlide = () => {
-  officeIndex.value = (officeIndex.value - 1 + officeSlides.length) % officeSlides.length
+  if (!officeSlides.value.length) return
+  officeIndex.value = (officeIndex.value - 1 + officeSlides.value.length) % officeSlides.value.length
 }
 
 const nextOfficeSlide = () => {
-  officeIndex.value = (officeIndex.value + 1) % officeSlides.length
+  if (!officeSlides.value.length) return
+  officeIndex.value = (officeIndex.value + 1) % officeSlides.value.length
 }
 
-import { portfolioItems } from 'src/data/portfolio.js'
+const portfolioItems = computed(() => store.portfolioItems)
 
 const portfolioScrollContainer = ref(null)
 const canScrollLeft = ref(false)
@@ -2547,28 +2024,63 @@ const updateScrollState = () => {
   }
 }
 
-const showKonstruksiInCard = ref(false)
-const showBoronganInCard = ref(false)
-const showTukangHarianInCard = ref(false)
+const activeDetailCardIdx = ref(null)
+
+const getServiceBg = (idx) => {
+  const colors = ['bg-[#0B192C]', 'bg-[#4E201B]', 'bg-[#6B1D1D]']
+  return colors[idx % colors.length]
+}
+
+const getServiceLink = (service, idx) => {
+  if (service.link) return service.link
+  const title = (service.title || '').toLowerCase()
+  if (title.includes('konstruksi')) return '/konstruksi'
+  if (title.includes('borongan')) return '/borongan'
+  if (title.includes('harian') || title.includes('tukang')) return '/tukang-harian'
+  
+  if (idx === 0) return '/konstruksi'
+  if (idx === 1) return '/borongan'
+  if (idx === 2) return '/tukang-harian'
+  return '/konstruksi'
+}
+
+const navigateToServiceDetail = (service, idx) => {
+  activeDetailCardIdx.value = null
+  const targetLink = getServiceLink(service, idx)
+  router.push(targetLink)
+}
 
 const artisansSlide = ref('slide1')
-
 const artisansVisible = ref(false)
 const artisansRef = ref(null)
 
-const navigateToDetail = () => {
-  showBoronganInCard.value = false
-  router.push('/borongan')
-}
-
-const navigateToKonstruksiDetail = () => {
-  showKonstruksiInCard.value = false
-  router.push('/konstruksi')
-}
-
-const navigateToTukangHarianDetail = () => {
-  showTukangHarianInCard.value = false
-  router.push('/tukang-harian')
+const getIconForTitle = (title, customIcon) => {
+  if (customIcon && customIcon !== 'verified_user') return customIcon
+  if (!title) return 'verified_user'
+  
+  const t = title.toLowerCase()
+  if (t.includes('cepat') || t.includes('cermat') || t.includes('waktu') || t.includes('jadwal') || t.includes('durasi') || t.includes('kilat') || t.includes('segera') || t.includes('responsif')) {
+    return 'bolt'
+  }
+  if (t.includes('aman') || t.includes('keselamatan') || t.includes('k3') || t.includes('safety') || t.includes('lindung')) {
+    return 'health_and_safety'
+  }
+  if (t.includes('kualitas') || t.includes('mutu') || t.includes('sni') || t.includes('bahan') || t.includes('premium')) {
+    return 'workspace_premium'
+  }
+  if (t.includes('profesional') || t.includes('ahli') || t.includes('pengalaman') || t.includes('tim') || t.includes('teknik') || t.includes('kompeten')) {
+    return 'engineering'
+  }
+  if (t.includes('mitra') || t.includes('percaya') || t.includes('rekan') || t.includes('handal') || t.includes('komitmen')) {
+    return 'handshake'
+  }
+  if (t.includes('biaya') || t.includes('harga') || t.includes('murah') || t.includes('rab') || t.includes('anggaran') || t.includes('ekonomis') || t.includes('transparan')) {
+    return 'payments'
+  }
+  if (t.includes('desain') || t.includes('arsitek') || t.includes('gambar') || t.includes('perencanaan')) {
+    return 'architecture'
+  }
+  return 'verified_user'
 }
 
 const toggleStat = (index) => {
@@ -2576,6 +2088,23 @@ const toggleStat = (index) => {
 }
 
 onMounted(() => {
+  // Load database store from localStorage + defaults
+  store.initializeStore()
+
+  // Ambil data jumlah pengunjung asli dari API
+  fetch('https://countapi.mileshilliard.com/api/v1/hit/website-agraabhinayaperkasa-visitors')
+    .then((res) => res.json())
+    .then((data) => {
+      if (data && typeof data.value === 'number') {
+        // Kita tambahkan base offset 1200 agar website terlihat established/kredibel,
+        // tapi tetap bertambah secara dinamis setiap ada kunjungan baru.
+        fetchedTarget.value = 1200 + data.value
+      }
+    })
+    .catch((err) => {
+      console.error('Error fetching visitor count:', err)
+    })
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -2602,6 +2131,8 @@ onMounted(() => {
             officeVisible.value = true
           } else if (entry.target.id === 'statistik-kunjungan') {
             statsVisible.value = true
+          } else if (entry.target.id === 'ulasan-klien') {
+            reviewsVisible.value = true
           }
           observer.unobserve(entry.target)
         }
@@ -2642,6 +2173,9 @@ onMounted(() => {
   }
   if (statsRef.value) {
     observer.observe(statsRef.value)
+  }
+  if (reviewsRef.value) {
+    observer.observe(reviewsRef.value)
   }
 
   setTimeout(() => {

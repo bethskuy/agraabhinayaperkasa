@@ -108,7 +108,7 @@ export const portfolioItems = [
   },
   {
     id: 5,
-    title: 'Cut & Fill Data Center GTN JKT 02',
+    title: 'Cut & Fill Data Center GTN JKT 02 / subkon seishin',
     category: 'konstruksi',
     categoryLabel: 'Konstruksi',
     location: 'Cikarang, Bekasi',
@@ -130,7 +130,7 @@ export const portfolioItems = [
   },
   {
     id: 6,
-    title: 'Cutting File Data Center GTN JKT 02',
+    title: 'Cutting File Data Center GTN JKT 02 / subkon seishin',
     category: 'konstruksi',
     categoryLabel: 'Konstruksi',
     location: 'Cikarang, Bekasi',
