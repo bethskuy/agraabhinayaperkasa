@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.agraabhinayaperkasa.com/sitemap.xml
+Sitemap: https://agraabhinayaperkasa.vercel.app/sitemap.xml
