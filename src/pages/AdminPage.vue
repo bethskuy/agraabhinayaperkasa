@@ -1513,9 +1513,9 @@ const deleteClient = (id, name) => {
 }
 
 // Review Handlers
-const deleteReview = (id, name) => {
+const deleteReview = async (id, name) => {
   if (confirm(`Hapus ulasan dari "${name}"? Ulasan tidak akan muncul lagi di marquee.`)) {
-    store.deleteReview(id)
+    await store.deleteReview(id)
     triggerToast(`Ulasan dari "${name}" telah dihapus.`)
   }
 }

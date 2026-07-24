@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { portfolioItems as defaultPortfolioItems } from 'src/data/portfolio.js'
+import { supabase } from 'src/supabase.js'
 
 export const useWebsiteStore = defineStore('websiteStore', {
   state: () => ({
@@ -196,7 +197,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
     }
   }),
   actions: {
-    initializeStore() {
+    async initializeStore() {
       const stored = localStorage.getItem('website-agraabhinayaperkasa-store-data')
       if (stored) {
         try {
@@ -279,18 +280,18 @@ export const useWebsiteStore = defineStore('websiteStore', {
               },
               {
                 title: 'Borongan',
-                desc: 'Agra menyediakan solusi layanan borongan menyeluruh untuk kelancaran pembangunan dan renovasi besar agar prosesnya jadi mudah.',
+                desc: 'Layanan terima beres (RAB, material, tukang, pengawasan) untuk renovasi maupun bangun baru bergaransi resmi dari PT Agra.',
                 image: 'images/borongan.png',
                 detailTitle: 'Borongan',
-                detailDesc: 'Mengerjakan perbaikan bangunan secara borongan untuk rumah, kantor, ruko, apartemen dan lainnya. Termasuk survey + jasa + material + pengawasan.',
-                bulletsText: 'Harga Transparan\nBertanggung jawab\nBergaransi',
+                detailDesc: 'Solusi terintegrasi pembangunan dan renovasi menyeluruh dari PT Agra. Kami menangani seluruh siklus proyek mulai dari perancangan, pembelian material, pengerjaan tukang, hingga pengawasan ketat dengan garansi resmi.',
+                bulletsText: 'Sistem Borongan Penuh\nGaransi Konstruksi\nBahan Material Berkualitas',
                 link: '/borongan',
-                badge: 'Full Service',
-                activeBg: 'bg-[#4E201B]'
+                badge: '',
+                activeBg: 'bg-[#1E3E62]'
               },
               {
                 title: 'Tukang Harian',
-                desc: 'Agra menyediakan solusi perbaikan rumah terencana oleh tenaga tukang berpengalaman agar kamu dan keluarga dapat hidup nyaman.',
+                desc: 'Butuh perbaikan kecil cepat? Sewa tenaga tukang terampil harian (bocor, cat, keramik, listrik) flat rate transparan.',
                 image: 'images/harian.png',
                 detailTitle: 'Tukang Harian',
                 detailDesc: 'Penyediaan tenaga tukang terampil harian untuk perbaikan kecil/besar, perapihan dinding, kusen pintu, pipa bocor, instalasi listrik, dan lainnya.',
@@ -300,6 +301,21 @@ export const useWebsiteStore = defineStore('websiteStore', {
                 activeBg: 'bg-[#6B1D1D]'
               }
             ]
+          }
+
+          // Fetch reviews from Supabase
+          try {
+            const { data, error } = await supabase
+              .from('reviews')
+              .select('*')
+              .order('created_at', { ascending: false })
+            if (error) {
+              console.error('Error fetching reviews from Supabase:', error)
+            } else if (data && data.length) {
+              this.reviews = data
+            }
+          } catch (err) {
+            console.error('Failed to load reviews from Supabase:', err)
           }
           
           this.initialized = true
@@ -323,6 +339,21 @@ export const useWebsiteStore = defineStore('websiteStore', {
         } catch {
           // Ignore
         }
+      }
+
+      // Fetch reviews from Supabase
+      try {
+        const { data, error } = await supabase
+          .from('reviews')
+          .select('*')
+          .order('created_at', { ascending: false })
+        if (error) {
+          console.error('Error fetching reviews from Supabase:', error)
+        } else if (data && data.length) {
+          this.reviews = data
+        }
+      } catch (err) {
+        console.error('Failed to load reviews from Supabase:', err)
       }
 
       this.initialized = true
@@ -411,16 +442,50 @@ export const useWebsiteStore = defineStore('websiteStore', {
     },
 
     // Review actions
-    addReview(review) {
-      const newId = Date.now()
-      this.reviews.unshift({
-        id: newId,
-        ...review
-      })
+    async addReview(review) {
+      try {
+        const { error } = await supabase
+          .from('reviews')
+          .insert([
+            {
+              name: review.name,
+              rating: review.rating,
+              comment: review.comment,
+              date: review.date
+            }
+          ])
+        
+        if (error) {
+          console.error('Error inserting review into Supabase:', error)
+        } else {
+          const { data } = await supabase
+            .from('reviews')
+            .select('*')
+            .order('created_at', { ascending: false })
+          if (data && data.length) {
+            this.reviews = data
+          }
+        }
+      } catch (err) {
+        console.error('Failed to add review to Supabase:', err)
+      }
       this.saveStore()
     },
 
-    deleteReview(id) {
+    async deleteReview(id) {
+      if (typeof id === 'string' && id.includes('-')) {
+        try {
+          const { error } = await supabase
+            .from('reviews')
+            .delete()
+            .eq('id', id)
+          if (error) {
+            console.error('Error deleting review from Supabase:', error)
+          }
+        } catch (err) {
+          console.error('Failed to delete review from Supabase:', err)
+        }
+      }
       this.reviews = this.reviews.filter(r => r.id !== id)
       this.saveStore()
     }

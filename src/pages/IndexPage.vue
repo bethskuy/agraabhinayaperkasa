@@ -227,7 +227,7 @@
           </div>          <!-- Card Misi (Right Column - Vertical Floating Offset Cards) -->
           <div class="flex flex-col justify-center space-y-6">
             <span
-              class="inline-block px-3 py-1 bg-[#0B192C] text-white font-extrabold text-[10px] uppercase tracking-wider rounded-full self-start text-slate-800 mb-2"
+              class="inline-block px-3 py-1 bg-[#0B192C] text-white font-extrabold text-[10px] uppercase tracking-wider rounded-full self-start mb-2"
             >
               Misi Perusahaan
             </span>
@@ -586,12 +586,12 @@
                   </p>
 
                   <!-- Bullets list -->
-                  <ul 
+                  <ul
                     v-if="service.bulletsText"
                     class="text-white text-sm space-y-3.5 pl-5 list-disc font-semibold"
                   >
-                    <li 
-                      v-for="(bullet, bIdx) in service.bulletsText.split('\n').filter(b => b.trim())" 
+                    <li
+                      v-for="(bullet, bIdx) in service.bulletsText.split('\n').filter(b => b.trim())"
                       :key="bIdx"
                     >
                       {{ bullet }}
@@ -1542,9 +1542,11 @@
                 <!-- Submit Button -->
                 <button
                   type="submit"
-                  class="w-full inline-flex items-center justify-center px-6 py-3.5 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold text-sm rounded-xl hover:-translate-y-0.5 hover:shadow-lg hover:shadow-red-600/20 active:translate-y-0 transition-all duration-200 border-none cursor-pointer focus:outline-none"
+                  :disabled="isSubmitting"
+                  class="w-full inline-flex items-center justify-center px-6 py-3.5 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold text-sm rounded-xl hover:-translate-y-0.5 hover:shadow-lg hover:shadow-red-600/20 active:translate-y-0 transition-all duration-200 border-none cursor-pointer focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Kirim Ulasan
+                  <span v-if="isSubmitting">Mengirim...</span>
+                  <span v-else>Kirim Ulasan</span>
                 </button>
               </form>
             </div>
@@ -1553,91 +1555,72 @@
             <div class="lg:col-span-7 space-y-6 self-center w-full overflow-hidden">
               <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider px-2">Ulasan Terbaru</h4>
 
-              <!-- Infinite Marquee -->
+              <!-- Infinite Marquee wrapper with absolute buttons -->
               <div class="relative w-full overflow-hidden before:absolute before:left-0 before:top-0 before:bottom-0 before:w-12 before:bg-gradient-to-r before:from-slate-50 before:to-transparent before:z-10 after:absolute after:right-0 after:top-0 after:bottom-0 after:w-12 after:bg-gradient-to-l after:from-slate-50 after:to-transparent after:z-10 py-2">
-                <div class="flex flex-row items-stretch gap-6 animate-marquee hover:[animation-play-state:paused] py-4">
-                  <!-- Original List -->
-                  <div class="flex flex-row items-stretch gap-6 shrink-0">
-                    <div
-                      v-for="review in reviews"
-                      :key="review.id"
-                      class="w-[280px] sm:w-[320px] bg-white border border-slate-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-red-500/10 transition-all duration-300 select-none"
-                    >
-                      <div>
-                        <!-- Header: Avatar, Name & Rating -->
-                        <div class="flex items-center space-x-3.5 mb-4">
-                          <div
-                            class="w-10 h-10 rounded-full flex items-center justify-center text-white font-extrabold text-sm shadow-sm"
-                            :style="{ backgroundColor: getAvatarColor(review.name) }"
-                          >
-                            {{ getInitial(review.name) }}
-                          </div>
-                          <div>
-                            <h5 class="text-sm font-extrabold text-[#0B192C] leading-none mb-1">{{ review.name }}</h5>
-                            <div class="flex items-center space-x-0.5">
-                              <q-icon
-                                v-for="star in 5"
-                                :key="star"
-                                :name="star <= review.rating ? 'star' : 'star_border'"
-                                class="text-amber-400"
-                                size="14px"
-                              />
-                            </div>
+                <!-- Floating Left Button -->
+                <button
+                  type="button"
+                  @click="scrollReviewsLeft"
+                  class="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full border border-slate-200 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-red-650 hover:bg-white hover:border-red-500/30 flex items-center justify-center cursor-pointer transition-all duration-200 shadow-md hover:scale-105"
+                >
+                  <q-icon name="chevron_left" size="22px" />
+                </button>
+
+                <!-- Floating Right Button -->
+                <button
+                  type="button"
+                  @click="scrollReviewsRight"
+                  class="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full border border-slate-200 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-red-650 hover:bg-white hover:border-red-500/30 flex items-center justify-center cursor-pointer transition-all duration-200 shadow-md hover:scale-105"
+                >
+                  <q-icon name="chevron_right" size="22px" />
+                </button>
+
+                <div
+                  ref="reviewsScrollContainer"
+                  @mousedown="onMouseDown"
+                  @mouseleave="onMouseLeave"
+                  @mouseup="onMouseUp"
+                  @mousemove="onMouseMove"
+                  class="flex flex-row flex-nowrap no-wrap items-center gap-6 overflow-x-auto no-scrollbar py-4 px-2 cursor-grab active:cursor-grabbing select-none"
+                >
+                  <!-- Flat List of Review Cards -->
+                  <div
+                    v-for="(review, idx) in displayedReviews"
+                    :key="idx"
+                    class="w-[280px] sm:w-[320px] bg-white border border-slate-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-red-500/10 transition-all duration-300 select-none shrink-0"
+                  >
+                    <div>
+                      <!-- Header: Avatar, Name & Rating -->
+                      <div class="flex items-center space-x-3.5 mb-4">
+                        <div
+                          class="w-10 h-10 rounded-full flex items-center justify-center text-white font-extrabold text-sm shadow-sm"
+                          :style="{ backgroundColor: getAvatarColor(review.name) }"
+                        >
+                          {{ getInitial(review.name) }}
+                        </div>
+                        <div>
+                          <h5 class="text-sm font-extrabold text-[#0B192C] leading-none mb-1">{{ review.name }}</h5>
+                          <div class="flex items-center space-x-0.5">
+                            <q-icon
+                              v-for="star in 5"
+                              :key="star"
+                              :name="star <= review.rating ? 'star' : 'star_border'"
+                              class="text-amber-400"
+                              size="14px"
+                            />
                           </div>
                         </div>
-                        <!-- Review Text -->
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium line-clamp-4">
-                          "{{ review.comment }}"
-                        </p>
                       </div>
-                      <!-- Date -->
-                      <div class="text-[10px] font-bold text-slate-400 tracking-wider mt-4">
-                        {{ review.date }}
-                      </div>
+                      <!-- Review Text -->
+                      <p class="text-xs sm:text-sm text-slate-650 leading-relaxed font-semibold line-clamp-4 pointer-events-none">
+                        "{{ review.comment }}"
+                      </p>
+                    </div>
+                    <!-- Date -->
+                    <div class="text-[10px] font-bold text-slate-400 tracking-wider mt-4">
+                      {{ review.date }}
                     </div>
                   </div>
-
-                  <!-- Duplicated List -->
-                  <div class="flex flex-row items-stretch gap-6 shrink-0">
-                    <div
-                      v-for="review in reviews"
-                      :key="'dup-' + review.id"
-                      class="w-[280px] sm:w-[320px] bg-white border border-slate-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-red-500/10 transition-all duration-300 select-none"
-                    >
-                      <div>
-                        <!-- Header: Avatar, Name & Rating -->
-                        <div class="flex items-center space-x-3.5 mb-4">
-                          <div
-                            class="w-10 h-10 rounded-full flex items-center justify-center text-white font-extrabold text-sm shadow-sm"
-                            :style="{ backgroundColor: getAvatarColor(review.name) }"
-                          >
-                            {{ getInitial(review.name) }}
-                          </div>
-                          <div>
-                            <h5 class="text-sm font-extrabold text-[#0B192C] leading-none mb-1">{{ review.name }}</h5>
-                            <div class="flex items-center space-x-0.5">
-                              <q-icon
-                                v-for="star in 5"
-                                :key="star"
-                                :name="star <= review.rating ? 'star' : 'star_border'"
-                                class="text-amber-400"
-                                size="14px"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Review Text -->
-                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium line-clamp-4">
-                          "{{ review.comment }}"
-                        </p>
-                      </div>
-                      <!-- Date -->
-                      <div class="text-[10px] font-bold text-slate-400 tracking-wider mt-4">
-                        {{ review.date }}
-                      </div>
-                    </div>
-                  </div>
-
                 </div>
               </div>
             </div>
@@ -1852,7 +1835,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useWebsiteStore } from 'src/stores/websiteStore'
 
@@ -1927,6 +1910,13 @@ const newReview = ref({
 })
 
 const reviews = computed(() => store.reviews)
+const isSubmitting = ref(false)
+const displayedReviews = computed(() => {
+  const list = reviews.value || []
+  if (list.length === 0) return []
+  if (list.length < 3) return list
+  return [...list, ...list]
+})
 
 const getInitial = (name) => {
   if (!name) return '?'
@@ -1953,28 +1943,36 @@ const triggerToast = (message) => {
   }, 4000)
 }
 
-const submitReview = () => {
+const submitReview = async () => {
+  if (isSubmitting.value) return
   if (!newReview.value.name.trim() || !newReview.value.comment.trim()) return
 
-  const now = new Date()
-  const months = [
-    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-  ]
-  const formattedDate = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`
+  isSubmitting.value = true
+  try {
+    const now = new Date()
+    const months = [
+      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ]
+    const formattedDate = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`
 
-  store.addReview({
-    name: newReview.value.name.trim(),
-    rating: newReview.value.rating,
-    comment: newReview.value.comment.trim(),
-    date: formattedDate
-  })
+    await store.addReview({
+      name: newReview.value.name.trim(),
+      rating: newReview.value.rating,
+      comment: newReview.value.comment.trim(),
+      date: formattedDate
+    })
 
-  newReview.value.name = ''
-  newReview.value.rating = 5
-  newReview.value.comment = ''
+    newReview.value.name = ''
+    newReview.value.rating = 5
+    newReview.value.comment = ''
 
-  triggerToast('Terima kasih! Ulasan Anda berhasil dikirim.')
+    triggerToast('Terima kasih! Ulasan Anda berhasil dikirim.')
+  } catch (err) {
+    console.error('Submit review error:', err)
+  } finally {
+    isSubmitting.value = false
+  }
 }
 const anekaSolusiVisible = ref(false)
 const anekaSolusiRef = ref(null)
@@ -2005,6 +2003,87 @@ const portfolioItems = computed(() => store.portfolioItems)
 const portfolioScrollContainer = ref(null)
 const canScrollLeft = ref(false)
 const canScrollRight = ref(true)
+
+const reviewsScrollContainer = ref(null)
+const isReviewsHovered = ref(false)
+let reviewsAutoScrollInterval = null
+let reviewsResumeTimeout = null
+
+// Drag-to-scroll state
+let isDown = false
+let startX = 0
+let scrollLeftStart = 0
+
+const onMouseDown = (e) => {
+  isDown = true
+  startX = e.pageX - reviewsScrollContainer.value.offsetLeft
+  scrollLeftStart = reviewsScrollContainer.value.scrollLeft
+  isReviewsHovered.value = true
+}
+
+const onMouseLeave = () => {
+  isDown = false
+  if (!reviewsResumeTimeout) {
+    isReviewsHovered.value = false
+  }
+}
+
+const onMouseUp = () => {
+  isDown = false
+  pauseAutoScrollTemporarily()
+}
+
+const onMouseMove = (e) => {
+  if (!isDown) return
+  e.preventDefault()
+  const x = e.pageX - reviewsScrollContainer.value.offsetLeft
+  const walk = (x - startX) * 1.5
+  reviewsScrollContainer.value.scrollLeft = scrollLeftStart - walk
+}
+
+const startReviewsAutoScroll = () => {
+  stopReviewsAutoScroll()
+  reviewsAutoScrollInterval = setInterval(() => {
+    if (!reviewsScrollContainer.value) return
+    if (isReviewsHovered.value || isDown) return
+
+    const container = reviewsScrollContainer.value
+    container.scrollLeft += 1
+
+    if (container.scrollLeft >= (container.scrollWidth / 2)) {
+      container.scrollLeft = 0
+    }
+  }, 25)
+}
+
+const stopReviewsAutoScroll = () => {
+  if (reviewsAutoScrollInterval) {
+    clearInterval(reviewsAutoScrollInterval)
+    reviewsAutoScrollInterval = null
+  }
+}
+
+const pauseAutoScrollTemporarily = () => {
+  isReviewsHovered.value = true
+  clearTimeout(reviewsResumeTimeout)
+  reviewsResumeTimeout = setTimeout(() => {
+    isReviewsHovered.value = false
+  }, 4000)
+}
+
+const scrollReviewsLeft = () => {
+  if (reviewsScrollContainer.value) {
+    reviewsScrollContainer.value.scrollBy({ left: -340, behavior: 'smooth' })
+    pauseAutoScrollTemporarily()
+  }
+}
+
+const scrollReviewsRight = () => {
+  if (reviewsScrollContainer.value) {
+    reviewsScrollContainer.value.scrollBy({ left: 340, behavior: 'smooth' })
+    pauseAutoScrollTemporarily()
+  }
+}
 
 const scrollPortfolioLeft = () => {
   if (portfolioScrollContainer.value) {
@@ -2037,7 +2116,7 @@ const getServiceLink = (service, idx) => {
   if (title.includes('konstruksi')) return '/konstruksi'
   if (title.includes('borongan')) return '/borongan'
   if (title.includes('harian') || title.includes('tukang')) return '/tukang-harian'
-  
+
   if (idx === 0) return '/konstruksi'
   if (idx === 1) return '/borongan'
   if (idx === 2) return '/tukang-harian'
@@ -2057,7 +2136,7 @@ const artisansRef = ref(null)
 const getIconForTitle = (title, customIcon) => {
   if (customIcon && customIcon !== 'verified_user') return customIcon
   if (!title) return 'verified_user'
-  
+
   const t = title.toLowerCase()
   if (t.includes('cepat') || t.includes('cermat') || t.includes('waktu') || t.includes('jadwal') || t.includes('durasi') || t.includes('kilat') || t.includes('segera') || t.includes('responsif')) {
     return 'bolt'
@@ -2181,6 +2260,13 @@ onMounted(() => {
   setTimeout(() => {
     updateScrollState()
   }, 300)
+
+  startReviewsAutoScroll()
+})
+
+onUnmounted(() => {
+  stopReviewsAutoScroll()
+  clearTimeout(reviewsResumeTimeout)
 })
 </script>
 
