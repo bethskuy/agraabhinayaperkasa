@@ -863,14 +863,31 @@
               </div>
 
               <div>
-                <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Path Logo Gambar</label>
-                <input
-                  v-model="clientForm.image"
-                  type="text"
-                  required
-                  placeholder="Contoh: images/semenindo.png..."
-                  class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
-                />
+                <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Logo Gambar / Upload Foto</label>
+                <div class="flex items-center space-x-3">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="client-file-upload"
+                    @change="handleClientUpload($event)"
+                    class="hidden"
+                  />
+                  <label
+                    for="client-file-upload"
+                    class="px-4 py-3.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-350 text-slate-700 rounded-xl text-xs font-extrabold flex items-center space-x-2 cursor-pointer transition-all duration-200 shrink-0 select-none"
+                  >
+                    <q-icon name="cloud_upload" size="18px" />
+                    <span>Upload Logo</span>
+                  </label>
+                  
+                  <input
+                    v-model="clientForm.image"
+                    type="text"
+                    required
+                    placeholder="Atau masukkan path / data base64..."
+                    class="flex-1 px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
+                  />
+                </div>
               </div>
 
               <div class="md:col-span-2 flex justify-end">
@@ -917,7 +934,8 @@
 
         <!-- TAB PANEL: ULASAN MODERASI -->
         <div v-if="activeTab === 'ulasan'" class="space-y-6">
-          <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
+          <!-- Desktop Table Layout (Visible on medium screens and up) -->
+          <div class="hidden md:block bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
             <div class="overflow-x-auto">
               <table class="w-full border-collapse text-left text-xs font-medium text-slate-700">
                 <thead>
@@ -947,7 +965,7 @@
                     <td class="p-4 sm:p-5 text-right">
                       <button
                         @click="deleteReview(review.id, review.name)"
-                        class="px-3 py-1.5 bg-red-50 hover:bg-red-600 hover:text-white text-red-600 border border-red-100 rounded-lg text-[10px] font-bold cursor-pointer transition-colors"
+                        class="px-3 py-1.5 bg-red-50 hover:bg-red-650 hover:text-white text-red-600 border border-red-100 rounded-lg text-[10px] font-bold cursor-pointer transition-colors"
                       >
                         Hapus Ulasan
                       </button>
@@ -958,6 +976,49 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          <!-- Mobile Card Layout (Visible only on mobile/tablet) -->
+          <div class="block md:hidden space-y-4">
+            <div v-for="review in store.reviews" :key="review.id" class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3 relative">
+              <!-- Header: Name & Rating -->
+              <div class="flex items-start justify-between">
+                <div>
+                  <h5 class="text-sm font-extrabold text-[#0B192C] leading-none mb-1.5">{{ review.name }}</h5>
+                  <div class="text-[10px] font-bold text-slate-400 tracking-wider">
+                    {{ review.date }}
+                  </div>
+                </div>
+                <!-- Stars -->
+                <div class="flex items-center space-x-0.5 text-amber-500 shrink-0">
+                  <q-icon
+                    v-for="star in 5"
+                    :key="star"
+                    :name="star <= review.rating ? 'star' : 'star_border'"
+                    size="12px"
+                  />
+                </div>
+              </div>
+              
+              <!-- Review Text -->
+              <p class="text-xs text-slate-600 leading-relaxed font-semibold">
+                "{{ review.comment }}"
+              </p>
+
+              <!-- Footer Actions -->
+              <div class="flex justify-end pt-3 border-t border-slate-100">
+                <button
+                  @click="deleteReview(review.id, review.name)"
+                  class="px-3.5 py-2 bg-red-50 hover:bg-red-600 hover:text-white text-red-600 border border-red-100 rounded-xl text-[10px] font-extrabold cursor-pointer transition-all duration-200 flex items-center space-x-1"
+                >
+                  <q-icon name="delete" size="14px" />
+                  <span>Hapus Ulasan</span>
+                </button>
+              </div>
+            </div>
+            <div v-if="store.reviews.length === 0" class="p-8 text-center text-slate-400 font-semibold bg-white border border-slate-200 rounded-2xl">
+              Belum ada ulasan masuk.
             </div>
           </div>
         </div>
@@ -1362,6 +1423,16 @@ const clientForm = ref({
   image: ''
 })
 
+const handleClientUpload = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    clientForm.value.image = e.target.result
+  }
+  reader.readAsDataURL(file)
+}
+
 // Lifecycle Load
 onMounted(() => {
   store.initializeStore()
@@ -1492,10 +1563,10 @@ const deleteProject = (id, title) => {
 }
 
 // Client Handlers
-const submitClient = () => {
+const submitClient = async () => {
   if (!clientForm.value.name.trim() || !clientForm.value.image.trim()) return
 
-  store.addClient({
+  await store.addClient({
     name: clientForm.value.name.trim(),
     image: clientForm.value.image.trim()
   })
@@ -1505,9 +1576,9 @@ const submitClient = () => {
   clientForm.value.image = ''
 }
 
-const deleteClient = (id, name) => {
+const deleteClient = async (id, name) => {
   if (confirm(`Hapus logo klien/partner "${name}"?`)) {
-    store.deleteClient(id)
+    await store.deleteClient(id)
     triggerToast(`Logo "${name}" telah dihapus.`)
   }
 }

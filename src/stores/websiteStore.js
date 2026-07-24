@@ -2,6 +2,18 @@ import { defineStore } from 'pinia'
 import { portfolioItems as defaultPortfolioItems } from 'src/data/portfolio.js'
 import { supabase } from 'src/supabase.js'
 
+const defaultClients = [
+  { id: 1, name: 'PT Brantas Abipraya', image: 'images/abipraya.png' },
+  { id: 2, name: 'APG', image: 'images/apg.png' },
+  { id: 3, name: 'Lippo Group', image: 'images/lippo.png' },
+  { id: 4, name: 'AGC Group', image: 'images/agc.png' },
+  { id: 5, name: 'KAI Properti', image: 'images/kaiproperti.png' },
+  { id: 6, name: 'Meiji', image: 'images/meiji.png' },
+  { id: 7, name: 'NIE', image: 'images/nie.png' },
+  { id: 8, name: 'PT Mastertama Adhi Propertindo', image: 'images/mastertama.png' },
+  { id: 9, name: 'Seishin', image: 'images/seishin.png' }
+]
+
 export const useWebsiteStore = defineStore('websiteStore', {
   state: () => ({
     initialized: false,
@@ -35,17 +47,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
       ]
     },
     portfolioItems: [],
-    clients: [
-      { id: 1, name: 'PT Brantas Abipraya', image: 'images/abipraya.png' },
-      { id: 2, name: 'APG', image: 'images/apg.png' },
-      { id: 3, name: 'Lippo Group', image: 'images/lippo.png' },
-      { id: 4, name: 'AGC Group', image: 'images/agc.png' },
-      { id: 5, name: 'KAI Properti', image: 'images/kaiproperti.png' },
-      { id: 6, name: 'Meiji', image: 'images/meiji.png' },
-      { id: 7, name: 'NIE', image: 'images/nie.png' },
-      { id: 8, name: 'PT Mastertama Adhi Propertindo', image: 'images/mastertama.png' },
-      { id: 9, name: 'Seishin', image: 'images/seishin.png' }
-    ],
+    clients: [...defaultClients],
     reviews: [
       {
         id: 1,
@@ -199,9 +201,13 @@ export const useWebsiteStore = defineStore('websiteStore', {
   actions: {
     async initializeStore() {
       const stored = localStorage.getItem('website-agraabhinayaperkasa-store-data')
+      let localClients = []
       if (stored) {
         try {
           const parsed = JSON.parse(stored)
+          if (parsed && parsed.clients && parsed.clients.length) {
+            localClients = parsed.clients
+          }
           this.heroSlides = parsed.heroSlides || this.heroSlides
           this.visiMisi = parsed.visiMisi || this.visiMisi
           this.portfolioItems = parsed.portfolioItems || this.portfolioItems
@@ -317,7 +323,83 @@ export const useWebsiteStore = defineStore('websiteStore', {
           } catch (err) {
             console.error('Failed to load reviews from Supabase:', err)
           }
+
+          // Fetch and migrate clients from Supabase
+          try {
+            const { data, error } = await supabase
+              .from('clients')
+              .select('*')
+              .order('created_at', { ascending: true })
+            if (error) {
+              console.error('Error fetching clients from Supabase:', error)
+            } else {
+              const wrongNames = ['PT Waskita Karya', 'PT Wijaya Karya', 'PT Adhi Karya']
+              const rawDbClients = data || []
+              
+              // Filter out wrong names and any default client names
+              const dbClients = rawDbClients.filter(c => {
+                const isWrong = wrongNames.includes(c.name)
+                const isDefault = defaultClients.some(d => d.name.toLowerCase() === c.name.toLowerCase())
+                return !isWrong && !isDefault
+              })
+              
+              // Trigger background delete for any wrong or duplicate default clients in Supabase
+              const toDelete = rawDbClients.filter(c => {
+                return wrongNames.includes(c.name) || defaultClients.some(d => d.name.toLowerCase() === c.name.toLowerCase())
+              })
+              if (toDelete.length > 0) {
+                const deleteIds = toDelete.map(c => c.id)
+                supabase.from('clients').delete().in('id', deleteIds).then(() => {})
+              }
+
+              // Filter out default clients from local storage list
+              const userAddedLocal = localClients.filter(c => {
+                const isDefaultId = Number(c.id) >= 1 && Number(c.id) <= 9
+                const isDefaultName = defaultClients.some(d => d.name.toLowerCase() === c.name.toLowerCase())
+                const isUuid = typeof c.id === 'string' && c.id.includes('-')
+                const isWrongName = wrongNames.includes(c.name)
+                return !isDefaultId && !isDefaultName && !isUuid && !isWrongName
+              })
+
+              // Find local clients not yet in Supabase database
+              const pendingUploads = userAddedLocal.filter(localC => {
+                return !dbClients.some(dbC => dbC.name.toLowerCase() === localC.name.toLowerCase())
+              })
+
+              if (pendingUploads.length > 0) {
+                console.log('Migrating local clients to Supabase:', pendingUploads)
+                for (const client of pendingUploads) {
+                  try {
+                    await supabase
+                      .from('clients')
+                      .insert([{ name: client.name, image: client.image }])
+                  } catch (uploadErr) {
+                    console.error('Failed to auto-migrate client:', client.name, uploadErr)
+                  }
+                }
+                const { data: refreshedData } = await supabase
+                  .from('clients')
+                  .select('*')
+                  .order('created_at', { ascending: true })
+                if (refreshedData) {
+                  const cleanRefreshed = refreshedData.filter(c => {
+                    const isWrong = wrongNames.includes(c.name)
+                    const isDefault = defaultClients.some(d => d.name.toLowerCase() === c.name.toLowerCase())
+                    return !isWrong && !isDefault
+                  })
+                  this.clients = [...defaultClients, ...cleanRefreshed]
+                } else {
+                  this.clients = [...defaultClients, ...dbClients, ...pendingUploads]
+                }
+              } else {
+                this.clients = [...defaultClients, ...dbClients]
+              }
+            }
+          } catch (err) {
+            console.error('Failed to load clients from Supabase:', err)
+          }
           
+          this.saveStore()
           this.initialized = true
           return
         } catch {
@@ -354,6 +436,81 @@ export const useWebsiteStore = defineStore('websiteStore', {
         }
       } catch (err) {
         console.error('Failed to load reviews from Supabase:', err)
+      }
+
+      // Fetch and migrate clients from Supabase
+      try {
+        const { data, error } = await supabase
+          .from('clients')
+          .select('*')
+          .order('created_at', { ascending: true })
+        if (error) {
+          console.error('Error fetching clients from Supabase:', error)
+        } else {
+          const wrongNames = ['PT Waskita Karya', 'PT Wijaya Karya', 'PT Adhi Karya']
+          const rawDbClients = data || []
+          
+          // Filter out wrong names and any default client names
+          const dbClients = rawDbClients.filter(c => {
+            const isWrong = wrongNames.includes(c.name)
+            const isDefault = defaultClients.some(d => d.name.toLowerCase() === c.name.toLowerCase())
+            return !isWrong && !isDefault
+          })
+          
+          // Trigger background delete for any wrong or duplicate default clients in Supabase
+          const toDelete = rawDbClients.filter(c => {
+            return wrongNames.includes(c.name) || defaultClients.some(d => d.name.toLowerCase() === c.name.toLowerCase())
+          })
+          if (toDelete.length > 0) {
+            const deleteIds = toDelete.map(c => c.id)
+            supabase.from('clients').delete().in('id', deleteIds).then(() => {})
+          }
+
+          // Filter out default clients from local storage list
+          const userAddedLocal = localClients.filter(c => {
+            const isDefaultId = Number(c.id) >= 1 && Number(c.id) <= 9
+            const isDefaultName = defaultClients.some(d => d.name.toLowerCase() === c.name.toLowerCase())
+            const isUuid = typeof c.id === 'string' && c.id.includes('-')
+            const isWrongName = wrongNames.includes(c.name)
+            return !isDefaultId && !isDefaultName && !isUuid && !isWrongName
+          })
+
+          // Find local clients not yet in Supabase database
+          const pendingUploads = userAddedLocal.filter(localC => {
+            return !dbClients.some(dbC => dbC.name.toLowerCase() === localC.name.toLowerCase())
+          })
+
+          if (pendingUploads.length > 0) {
+            console.log('Migrating local clients to Supabase:', pendingUploads)
+            for (const client of pendingUploads) {
+              try {
+                await supabase
+                  .from('clients')
+                  .insert([{ name: client.name, image: client.image }])
+              } catch (uploadErr) {
+                console.error('Failed to auto-migrate client:', client.name, uploadErr)
+              }
+            }
+            const { data: refreshedData } = await supabase
+              .from('clients')
+              .select('*')
+              .order('created_at', { ascending: true })
+            if (refreshedData) {
+              const cleanRefreshed = refreshedData.filter(c => {
+                const isWrong = wrongNames.includes(c.name)
+                const isDefault = defaultClients.some(d => d.name.toLowerCase() === c.name.toLowerCase())
+                return !isWrong && !isDefault
+              })
+              this.clients = [...defaultClients, ...cleanRefreshed]
+            } else {
+              this.clients = [...defaultClients, ...dbClients, ...pendingUploads]
+            }
+          } else {
+            this.clients = [...defaultClients, ...dbClients]
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load clients from Supabase:', err)
       }
 
       this.initialized = true
@@ -425,18 +582,48 @@ export const useWebsiteStore = defineStore('websiteStore', {
     },
 
     // Client actions
-    addClient(client) {
-      const newId = this.clients.length
-        ? Math.max(...this.clients.map(c => c.id)) + 1
-        : 1
-      this.clients.push({
-        id: newId,
-        ...client
-      })
+    async addClient(client) {
+      try {
+        const { error } = await supabase
+          .from('clients')
+          .insert([
+            {
+              name: client.name,
+              image: client.image
+            }
+          ])
+        
+        if (error) {
+          console.error('Error inserting client into Supabase:', error)
+        } else {
+          const { data } = await supabase
+            .from('clients')
+            .select('*')
+            .order('created_at', { ascending: true })
+          if (data && data.length) {
+            this.clients = [...defaultClients, ...data]
+          }
+        }
+      } catch (err) {
+        console.error('Failed to add client to Supabase:', err)
+      }
       this.saveStore()
     },
 
-    deleteClient(id) {
+    async deleteClient(id) {
+      if (typeof id === 'string' && id.includes('-')) {
+        try {
+          const { error } = await supabase
+            .from('clients')
+            .delete()
+            .eq('id', id)
+          if (error) {
+            console.error('Error deleting client from Supabase:', error)
+          }
+        } catch (err) {
+          console.error('Failed to delete client from Supabase:', err)
+        }
+      }
       this.clients = this.clients.filter(c => c.id !== id)
       this.saveStore()
     },
