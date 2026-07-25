@@ -278,23 +278,6 @@
       </div>
     </section>
 
-    <!-- Visitor Counter Showcase Section -->
-    <section
-      ref="statsRef"
-      id="statistik-kunjungan"
-      class="bg-slate-50 py-12 border-b border-slate-100 relative overflow-hidden"
-    >
-      <div class="max-w-6xl mx-auto px-6 relative z-10 flex justify-center">
-        <div class="bg-white rounded-[32px] p-8 md:p-10 shadow-lg border border-slate-100/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-center text-center max-w-sm w-full">
-          <span class="text-red-650 font-extrabold text-5xl md:text-6xl leading-none">
-            {{ visitorCount }}+
-          </span>
-          <span class="text-[#0B192C] font-extrabold text-sm sm:text-base mt-4 uppercase tracking-wider">
-            Telah dikunjungi orang hari ini
-          </span>
-        </div>
-      </div>
-    </section>
 
     <!-- Kantor Kami Section -->
     <section
@@ -719,346 +702,48 @@
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 !text-slate-800">
-              <!-- Item 1: Kebocoran -->
               <div
+                v-for="(sol, idx) in store.solutions"
+                :key="sol.id"
                 :class="[
-                  'bg-white rounded-3xl p-6 shadow-lg hover:shadow-blue-200/60 hover:shadow-2xl hover:-translate-y-4 hover:scale-[1.03] relative overflow-hidden group cursor-pointer transition-all duration-700',
-                  anekaSolusiVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10',
+                  'bg-white rounded-3xl p-6 shadow-lg hover:shadow-2xl hover:-translate-y-4 hover:scale-[1.03] relative overflow-hidden group cursor-pointer transition-all duration-700',
+                  getColorClasses(sol.color).hoverShadow,
+                  anekaSolusiVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 ]"
-                style="transition-delay: 0ms"
+                :style="{ transitionDelay: (idx * 80) + 'ms' }"
               >
+                <!-- Decorative Top-Right Gradient -->
                 <div
-                  class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-50 to-transparent rounded-bl-full opacity-70"
+                  :class="[
+                    'absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl rounded-bl-full opacity-70',
+                    getColorClasses(sol.color).decorBg
+                  ]"
                 ></div>
+                
                 <div class="relative z-10">
+                  <!-- Icon Container -->
                   <div
-                    class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
+                    :class="[
+                      'w-12 h-12 bg-gradient-to-br rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110',
+                      getColorClasses(sol.color).iconGrad
+                    ]"
                   >
                     <q-icon
-                      name="plumbing"
+                      :name="sol.icon"
                       size="28px"
                       class="text-white"
                     />
                   </div>
-                  <h3
-                    class="text-base font-extrabold text-slate-800 mb-2"
-                  >
-                    Kebocoran
+                  
+                  <h3 class="text-base font-extrabold text-slate-800 mb-2">
+                    {{ sol.name }}
                   </h3>
-                  <p
-                    class="text-sm text-slate-600"
-                  >
-                    Jaga Rumah Bebas Bocor
+                  <p class="text-sm text-slate-600">
+                    {{ sol.description }}
                   </p>
                 </div>
-                <div class="absolute bottom-0 left-0 w-full h-12 opacity-20">
-                  <div class="flex flex-wrap gap-2 p-3">
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 2: Cat -->
-              <div
-                :class="[
-                  'bg-white rounded-3xl p-6 shadow-lg hover:shadow-red-200/60 hover:shadow-2xl hover:-translate-y-4 hover:scale-[1.03] relative overflow-hidden group cursor-pointer transition-all duration-700',
-                  anekaSolusiVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10',
-                ]"
-                style="transition-delay: 80ms"
-              >
-                <div
-                  class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-red-50 to-transparent rounded-bl-full opacity-70"
-                ></div>
-                <div class="relative z-10">
-                  <div
-                    class="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
-                  >
-                    <q-icon
-                      name="format_paint"
-                      size="28px"
-                      class="text-white"
-                    />
-                  </div>
-                  <h3
-                    class="text-base font-extrabold text-slate-800 mb-2"
-                  >
-                    Cat
-                  </h3>
-                  <p
-                    class="text-sm text-slate-600"
-                  >
-                    Warnai Rumahmu
-                  </p>
-                </div>
-                <div class="absolute bottom-0 left-0 w-full h-12 opacity-20">
-                  <div class="flex flex-wrap gap-2 p-3">
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 3: Keramik -->
-              <div
-                :class="[
-                  'bg-white rounded-3xl p-6 shadow-lg hover:shadow-orange-200/60 hover:shadow-2xl hover:-translate-y-4 hover:scale-[1.03] relative overflow-hidden group cursor-pointer transition-all duration-700',
-                  anekaSolusiVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10',
-                ]"
-                style="transition-delay: 160ms"
-              >
-                <div
-                  class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-orange-50 to-transparent rounded-bl-full opacity-70"
-                ></div>
-                <div class="relative z-10">
-                  <div
-                    class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
-                  >
-                    <q-icon
-                      name="grid_view"
-                      size="28px"
-                      class="text-white"
-                    />
-                  </div>
-                  <h3
-                    class="text-base font-extrabold text-slate-800 mb-2"
-                  >
-                    Keramik
-                  </h3>
-                  <p
-                    class="text-sm text-slate-600"
-                  >
-                    Percantik Lantai dan Dindingmu
-                  </p>
-                </div>
-                <div class="absolute bottom-0 left-0 w-full h-12 opacity-20">
-                  <div class="flex flex-wrap gap-2 p-3">
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 4: Listrik -->
-              <div
-                :class="[
-                  'bg-white rounded-3xl p-6 shadow-lg hover:shadow-green-200/60 hover:shadow-2xl hover:-translate-y-4 hover:scale-[1.03] relative overflow-hidden group cursor-pointer transition-all duration-700',
-                  anekaSolusiVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10',
-                ]"
-                style="transition-delay: 240ms"
-              >
-                <div
-                  class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-green-50 to-transparent rounded-bl-full opacity-70"
-                ></div>
-                <div class="relative z-10">
-                  <div
-                    class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
-                  >
-                    <q-icon
-                      name="electrical_services"
-                      size="28px"
-                      class="text-white"
-                    />
-                  </div>
-                  <h3
-                    class="text-base font-extrabold text-slate-800 mb-2"
-                  >
-                    Listrik
-                  </h3>
-                  <p
-                    class="text-sm text-slate-600"
-                  >
-                    Rumah Terang, Hati Senang
-                  </p>
-                </div>
-                <div class="absolute bottom-0 left-0 w-full h-12 opacity-20">
-                  <div class="flex flex-wrap gap-2 p-3">
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 5: Pipa -->
-              <div
-                :class="[
-                  'bg-white rounded-3xl p-6 shadow-lg hover:shadow-cyan-200/60 hover:shadow-2xl hover:-translate-y-4 hover:scale-[1.03] relative overflow-hidden group cursor-pointer transition-all duration-700',
-                  anekaSolusiVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10',
-                ]"
-                style="transition-delay: 80ms"
-              >
-                <div
-                  class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-cyan-50 to-transparent rounded-bl-full opacity-70"
-                ></div>
-                <div class="relative z-10">
-                  <div
-                    class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
-                  >
-                    <q-icon
-                      name="water"
-                      size="28px"
-                      class="text-white"
-                    />
-                  </div>
-                  <h3
-                    class="text-base font-extrabold text-slate-800 mb-2"
-                  >
-                    Pipa
-                  </h3>
-                  <p
-                    class="text-sm text-slate-600"
-                  >
-                    Air Mengalir Lancar
-                  </p>
-                </div>
-                <div class="absolute bottom-0 left-0 w-full h-12 opacity-20">
-                  <div class="flex flex-wrap gap-2 p-3">
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 6: Toilet -->
-              <div
-                :class="[
-                  'bg-white rounded-3xl p-6 shadow-lg hover:shadow-teal-200/60 hover:shadow-2xl hover:-translate-y-4 hover:scale-[1.03] relative overflow-hidden group cursor-pointer transition-all duration-700',
-                  anekaSolusiVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10',
-                ]"
-                style="transition-delay: 160ms"
-              >
-                <div
-                  class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-teal-50 to-transparent rounded-bl-full opacity-70"
-                ></div>
-                <div class="relative z-10">
-                  <div
-                    class="w-12 h-12 bg-gradient-to-br from-teal-400 to-teal-600 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
-                  >
-                    <q-icon
-                      name="bathroom"
-                      size="28px"
-                      class="text-white"
-                    />
-                  </div>
-                  <h3
-                    class="text-base font-extrabold text-slate-800 mb-2"
-                  >
-                    Toilet
-                  </h3>
-                  <p
-                    class="text-sm text-slate-600"
-                  >
-                    Kamar Mandi Bersih dan Nyaman
-                  </p>
-                </div>
-                <div class="absolute bottom-0 left-0 w-full h-12 opacity-20">
-                  <div class="flex flex-wrap gap-2 p-3">
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 7: Konsultan -->
-              <div
-                :class="[
-                  'bg-white rounded-3xl p-6 shadow-lg hover:shadow-amber-200/60 hover:shadow-2xl hover:-translate-y-4 hover:scale-[1.03] relative overflow-hidden group cursor-pointer transition-all duration-700',
-                  anekaSolusiVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10',
-                ]"
-                style="transition-delay: 240ms"
-              >
-                <div
-                  class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-amber-50 to-transparent rounded-bl-full opacity-70"
-                ></div>
-                <div class="relative z-10">
-                  <div
-                    class="w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
-                  >
-                    <q-icon
-                      name="support_agent"
-                      size="28px"
-                      class="text-white"
-                    />
-                  </div>
-                  <h3
-                    class="text-base font-extrabold text-slate-800 mb-2"
-                  >
-                    Konsultan
-                  </h3>
-                  <p
-                    class="text-sm text-slate-600"
-                  >
-                    Bantu Rencanakan Proyekmu
-                  </p>
-                </div>
-                <div class="absolute bottom-0 left-0 w-full h-12 opacity-20">
-                  <div class="flex flex-wrap gap-2 p-3">
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 8: Plafon -->
-              <div
-                :class="[
-                  'bg-white rounded-3xl p-6 shadow-lg hover:shadow-indigo-200/60 hover:shadow-2xl hover:-translate-y-4 hover:scale-[1.03] relative overflow-hidden group cursor-pointer transition-all duration-700',
-                  anekaSolusiVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10',
-                ]"
-                style="transition-delay: 320ms"
-              >
-                <div
-                  class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-indigo-50 to-transparent rounded-bl-full opacity-70"
-                ></div>
-                <div class="relative z-10">
-                  <div
-                    class="w-12 h-12 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
-                  >
-                    <q-icon
-                      name="roofing"
-                      size="28px"
-                      class="text-white"
-                    />
-                  </div>
-                  <h3
-                    class="text-base font-extrabold text-slate-800 mb-2"
-                  >
-                    Plafon
-                  </h3>
-                  <p
-                    class="text-sm text-slate-600"
-                  >
-                    Kebutuhan Langit-langit Rumahmu
-                  </p>
-                </div>
+                
+                <!-- Bottom Decorative Dots -->
                 <div class="absolute bottom-0 left-0 w-full h-12 opacity-20">
                   <div class="flex flex-wrap gap-2 p-3">
                     <div class="w-3 h-3 bg-red-400 rounded-full"></div>
@@ -1202,9 +887,12 @@
                 height="380px"
                 class="rounded-3xl shadow-2xl border border-slate-100 overflow-hidden bg-white artisan-carousel"
               >
-                <q-carousel-slide name="slide1" img-src="images/proses-ketat.png" />
-                <q-carousel-slide name="slide2" img-src="images/hasil-rapih.png" />
-                <q-carousel-slide name="slide3" img-src="images/tukang-sertifikat.png" />
+                <q-carousel-slide
+                  v-for="(slideImg, sIdx) in store.artisansSlides"
+                  :key="sIdx"
+                  :name="'slide' + (sIdx + 1)"
+                  :img-src="slideImg"
+                />
               </q-carousel>
             </div>
 
@@ -1212,27 +900,30 @@
             <div class="space-y-6 text-left">
               <div>
                 <p class="text-xs font-bold text-red-600 uppercase tracking-widest mb-3">
-                  Tenaga Ahli Mitra Agra
+                  {{ store.artisansSubHeader }}
                 </p>
                 <h2
                   class="font-heading text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight m-0"
                 >
-                  Tukang Terkualifikasi & Berpengalaman
+                  {{ store.artisansTitle }}
                 </h2>
                 <p class="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed font-medium">
-                  Semua proyek pembangunan, renovasi, hingga perbaikan kecil harian dikerjakan oleh
-                  mitra tukang terlatih PT Agra Abhinaya Perkasa yang memiliki keahlian
-                  tersertifikasi di bidangnya masing-masing.
+                  {{ store.artisansDesc }}
                 </p>
               </div>
 
               <!-- List of Core Values -->
               <div class="space-y-4 pt-2">
-                <div class="flex flex-row flex-nowrap items-start space-x-3.5">
+                <div
+                  v-for="(point, pIdx) in store.artisansPoints"
+                  :key="pIdx"
+                  class="flex flex-row flex-nowrap items-start space-x-3.5"
+                >
                   <div
                     class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 bg-gradient-to-br from-red-600 to-red-800 text-white shadow-sm mt-0.5"
                   >
                     <svg
+                      v-if="pIdx % 3 === 0"
                       class="w-3.5 h-3.5"
                       fill="none"
                       stroke="currentColor"
@@ -1245,23 +936,8 @@
                         d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0Z"
                       />
                     </svg>
-                  </div>
-                  <div>
-                    <h3 class="text-base font-extrabold text-slate-900 m-0">
-                      Proses Seleksi Ketat
-                    </h3>
-                    <p class="text-slate-600 text-xs sm:text-sm mt-1 leading-relaxed font-medium">
-                      Tukang disaring ketat berdasarkan kualitas pengerjaan, kejujuran, dan komitmen
-                      waktu.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="flex flex-row flex-nowrap items-start space-x-3.5">
-                  <div
-                    class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 bg-gradient-to-br from-red-600 to-red-800 text-white shadow-sm mt-0.5"
-                  >
                     <svg
+                      v-else-if="pIdx % 3 === 1"
                       class="w-3.5 h-3.5"
                       fill="none"
                       stroke="currentColor"
@@ -1274,23 +950,8 @@
                         d="M16.5 18.75h-9m9 0a3 3 0 0 1 3 3h-15a3 3 0 0 1 3-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 0 1-.982-3.172M9.497 14.25a7.454 7.454 0 0 0 .981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 0 0 7.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 0 0 2.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 0 1 2.916.52 6.003 6.003 0 0 1-5.395 4.972m0 0a6.726 6.726 0 0 1-2.749 1.35m0 0a6.772 6.772 0 0 1-3.044 0"
                       />
                     </svg>
-                  </div>
-                  <div>
-                    <h3 class="text-base font-extrabold text-slate-900 m-0">
-                      Sertifikasi & Keahlian Khusus
-                    </h3>
-                    <p class="text-slate-600 text-xs sm:text-sm mt-1 leading-relaxed font-medium">
-                      Memiliki tukang spesialis untuk pengerjaan finishing, batu alam, konstruksi
-                      beton, pipa, dan listrik.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="flex flex-row flex-nowrap items-start space-x-3.5">
-                  <div
-                    class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 bg-gradient-to-br from-red-600 to-red-800 text-white shadow-sm mt-0.5"
-                  >
                     <svg
+                      v-else
                       class="w-3.5 h-3.5"
                       fill="none"
                       stroke="currentColor"
@@ -1306,11 +967,10 @@
                   </div>
                   <div>
                     <h3 class="text-base font-extrabold text-slate-900 m-0">
-                      Hasil Kerja Rapi & Bergaransi
+                      {{ point.title }}
                     </h3>
                     <p class="text-slate-600 text-xs sm:text-sm mt-1 leading-relaxed font-medium">
-                      Jaminan perbaikan ulang gratis apabila terjadi kendala pengerjaan yang kurang
-                      memuaskan.
+                      {{ point.desc }}
                     </p>
                   </div>
                 </div>
@@ -1491,7 +1151,7 @@
 
               <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                 <!-- Left side: Big Average Number -->
-                <div class="md:col-span-4 text-center md:border-r md:border-slate-100 md:pr-6 py-1 flex flex-col justify-center items-center">
+                <div class="md:col-span-3 text-center md:border-r md:border-slate-100 md:pr-6 py-1 flex flex-col justify-center items-center">
                   <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Rata-rata Rating</div>
                   <div class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-none">
                     {{ averageRating || '0.0' }}
@@ -1511,8 +1171,30 @@
                   </div>
                 </div>
 
+                <!-- Middle: Visitor Counter Card -->
+                <div class="md:col-span-4 text-center md:border-r md:border-slate-100 md:px-6 py-1 flex flex-col justify-center items-center">
+                  <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Statistik Kunjungan</div>
+                  <div class="flex items-center space-x-3.5 bg-gradient-to-br from-[#0B192C] to-[#1E3E62] text-white rounded-2xl p-4 sm:p-5 w-full shadow-md relative overflow-hidden group">
+                    <div class="absolute -right-6 -bottom-6 w-16 h-16 bg-white/5 rounded-full blur-lg group-hover:scale-125 transition-transform duration-500"></div>
+                    <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/5 shadow-sm">
+                      <q-icon name="groups" class="text-white" size="22px" />
+                    </div>
+                    <div class="text-left">
+                      <div class="text-xl sm:text-2xl font-black tracking-tight leading-none text-white">
+                        {{ visitorCount.toLocaleString() }}
+                      </div>
+                      <div class="text-[9px] font-extrabold text-slate-300 uppercase tracking-wider mt-1.5 leading-tight">
+                        Pengunjung Bergabung
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-[11px] font-semibold text-slate-500 mt-3 text-center px-1">
+                    Telah mengunjungi PT Agra Abhinaya Perkasa
+                  </div>
+                </div>
+
                 <!-- Right side: Star Bars Breakdown -->
-                <div class="md:col-span-8 space-y-2">
+                <div class="md:col-span-5 space-y-2">
                   <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Distribusi Penilaian</h4>
                   <div
                     v-for="star in [5, 4, 3, 2, 1]"
@@ -1770,7 +1452,8 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto items-stretch">
             <!-- Instagram Card -->
             <a
-              href="https://www.instagram.com/ptagraabhinayaperkasa/"
+              v-if="store.socialLinks.instagram"
+              :href="getInstagramLink"
               target="_blank"
               rel="noopener noreferrer"
               class="group flex flex-col justify-between bg-red-50/40 border border-red-100 rounded-2xl p-4 sm:p-5 hover:border-red-500/60 hover:bg-red-50 hover:shadow-lg hover:shadow-red-500/5 transition-all duration-300 no-underline text-left"
@@ -1792,7 +1475,7 @@
                     Instagram
                   </div>
                   <div class="text-xs font-semibold text-slate-500 mt-0.5 leading-tight">
-                    @ptagraabhinayaperkasa
+                    {{ getInstagramUser }}
                   </div>
                 </div>
               </div>
@@ -1806,7 +1489,8 @@
 
             <!-- TikTok Card -->
             <a
-              href="https://www.tiktok.com/@agraabhinayaperkasa"
+              v-if="store.socialLinks.tiktok"
+              :href="getTiktokLink"
               target="_blank"
               rel="noopener noreferrer"
               class="group flex flex-col justify-between bg-red-50/40 border border-red-100 rounded-2xl p-4 sm:p-5 hover:border-red-500/60 hover:bg-red-50 hover:shadow-lg hover:shadow-red-500/5 transition-all duration-300 no-underline text-left"
@@ -1828,7 +1512,7 @@
                     TikTok
                   </div>
                   <div class="text-xs font-semibold text-slate-500 mt-0.5 leading-tight">
-                    @agraabhinayaperkasa
+                    {{ getTiktokUser }}
                   </div>
                 </div>
               </div>
@@ -1842,7 +1526,8 @@
 
             <!-- Facebook Card -->
             <a
-              href="https://www.facebook.com/profile.php?id=61590675123305"
+              v-if="store.socialLinks.facebook"
+              :href="getFacebookLink"
               target="_blank"
               rel="noopener noreferrer"
               class="group flex flex-col justify-between bg-red-50/40 border border-red-100 rounded-2xl p-4 sm:p-5 hover:border-red-500/60 hover:bg-red-50 hover:shadow-lg hover:shadow-red-500/5 transition-all duration-300 no-underline text-left"
@@ -1864,7 +1549,7 @@
                     Facebook
                   </div>
                   <div class="text-xs font-semibold text-slate-500 mt-0.5 leading-tight">
-                    PT Agra Abhinaya Perkasa
+                    {{ getFacebookUser }}
                   </div>
                 </div>
               </div>
@@ -1892,18 +1577,117 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useWebsiteStore } from 'src/stores/websiteStore'
 
 const store = useWebsiteStore()
 const router = useRouter()
+const route = useRoute()
+
+const getInstagramUser = computed(() => {
+  const url = store.socialLinks.instagram || ''
+  const clean = url.replace(/\/$/, '').split('/')
+  const username = clean[clean.length - 1] || ''
+  if (!username || username.includes('instagram.com') || username.includes('www.')) {
+    return '@ptagraabhinayaperkasa'
+  }
+  return username.startsWith('@') ? username : '@' + username
+})
+
+const getInstagramLink = computed(() => {
+  const url = store.socialLinks.instagram || ''
+  if (!url || url === 'https://www.instagram.com/' || url === 'https://www.instagram.com') {
+    return 'https://www.instagram.com/ptagraabhinayaperkasa/'
+  }
+  return url
+})
+
+const getTiktokUser = computed(() => {
+  const url = store.socialLinks.tiktok || ''
+  const clean = url.replace(/\/$/, '').split('/')
+  const username = clean[clean.length - 1] || ''
+  if (!username || username.includes('tiktok.com') || username.includes('www.')) {
+    return '@agraabhinayaperkasa'
+  }
+  return username.startsWith('@') ? username : '@' + username
+})
+
+const getTiktokLink = computed(() => {
+  const url = store.socialLinks.tiktok || ''
+  if (!url || url === 'https://www.tiktok.com/' || url === 'https://www.tiktok.com') {
+    return 'https://www.tiktok.com/@agraabhinayaperkasa'
+  }
+  return url
+})
+
+const getFacebookUser = computed(() => {
+  const url = store.socialLinks.facebook || ''
+  const clean = url.replace(/\/$/, '').split('/')
+  const last = clean[clean.length - 1] || ''
+  if (!last || last.includes('facebook.com') || last.includes('www.') || last.includes('id=')) {
+    return 'PT Agra Abhinaya Perkasa'
+  }
+  return last
+})
+
+const getFacebookLink = computed(() => {
+  const url = store.socialLinks.facebook || ''
+  if (!url || url === 'https://www.facebook.com/' || url === 'https://www.facebook.com') {
+    return 'https://www.facebook.com/profile.php?id=61590675123305'
+  }
+  return url
+})
+
+const getColorClasses = (color) => {
+  const mapping = {
+    blue: {
+      hoverShadow: 'hover:shadow-blue-200/60',
+      decorBg: 'from-blue-50',
+      iconGrad: 'from-blue-400 to-blue-600'
+    },
+    red: {
+      hoverShadow: 'hover:shadow-red-200/60',
+      decorBg: 'from-red-50',
+      iconGrad: 'from-red-400 to-red-600'
+    },
+    orange: {
+      hoverShadow: 'hover:shadow-orange-200/60',
+      decorBg: 'from-orange-50',
+      iconGrad: 'from-yellow-400 to-orange-600'
+    },
+    green: {
+      hoverShadow: 'hover:shadow-green-200/60',
+      decorBg: 'from-green-50',
+      iconGrad: 'from-green-400 to-green-600'
+    },
+    cyan: {
+      hoverShadow: 'hover:shadow-cyan-200/60',
+      decorBg: 'from-cyan-50',
+      iconGrad: 'from-cyan-400 to-cyan-600'
+    },
+    teal: {
+      hoverShadow: 'hover:shadow-teal-200/60',
+      decorBg: 'from-teal-50',
+      iconGrad: 'from-teal-400 to-teal-600'
+    },
+    amber: {
+      hoverShadow: 'hover:shadow-amber-200/60',
+      decorBg: 'from-amber-50',
+      iconGrad: 'from-amber-400 to-amber-600'
+    },
+    indigo: {
+      hoverShadow: 'hover:shadow-indigo-200/60',
+      decorBg: 'from-indigo-50',
+      iconGrad: 'from-indigo-400 to-indigo-600'
+    }
+  }
+  return mapping[color] || mapping.blue
+}
 
 const activeSlide = ref('konstruksi')
 const expandedStat = ref(0)
 
-const statsVisible = ref(false)
-const statsRef = ref(null)
 const visitorCount = ref(0)
 const hasAnimatedCount = ref(false)
 const fetchedTarget = ref(128) // Nilai fallback jika API gagal
@@ -1934,15 +1718,6 @@ const startVisitorCounter = () => {
 
   requestAnimationFrame(animate)
 }
-
-watch(
-  () => statsVisible.value,
-  (visible) => {
-    if (visible) {
-      startVisitorCounter()
-    }
-  }
-)
 const sectionVisible = ref(false)
 const sectionRef = ref(null)
 const servicesVisible = ref(false)
@@ -2261,11 +2036,16 @@ onMounted(() => {
         // Kita tambahkan base offset 1200 agar website terlihat established/kredibel,
         // tapi tetap bertambah secara dinamis setiap ada kunjungan baru.
         fetchedTarget.value = 1200 + data.value
+        startVisitorCounter()
       }
     })
     .catch((err) => {
       console.error('Error fetching visitor count:', err)
+      startVisitorCounter()
     })
+
+  // Increment local session visit count
+  store.incrementVisitorCount()
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -2291,8 +2071,6 @@ onMounted(() => {
             portfolioVisible.value = true
           } else if (entry.target.id === 'kantor-kami') {
             officeVisible.value = true
-          } else if (entry.target.id === 'statistik-kunjungan') {
-            statsVisible.value = true
           } else if (entry.target.id === 'ulasan-klien') {
             reviewsVisible.value = true
           }
@@ -2333,9 +2111,6 @@ onMounted(() => {
   if (officeRef.value) {
     observer.observe(officeRef.value)
   }
-  if (statsRef.value) {
-    observer.observe(statsRef.value)
-  }
   if (reviewsRef.value) {
     observer.observe(reviewsRef.value)
   }
@@ -2345,6 +2120,18 @@ onMounted(() => {
   }, 300)
 
   startReviewsAutoScroll()
+
+  // Handle redirect scroll from other pages (e.g. portfolio detail back button)
+  if (route.query.scroll === 'portofolio') {
+    setTimeout(() => {
+      const el = document.getElementById('portofolio')
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+      // Clear the query parameter so it doesn't trigger scroll again on refresh
+      router.replace({ path: route.path, query: { ...route.query, scroll: undefined } })
+    }, 600)
+  }
 })
 
 onUnmounted(() => {

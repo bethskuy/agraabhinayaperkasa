@@ -162,7 +162,7 @@
         </header>
 
         <!-- Main Dashboard Panels -->
-        <main class="flex-grow p-6 md:p-8 lg:p-10 overflow-y-auto">
+        <main ref="mainScrollRef" @scroll="handleMainScroll" class="flex-grow p-6 md:p-8 lg:p-10 overflow-y-auto">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-200 pb-6 mb-8 gap-4">
           <div>
@@ -395,7 +395,7 @@
                 <div class="absolute top-4 right-4">
                   <button
                     @click="removeOfficeSlide(idx)"
-                    class="p-2 bg-red-50 hover:bg-red-650 text-white rounded-xl border-none cursor-pointer"
+                    class="p-2 bg-red-50 hover:bg-red-600 text-white rounded-xl border-none cursor-pointer"
                     title="Hapus Slide"
                     style="background-color: rgb(239, 68, 68);"
                   >
@@ -558,7 +558,7 @@
                     <div class="absolute top-4 right-4">
                       <button
                         @click="removeAdvantage(idx)"
-                        class="p-2 bg-red-50 hover:bg-red-650 text-white rounded-xl border-none cursor-pointer"
+                        class="p-2 bg-red-50 hover:bg-red-600 text-white rounded-xl border-none cursor-pointer"
                         title="Hapus Keunggulan"
                         style="background-color: rgb(239, 68, 68);"
                       >
@@ -638,7 +638,7 @@
                   <div class="absolute top-4 right-4">
                     <button
                       @click="removeService(idx)"
-                      class="p-2 bg-red-50 hover:bg-red-650 text-white rounded-xl border-none cursor-pointer"
+                      class="p-2 bg-red-50 hover:bg-red-600 text-white rounded-xl border-none cursor-pointer"
                       title="Hapus Layanan"
                       style="background-color: rgb(239, 68, 68);"
                     >
@@ -764,6 +764,227 @@
                 class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-sm rounded-xl transition-all duration-200 border-none cursor-pointer shadow-md hover:shadow-lg hover:shadow-red-600/20"
               >
                 Simpan Layanan Kami
+              </button>
+            </div>
+          </div>
+
+          <!-- Tenaga Ahli (Qualified Artisans) Editor -->
+          <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-lg font-extrabold text-slate-900 m-0 flex items-center">
+                <q-icon name="engineering" class="text-red-500 mr-2" size="22px" />
+                Kelola Tenaga Ahli (Tukang)
+              </h3>
+            </div>
+
+            <div class="space-y-6">
+              <!-- Header & Sub Header -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Sub-Header</label>
+                  <input
+                    v-model="store.artisansSubHeader"
+                    type="text"
+                    class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
+                  />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Judul Utama</label>
+                  <input
+                    v-model="store.artisansTitle"
+                    type="text"
+                    class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
+                  />
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div>
+                <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Deskripsi Penjelasan</label>
+                <textarea
+                  v-model="store.artisansDesc"
+                  rows="3"
+                  class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
+                ></textarea>
+              </div>
+
+              <!-- Slides List -->
+              <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50">
+                <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide flex justify-between items-center">
+                  <span>Slide Foto Tenaga Ahli (Carousel)</span>
+                  <button
+                    type="button"
+                    @click="addArtisanSlide"
+                    class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 border-none rounded-lg text-[10px] font-bold cursor-pointer text-slate-700 flex items-center space-x-1"
+                  >
+                    <q-icon name="add" size="12px" />
+                    <span>Tambah Foto</span>
+                  </button>
+                </label>
+
+                <div class="space-y-3 mt-3">
+                  <div v-for="(slideImg, sIdx) in store.artisansSlides" :key="sIdx" class="flex items-center space-x-3">
+                    <div class="w-16 h-12 rounded-xl border border-slate-200 bg-white overflow-hidden flex items-center justify-center shrink-0">
+                      <img v-if="slideImg && !slideImg.startsWith('images/')" :src="slideImg" class="w-full h-full object-cover" />
+                      <img v-else-if="slideImg" :src="slideImg" class="w-full h-full object-cover" />
+                      <q-icon v-else name="image" class="text-slate-355" size="18px" />
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      :id="'artisan-slide-upload-' + sIdx"
+                      @change="handleArtisanSlideUpload($event, sIdx)"
+                      class="hidden"
+                    />
+                    <label
+                      :for="'artisan-slide-upload-' + sIdx"
+                      class="px-3 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-lg text-[10px] font-extrabold flex items-center space-x-1.5 cursor-pointer transition-all shrink-0 select-none border-dashed"
+                    >
+                      <q-icon name="cloud_upload" size="14px" />
+                      <span>Upload</span>
+                    </label>
+                    <input
+                      v-model="store.artisansSlides[sIdx]"
+                      type="text"
+                      placeholder="Path gambar..."
+                      class="flex-grow px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 text-xs font-semibold focus:outline-none focus:border-red-500"
+                    />
+                    <button
+                      type="button"
+                      @click="removeArtisanSlide(sIdx)"
+                      class="p-2 bg-red-50 hover:bg-red-650 border border-red-100 text-red-600 hover:text-white rounded-lg cursor-pointer transition-colors duration-150"
+                    >
+                      <q-icon name="delete" size="14px" />
+                    </button>
+                  </div>
+                  <div v-if="store.artisansSlides.length === 0" class="text-slate-400 text-[10px] font-semibold text-center py-2">
+                    Belum ada foto ditambahkan.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Core Points List -->
+              <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50">
+                <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide flex justify-between items-center">
+                  <span>Poin Keunggulan Tenaga Ahli</span>
+                  <button
+                    type="button"
+                    @click="addArtisanPoint"
+                    class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 border-none rounded-lg text-[10px] font-bold cursor-pointer text-slate-700 flex items-center space-x-1"
+                  >
+                    <q-icon name="add" size="12px" />
+                    <span>Tambah Poin</span>
+                  </button>
+                </label>
+
+                <div class="space-y-4 mt-3">
+                  <div v-for="(point, pIdx) in store.artisansPoints" :key="pIdx" class="p-4 bg-white border border-slate-200 rounded-xl relative space-y-3">
+                    <div class="absolute top-3 right-3">
+                      <button
+                        type="button"
+                        @click="removeArtisanPoint(pIdx)"
+                        class="p-2 bg-red-50 hover:bg-red-650 border border-red-100 text-red-600 hover:text-white rounded-lg cursor-pointer transition-colors duration-150"
+                      >
+                        <q-icon name="delete" size="14px" />
+                      </button>
+                    </div>
+                    <div class="font-extrabold text-[10px] text-red-600 uppercase tracking-wider">Poin {{ pIdx + 1 }}</div>
+                    <div class="grid grid-cols-1 gap-3">
+                      <div>
+                        <label class="block text-[10px] font-bold text-slate-450 mb-1.5 uppercase tracking-wide">Judul Poin</label>
+                        <input
+                          v-model="point.title"
+                          type="text"
+                          class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 text-xs font-semibold focus:outline-none focus:border-red-500"
+                        />
+                      </div>
+                      <div>
+                        <label class="block text-[10px] font-bold text-slate-450 mb-1.5 uppercase tracking-wide">Penjelasan Singkat</label>
+                        <textarea
+                          v-model="point.desc"
+                          rows="2"
+                          class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 text-xs font-semibold focus:outline-none focus:border-red-500"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-if="store.artisansPoints.length === 0" class="text-slate-400 text-[10px] font-semibold text-center py-2">
+                    Belum ada poin ditambahkan.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end mt-6">
+              <button
+                @click="saveGeneralData"
+                class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-sm rounded-xl transition-all duration-200 border-none cursor-pointer shadow-md hover:shadow-lg hover:shadow-red-600/20"
+              >
+                Simpan Tenaga Ahli
+              </button>
+            </div>
+          </div>
+
+          <!-- Media Sosial Editor -->
+          <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-lg font-extrabold text-slate-900 m-0 flex items-center">
+                <q-icon name="share" class="text-red-500 mr-2" size="22px" />
+                Kelola Media Sosial
+              </h3>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Instagram -->
+              <div>
+                <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide flex items-center">
+                  <q-icon name="photo_camera" class="text-pink-500 mr-1" size="16px" />
+                  Link Instagram
+                </label>
+                <input
+                  v-model="store.socialLinks.instagram"
+                  type="text"
+                  placeholder="Contoh: https://www.instagram.com/username"
+                  class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
+                />
+              </div>
+
+              <!-- TikTok -->
+              <div>
+                <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide flex items-center">
+                  <q-icon name="music_note" class="text-black mr-1" size="16px" />
+                  Link TikTok
+                </label>
+                <input
+                  v-model="store.socialLinks.tiktok"
+                  type="text"
+                  placeholder="Contoh: https://www.tiktok.com/@username"
+                  class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
+                />
+              </div>
+
+              <!-- Facebook -->
+              <div>
+                <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide flex items-center">
+                  <q-icon name="facebook" class="text-blue-600 mr-1" size="16px" />
+                  Link Facebook
+                </label>
+                <input
+                  v-model="store.socialLinks.facebook"
+                  type="text"
+                  placeholder="Contoh: https://www.facebook.com/page-name"
+                  class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
+                />
+              </div>
+
+            </div>
+
+            <div class="flex justify-end mt-6">
+              <button
+                @click="saveGeneralData"
+                class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-sm rounded-xl transition-all duration-200 border-none cursor-pointer shadow-md hover:shadow-lg hover:shadow-red-600/20"
+              >
+                Simpan Media Sosial
               </button>
             </div>
           </div>
@@ -932,6 +1153,133 @@
           </div>
         </div>
 
+        <!-- TAB PANEL: KELOLA ANEKA SOLUSI -->
+        <div v-if="activeTab === 'solusi'" class="space-y-6">
+          <div class="flex justify-between items-center bg-white border border-slate-200 rounded-3xl p-5 shadow-sm">
+            <div>
+              <h3 class="text-lg font-extrabold text-slate-900 leading-none">Kelola Solusi Bangunan</h3>
+              <p class="text-xs text-slate-500 font-semibold mt-1.5">Tambah, ubah, atau hapus item kartu solusi masalah bangunan yang tampil di halaman depan.</p>
+            </div>
+            <button
+              @click="openSolutionDialog()"
+              class="px-5 py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-sm rounded-xl transition-all duration-200 border-none cursor-pointer flex items-center space-x-1.5 shadow-sm"
+            >
+              <q-icon name="add" size="18px" />
+              <span>Tambah Solusi</span>
+            </button>
+          </div>
+
+          <!-- Desktop Table Layout -->
+          <div class="hidden md:block bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full border-collapse text-left text-xs font-medium text-slate-700">
+                <thead>
+                  <tr class="border-b border-slate-200 bg-slate-50/80 text-slate-500 font-bold uppercase tracking-wider">
+                    <th class="p-4 sm:p-5 w-24">Ikon Preview</th>
+                    <th class="p-4 sm:p-5">Nama Solusi</th>
+                    <th class="p-4 sm:p-5">Deskripsi</th>
+                    <th class="p-4 sm:p-5">Warna Tema</th>
+                    <th class="p-4 sm:p-5 text-right">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                   <tr v-for="sol in store.solutions" :key="sol.id" class="hover:bg-slate-50/50 transition-colors">
+                    <td class="p-4 sm:p-5">
+                      <div
+                        :class="[
+                          'w-10 h-10 rounded-xl flex items-center justify-center border',
+                          getSolutionStyles(sol.color).iconBg
+                        ]"
+                      >
+                        <q-icon :name="sol.icon" size="20px" />
+                      </div>
+                    </td>
+                    <td class="p-4 sm:p-5 font-bold text-slate-900 whitespace-nowrap">{{ sol.name }}</td>
+                    <td class="p-4 sm:p-5 text-slate-650 font-semibold leading-relaxed">{{ sol.description }}</td>
+                    <td class="p-4 sm:p-5">
+                      <span
+                        class="px-2.5 py-1 text-[10px] font-extrabold uppercase rounded-full tracking-wider border"
+                        :class="getSolutionStyles(sol.color).badge"
+                      >
+                        {{ sol.color }}
+                      </span>
+                    </td>
+                    <td class="p-4 sm:p-5 text-right space-x-2">
+                      <button
+                        @click="openSolutionDialog(sol)"
+                        class="px-3 py-1.5 bg-slate-100 hover:bg-slate-900 hover:text-white text-slate-800 border border-slate-200 rounded-lg text-[10px] font-bold cursor-pointer transition-colors"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        @click="deleteSolution(sol.id, sol.name)"
+                        class="px-3 py-1.5 bg-red-50 hover:bg-red-600 hover:text-white text-red-600 border border-red-100 rounded-lg text-[10px] font-bold cursor-pointer transition-colors"
+                      >
+                        Hapus
+                      </button>
+                    </td>
+                  </tr>
+                  <tr v-if="!store.solutions || store.solutions.length === 0">
+                    <td colspan="5" class="p-8 text-center text-slate-400 font-semibold">Belum ada solusi bangunan ditambahkan.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Mobile Card Layout -->
+          <div class="block md:hidden space-y-4">
+            <div
+              v-for="sol in store.solutions"
+              :key="sol.id"
+              :class="[
+                'border rounded-2xl p-5 space-y-3 relative transition-all duration-300',
+                getSolutionStyles(sol.color).cardBg
+              ]"
+            >
+              <div class="flex items-center space-x-3.5">
+                <div
+                  :class="[
+                    'w-11 h-11 rounded-xl flex items-center justify-center border shrink-0',
+                    getSolutionStyles(sol.color).iconBg
+                  ]"
+                >
+                  <q-icon :name="sol.icon" size="22px" />
+                </div>
+                <div>
+                  <h5 class="text-sm font-extrabold text-[#0B192C] leading-none mb-1.5">{{ sol.name }}</h5>
+                  <span
+                    class="px-2 py-0.5 text-[9px] font-extrabold uppercase rounded-full tracking-wider border inline-block mt-0.5"
+                    :class="getSolutionStyles(sol.color).badge"
+                  >
+                    {{ sol.color }}
+                  </span>
+                </div>
+              </div>
+              <p class="text-xs text-slate-550 leading-relaxed font-semibold">
+                {{ sol.description }}
+              </p>
+              <div class="flex justify-end pt-3 border-t border-slate-100 space-x-2">
+                <button
+                  @click="openSolutionDialog(sol)"
+                  class="px-3.5 py-2 bg-slate-100 hover:bg-slate-900 hover:text-white text-slate-800 border border-slate-200 rounded-xl text-[10px] font-extrabold cursor-pointer transition-all duration-200"
+                >
+                  Edit
+                </button>
+                <button
+                  @click="deleteSolution(sol.id, sol.name)"
+                  class="px-3.5 py-2 bg-red-50 hover:bg-red-600 hover:text-white text-red-600 border border-red-100 rounded-xl text-[10px] font-extrabold cursor-pointer transition-all duration-200"
+                >
+                  Hapus
+                </button>
+              </div>
+            </div>
+            <div v-if="!store.solutions || store.solutions.length === 0" class="p-8 text-center text-slate-400 font-semibold bg-white border border-slate-200 rounded-2xl">
+              Belum ada solusi bangunan ditambahkan.
+            </div>
+          </div>
+        </div>
+
         <!-- TAB PANEL: ULASAN MODERASI -->
         <div v-if="activeTab === 'ulasan'" class="space-y-6">
           <!-- Desktop Table Layout (Visible on medium screens and up) -->
@@ -965,7 +1313,7 @@
                     <td class="p-4 sm:p-5 text-right">
                       <button
                         @click="deleteReview(review.id, review.name)"
-                        class="px-3 py-1.5 bg-red-50 hover:bg-red-650 hover:text-white text-red-600 border border-red-100 rounded-lg text-[10px] font-bold cursor-pointer transition-colors"
+                        class="px-3 py-1.5 bg-red-50 hover:bg-red-600 hover:text-white text-red-600 border border-red-100 rounded-lg text-[10px] font-bold cursor-pointer transition-colors"
                       >
                         Hapus Ulasan
                       </button>
@@ -1022,7 +1370,17 @@
             </div>
           </div>
         </div>
-
+        <!-- Floating Back to Top Button -->
+        <button 
+          @click="scrollToTop"
+          class="fixed bottom-6 right-6 z-[999] w-12 h-12 bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 cursor-pointer select-none hover:-translate-y-1 hover:scale-105 active:scale-95"
+          :class="showBackToTop ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' : 'opacity-0 translate-y-4 scale-75 pointer-events-none'"
+          aria-label="Kembali ke atas"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+          </svg>
+        </button>
       </main>
       </div>
     </div>
@@ -1090,14 +1448,31 @@
               />
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Path Gambar Utama</label>
-              <input
-                v-model="projectForm.image"
-                type="text"
-                required
-                placeholder="Contoh: images/k1.png..."
-                class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
-              />
+              <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Gambar Utama / Upload Foto</label>
+              <div class="flex items-center space-x-3">
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="project-main-upload"
+                  @change="handleProjectMainUpload($event)"
+                  class="hidden"
+                />
+                <label
+                  for="project-main-upload"
+                  class="px-4 py-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-350 text-slate-700 rounded-xl text-xs font-extrabold flex items-center space-x-2 cursor-pointer transition-all duration-200 shrink-0 select-none animate-pulse"
+                  style="animation-duration: 3s;"
+                >
+                  <q-icon name="cloud_upload" size="18px" />
+                  <span>Upload Foto</span>
+                </label>
+                <input
+                  v-model="projectForm.image"
+                  type="text"
+                  required
+                  placeholder="Path atau URL Gambar Utama..."
+                  class="flex-grow px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
+                />
+              </div>
             </div>
           </div>
 
@@ -1124,41 +1499,6 @@
             ></textarea>
           </div>
 
-          <!-- Specifications Array Editor -->
-          <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50">
-            <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide flex justify-between items-center">
-              <span>Spesifikasi / Detail Teknis</span>
-              <button
-                type="button"
-                @click="addSpecificationRow"
-                class="px-2.5 py-1 bg-slate-100 hover:bg-slate-250 border-none rounded-lg text-[10px] font-bold cursor-pointer text-slate-700 flex items-center space-x-1"
-              >
-                <q-icon name="add" size="12px" />
-                <span>Tambah Spek</span>
-              </button>
-            </label>
-
-            <div class="space-y-2 mt-3">
-              <div v-for="(spec, sIdx) in projectForm.specifications" :key="sIdx" class="flex items-center space-x-2">
-                <input
-                  v-model="projectForm.specifications[sIdx]"
-                  type="text"
-                  placeholder="Contoh: Struktur: Beton Bertulang K-350..."
-                  class="flex-grow px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 text-xs font-semibold focus:outline-none focus:border-red-500"
-                />
-                <button
-                  type="button"
-                  @click="removeSpecificationRow(sIdx)"
-                  class="p-2 bg-red-50 hover:bg-red-600 border border-red-100 text-red-600 hover:text-white rounded-lg cursor-pointer transition-colors duration-150"
-                >
-                  <q-icon name="delete" size="14px" />
-                </button>
-              </div>
-              <div v-if="projectForm.specifications.length === 0" class="text-slate-400 text-[10px] font-semibold text-center py-2">
-                Belum ada spesifikasi ditambahkan.
-              </div>
-            </div>
-          </div>
 
           <!-- Gallery Images Array Editor -->
           <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50">
@@ -1174,8 +1514,22 @@
               </button>
             </label>
 
-            <div class="space-y-2 mt-3">
+            <div class="space-y-3 mt-3">
               <div v-for="(imgUrl, gIdx) in projectForm.gallery" :key="gIdx" class="flex items-center space-x-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  :id="'project-gallery-upload-' + gIdx"
+                  @change="handleProjectGalleryUpload($event, gIdx)"
+                  class="hidden"
+                />
+                <label
+                  :for="'project-gallery-upload-' + gIdx"
+                  class="px-3 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-lg text-[10px] font-extrabold flex items-center space-x-1.5 cursor-pointer transition-all shrink-0 select-none border-dashed"
+                >
+                  <q-icon name="cloud_upload" size="14px" />
+                  <span>Upload</span>
+                </label>
                 <input
                   v-model="projectForm.gallery[gIdx]"
                   type="text"
@@ -1214,6 +1568,61 @@
       </q-card>
     </q-dialog>
 
+    <!-- 4. DIALOG: SOLUTIONS FORM (TAMBAH / EDIT) -->
+    <q-dialog v-model="solutionDialog" persistent>
+      <q-card class="bg-white border border-slate-200 text-slate-800 rounded-3xl w-full max-w-lg p-4 shadow-2xl">
+        <q-card-section class="flex justify-between items-center pb-4 border-b border-slate-100">
+          <h3 class="text-lg font-extrabold text-slate-900">
+            {{ isEditingSolution ? 'Edit Solusi Bangunan' : 'Tambah Solusi Baru' }}
+          </h3>
+          <button @click="solutionDialog = false" class="bg-transparent border-none cursor-pointer text-slate-400 hover:text-slate-800">
+            <q-icon name="close" size="20px" />
+          </button>
+        </q-card-section>
+
+        <q-card-section class="space-y-4 pt-6 text-slate-700">
+          <!-- Name -->
+          <div>
+            <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Nama Solusi</label>
+            <input
+              v-model="solutionForm.name"
+              type="text"
+              required
+              placeholder="Contoh: Kebocoran / Plafon..."
+              class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
+            />
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Deskripsi Ringkas</label>
+            <input
+              v-model="solutionForm.description"
+              type="text"
+              required
+              placeholder="Contoh: Jaga Rumah Bebas Bocor / Cat Rumah..."
+              class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
+            />
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right" class="border-t border-slate-100 pt-4 mt-4 space-x-2">
+          <q-btn
+            flat
+            label="Batal"
+            @click="solutionDialog = false"
+            class="text-slate-500 hover:text-slate-800 rounded-xl text-xs font-bold font-sans"
+          />
+          <q-btn
+            color="red-6"
+            :label="isEditingSolution ? 'Simpan' : 'Tambah Solusi'"
+            @click="saveSolution"
+            class="text-white rounded-xl text-xs font-bold shadow-md hover:shadow-lg hover:shadow-red-600/20 font-sans"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
     <!-- Global Toast Toast Notification -->
     <div
       v-if="toastActive"
@@ -1227,7 +1636,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useWebsiteStore } from 'src/stores/websiteStore'
 
 const store = useWebsiteStore()
@@ -1247,6 +1656,7 @@ const tabList = [
   { label: 'Edit Beranda & Profil', value: 'beranda', icon: 'home', title: 'Edit Konten Beranda & Profil' },
   { label: 'Kelola Portofolio', value: 'portofolio', icon: 'folder', title: 'Kelola Portofolio Proyek' },
   { label: 'Kelola Klien & Partner', value: 'klien', icon: 'business', title: 'Kelola Klien & Logo Partner' },
+  { label: 'Kelola Aneka Solusi', value: 'solusi', icon: 'plumbing', title: 'Kelola Solusi Bangunan' },
   { label: 'Moderasi Ulasan', value: 'ulasan', icon: 'star', title: 'Moderasi Komentar & Rating' }
 ]
 
@@ -1254,6 +1664,22 @@ const tabList = [
 const sidebarOpen = ref(true)
 const toggleSidebar = () => {
   sidebarOpen.value = !sidebarOpen.value
+}
+
+// Scroll To Top States & Helpers
+const mainScrollRef = ref(null)
+const showBackToTop = ref(false)
+
+const handleMainScroll = () => {
+  const scrollTop = mainScrollRef.value ? mainScrollRef.value.scrollTop : 0
+  showBackToTop.value = window.scrollY > 300 || scrollTop > 300
+}
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+  if (mainScrollRef.value) {
+    mainScrollRef.value.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 }
 const selectTab = (tabValue) => {
   activeTab.value = tabValue
@@ -1391,6 +1817,43 @@ const removeService = (index) => {
   store.servicesList.splice(index, 1)
 }
 
+// Tenaga Ahli (Artisans) Helpers
+const addArtisanSlide = () => {
+  store.artisansSlides.push('images/')
+}
+
+const removeArtisanSlide = (index) => {
+  store.artisansSlides.splice(index, 1)
+}
+
+const handleArtisanSlideUpload = (event, index) => {
+  const file = event.target.files[0]
+  if (!file) return
+
+  if (file.size > 2 * 1024 * 1024) {
+    triggerToast('Ukuran foto terlalu besar! Maksimal 2MB.')
+    return
+  }
+
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    store.artisansSlides[index] = e.target.result
+    triggerToast(`Foto Slide ${index + 1} berhasil diunggah!`)
+  }
+  reader.readAsDataURL(file)
+}
+
+const addArtisanPoint = () => {
+  store.artisansPoints.push({
+    title: '',
+    desc: ''
+  })
+}
+
+const removeArtisanPoint = (index) => {
+  store.artisansPoints.splice(index, 1)
+}
+
 // Portfolio Search & List
 const portfolioSearch = ref('')
 const filteredPortfolio = computed(() => {
@@ -1433,6 +1896,26 @@ const handleClientUpload = (event) => {
   reader.readAsDataURL(file)
 }
 
+const handleProjectMainUpload = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    projectForm.value.image = e.target.result
+  }
+  reader.readAsDataURL(file)
+}
+
+const handleProjectGalleryUpload = (event, index) => {
+  const file = event.target.files[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    projectForm.value.gallery[index] = e.target.result
+  }
+  reader.readAsDataURL(file)
+}
+
 // Lifecycle Load
 onMounted(() => {
   store.initializeStore()
@@ -1449,6 +1932,12 @@ onMounted(() => {
   if (adminSession === 'true') {
     isLoggedIn.value = true
   }
+
+  window.addEventListener('scroll', handleMainScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleMainScroll)
 })
 
 // Login & Logout Handlers
@@ -1491,7 +1980,7 @@ const openPortfolioDialog = (project = null) => {
       image: project.image,
       desc: project.desc,
       fullDesc: project.fullDesc,
-      specifications: [...project.specifications],
+      specifications: project.specifications ? [...project.specifications] : [],
       gallery: [...project.gallery]
     }
   } else {
@@ -1505,19 +1994,11 @@ const openPortfolioDialog = (project = null) => {
       image: 'images/',
       desc: '',
       fullDesc: '',
-      specifications: ['Jenis Pekerjaan: ', 'Kerjasama: '],
+      specifications: [],
       gallery: ['images/']
     }
   }
   portfolioDialog.value = true
-}
-
-const addSpecificationRow = () => {
-  projectForm.value.specifications.push('')
-}
-
-const removeSpecificationRow = (idx) => {
-  projectForm.value.specifications.splice(idx, 1)
 }
 
 const addGalleryRow = () => {
@@ -1535,7 +2016,7 @@ const savePortfolio = () => {
   }
 
   // Filter clean strings (remove empty paths or lines)
-  const cleanSpecs = projectForm.value.specifications.filter(s => s.trim() !== '')
+  const cleanSpecs = projectForm.value.specifications ? projectForm.value.specifications.filter(s => s.trim() !== '') : []
   const cleanGallery = projectForm.value.gallery.filter(g => g.trim() !== '' && g.trim() !== 'images/')
 
   const submission = {
@@ -1589,6 +2070,112 @@ const deleteReview = async (id, name) => {
     await store.deleteReview(id)
     triggerToast(`Ulasan dari "${name}" telah dihapus.`)
   }
+}
+
+// Solutions Handlers
+const solutionDialog = ref(false)
+const isEditingSolution = ref(false)
+const solutionForm = ref({
+  id: null,
+  name: '',
+  description: '',
+  icon: 'plumbing',
+  color: 'blue'
+})
+
+const openSolutionDialog = (sol = null) => {
+  if (sol) {
+    isEditingSolution.value = true
+    solutionForm.value = {
+      id: sol.id,
+      name: sol.name,
+      description: sol.description,
+      icon: sol.icon,
+      color: sol.color
+    }
+  } else {
+    isEditingSolution.value = false
+    solutionForm.value = {
+      id: null,
+      name: '',
+      description: '',
+      icon: 'plumbing',
+      color: 'blue'
+    }
+  }
+  solutionDialog.value = true
+}
+
+const saveSolution = async () => {
+  if (!solutionForm.value.name.trim() || !solutionForm.value.description.trim()) return
+
+  await store.addSolution({
+    id: solutionForm.value.id,
+    name: solutionForm.value.name.trim(),
+    description: solutionForm.value.description.trim(),
+    icon: solutionForm.value.icon,
+    color: solutionForm.value.color
+  })
+
+  triggerToast(
+    isEditingSolution.value
+      ? `Solusi "${solutionForm.value.name}" berhasil diperbarui.`
+      : `Solusi "${solutionForm.value.name}" berhasil ditambahkan.`
+  )
+  solutionDialog.value = false
+}
+
+const deleteSolution = async (id, name) => {
+  if (confirm(`Apakah Anda yakin ingin menghapus solusi "${name}"?`)) {
+    await store.deleteSolution(id)
+    triggerToast(`Solusi "${name}" telah dihapus.`)
+  }
+}
+
+const getSolutionStyles = (color) => {
+  const mapping = {
+    blue: {
+      cardBg: 'bg-blue-50 border-blue-100 hover:border-blue-300 shadow-sm shadow-blue-100/10',
+      iconBg: 'bg-blue-100 text-blue-700 border-blue-200',
+      badge: 'bg-blue-100 text-blue-700 border-blue-200'
+    },
+    red: {
+      cardBg: 'bg-red-50 border-red-100 hover:border-red-300 shadow-sm shadow-red-100/10',
+      iconBg: 'bg-red-100 text-red-700 border-red-200',
+      badge: 'bg-red-100 text-red-700 border-red-200'
+    },
+    orange: {
+      cardBg: 'bg-orange-50 border-orange-100 hover:border-orange-300 shadow-sm shadow-orange-100/10',
+      iconBg: 'bg-orange-100 text-orange-700 border-orange-200',
+      badge: 'bg-orange-100 text-orange-700 border-orange-200'
+    },
+    green: {
+      cardBg: 'bg-green-50 border-green-100 hover:border-green-300 shadow-sm shadow-green-100/10',
+      iconBg: 'bg-green-100 text-green-700 border-green-200',
+      badge: 'bg-green-100 text-green-700 border-green-200'
+    },
+    cyan: {
+      cardBg: 'bg-cyan-50 border-cyan-100 hover:border-cyan-300 shadow-sm shadow-cyan-100/10',
+      iconBg: 'bg-cyan-100 text-cyan-700 border-cyan-200',
+      badge: 'bg-cyan-100 text-cyan-700 border-cyan-200'
+    },
+    teal: {
+      cardBg: 'bg-teal-50 border-teal-100 hover:border-teal-300 shadow-sm shadow-teal-100/10',
+      iconBg: 'bg-teal-100 text-teal-700 border-teal-200',
+      badge: 'bg-teal-100 text-teal-700 border-teal-200'
+    },
+    amber: {
+      cardBg: 'bg-amber-50 border-amber-100 hover:border-amber-300 shadow-sm shadow-amber-100/10',
+      iconBg: 'bg-amber-100 text-amber-700 border-amber-200',
+      badge: 'bg-amber-100 text-amber-700 border-amber-200'
+    },
+    indigo: {
+      cardBg: 'bg-indigo-50 border-indigo-100 hover:border-indigo-300 shadow-sm shadow-indigo-100/10',
+      iconBg: 'bg-indigo-100 text-indigo-700 border-indigo-200',
+      badge: 'bg-indigo-100 text-indigo-700 border-indigo-200'
+    }
+  }
+  return mapping[color] || mapping.blue
 }
 </script>
 

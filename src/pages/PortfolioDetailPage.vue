@@ -3,7 +3,7 @@
     <!-- Header with Back Button -->
     <div class="max-w-6xl mx-auto px-6 mb-8">
       <button
-        @click="router.push('/')"
+        @click="router.push({ path: '/', query: { scroll: 'portofolio' } })"
         class="inline-flex items-center space-x-2 text-slate-500 hover:text-red-600 transition-colors duration-300 bg-transparent border-none cursor-pointer focus:outline-none font-bold text-sm"
       >
         <q-icon name="arrow_back" size="18px" />
@@ -61,7 +61,6 @@
               {{ project.fullDesc }}
             </p>
           </div>
-
         </div>
 
       </div>
@@ -106,7 +105,7 @@
     <div v-else class="max-w-6xl mx-auto px-6 py-24 text-center">
       <h2 class="text-2xl font-bold text-slate-800">Proyek tidak ditemukan</h2>
       <p class="text-slate-500 mt-2">Maaf, halaman detail portofolio ini tidak tersedia atau telah dipindahkan.</p>
-      <q-btn label="Kembali ke Beranda" color="red-6" rounded class="mt-6" @click="router.push('/')" />
+      <q-btn label="Kembali ke Beranda" color="red-6" rounded class="mt-6" @click="router.push({ path: '/', query: { scroll: 'portofolio' } })" />
     </div>
   </q-page>
 </template>

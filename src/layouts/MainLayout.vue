@@ -374,6 +374,18 @@
         </div>
       </footer>
 
+      <!-- Floating Back to Top Button -->
+      <button 
+        @click="scrollToTop"
+        class="fixed bottom-24 right-6 z-[998] w-12 h-12 bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 cursor-pointer select-none hover:-translate-y-1 hover:scale-105 active:scale-95"
+        :class="showBackToTop ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' : 'opacity-0 translate-y-4 scale-75 pointer-events-none'"
+        aria-label="Kembali ke atas"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+        </svg>
+      </button>
+
       <!-- Floating WhatsApp Button -->
       <a 
         href="https://api.whatsapp.com/send/?phone=6285695660902&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20ingin%20berkonsultasi%20mengenai%20proyek%20konstruksi/renovasi."
@@ -403,6 +415,7 @@ const route = useRoute()
 const router = useRouter()
 
 const isScrolled = ref(false)
+const showBackToTop = ref(false)
 const mobileMenuOpen = ref(false)
 const mobileLayananOpen = ref(false)
 const isMobile = ref(false)
@@ -415,6 +428,11 @@ const checkScreenSize = () => {
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 20
+  showBackToTop.value = window.scrollY > 300
+}
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 const toggleMobileMenu = () => {
