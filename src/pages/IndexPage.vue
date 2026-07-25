@@ -286,7 +286,7 @@
     >
       <div class="max-w-6xl mx-auto px-6 relative z-10 flex justify-center">
         <div class="bg-white rounded-[32px] p-8 md:p-10 shadow-lg border border-slate-100/80 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-center text-center max-w-sm w-full">
-          <span class="text-red-600 font-extrabold text-5xl md:text-6xl leading-none">
+          <span class="text-red-650 font-extrabold text-5xl md:text-6xl leading-none">
             {{ visitorCount }}+
           </span>
           <span class="text-[#0B192C] font-extrabold text-sm sm:text-base mt-4 uppercase tracking-wider">
@@ -1482,10 +1482,67 @@
 
           <!-- Review Form & Marquee Layout -->
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto">
-            <!-- Left: Add Review Form (col-span-5) -->
+            <!-- Row 1: Full-width Rating Summary Card (col-span-12) -->
+            <div class="lg:col-span-12 w-full bg-white border border-slate-200/50 rounded-2xl p-4 sm:p-5 shadow-sm mb-2">
+              <h3 class="text-sm sm:text-base font-extrabold text-[#0B192C] mb-4 flex items-center">
+                <q-icon name="stars" class="text-red-650 mr-2" size="20px" />
+                Ringkasan Rating Klien
+              </h3>
+
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                <!-- Left side: Big Average Number -->
+                <div class="md:col-span-4 text-center md:border-r md:border-slate-100 md:pr-6 py-1 flex flex-col justify-center items-center">
+                  <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Rata-rata Rating</div>
+                  <div class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-none">
+                    {{ averageRating || '0.0' }}
+                  </div>
+                  <!-- Avg Stars -->
+                  <div class="flex justify-center items-center space-x-0.5 mt-3">
+                    <q-icon
+                      v-for="star in 5"
+                      :key="star"
+                      :name="star <= Math.round(averageRating) ? 'star' : 'star_border'"
+                      size="18px"
+                      class="text-amber-400"
+                    />
+                  </div>
+                  <div class="text-[11px] font-semibold text-slate-500 mt-2.5">
+                    Berdasarkan {{ totalReviews }} Ulasan Klien
+                  </div>
+                </div>
+
+                <!-- Right side: Star Bars Breakdown -->
+                <div class="md:col-span-8 space-y-2">
+                  <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Distribusi Penilaian</h4>
+                  <div
+                    v-for="star in [5, 4, 3, 2, 1]"
+                    :key="star"
+                    class="flex items-center text-xs text-slate-700 font-bold"
+                  >
+                    <span class="w-3 text-right">{{ star }}</span>
+                    <q-icon name="star" class="text-amber-400 mx-1.5" size="14px" />
+                    
+                    <!-- Progress bar -->
+                    <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div
+                        class="h-full bg-gradient-to-r from-amber-400 to-amber-500 rounded-full transition-all duration-500"
+                        :style="{ width: ratingPercentageByStar[star] + '%' }"
+                      ></div>
+                    </div>
+                    
+                    <!-- Review count & percentage -->
+                    <span class="w-16 text-right text-slate-400 pl-2">
+                      {{ ratingCountByStar[star] }} ({{ ratingPercentageByStar[star] }}%)
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Left: Add Review Form (lg:col-span-5) -->
             <div class="lg:col-span-5 bg-white border border-slate-200/60 rounded-3xl p-6 sm:p-8 shadow-md">
-              <h3 class="text-xl font-extrabold text-[#0B192C] mb-6 flex items-center">
-                <q-icon name="rate_review" class="text-red-600 mr-2" size="24px" />
+              <h3 class="text-lg font-extrabold text-[#0B192C] mb-6 flex items-center">
+                <q-icon name="rate_review" class="text-red-650 mr-2" size="24px" />
                 Kirim Ulasan Anda
               </h3>
 
@@ -1910,6 +1967,32 @@ const newReview = ref({
 })
 
 const reviews = computed(() => store.reviews)
+const totalReviews = computed(() => reviews.value.length)
+
+const averageRating = computed(() => {
+  if (totalReviews.value === 0) return 0
+  const sum = reviews.value.reduce((acc, r) => acc + r.rating, 0)
+  return Number((sum / totalReviews.value).toFixed(1))
+})
+
+const ratingCountByStar = computed(() => {
+  const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+  reviews.value.forEach(r => {
+    if (counts[r.rating] !== undefined) {
+      counts[r.rating]++
+    }
+  })
+  return counts
+})
+
+const ratingPercentageByStar = computed(() => {
+  const percentages = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+  if (totalReviews.value === 0) return percentages
+  for (let star = 1; star <= 5; star++) {
+    percentages[star] = Math.round((ratingCountByStar.value[star] / totalReviews.value) * 100)
+  }
+  return percentages
+})
 const isSubmitting = ref(false)
 const displayedReviews = computed(() => {
   const list = reviews.value || []
