@@ -185,14 +185,33 @@
         <div v-if="activeTab === 'beranda'" class="space-y-8 max-w-4xl">
           <!-- Slide Manager -->
           <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
-            <h3 class="text-lg font-extrabold text-slate-900 mb-6 flex items-center">
-              <q-icon name="view_carousel" class="text-red-500 mr-2" size="22px" />
-              Slide Banner Utama (Hero Slider)
+            <h3 class="text-lg font-extrabold text-slate-900 mb-6 flex items-center justify-between">
+              <span class="flex items-center">
+                <q-icon name="view_carousel" class="text-red-500 mr-2" size="22px" />
+                Slide Banner Utama (Hero Slider)
+              </span>
+              <button
+                @click="addHeroSlide"
+                class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 font-extrabold text-xs rounded-xl border-none cursor-pointer transition-colors"
+              >
+                + Tambah Slide Banner
+              </button>
             </h3>
 
             <div class="space-y-6">
-              <div v-for="(slide, idx) in store.heroSlides" :key="idx" class="border border-[#1E3E62]/15 rounded-2xl p-5 bg-[#1E3E62]/5">
-                <div class="font-extrabold text-sm text-red-600 mb-4 uppercase tracking-wider">Slide {{ idx + 1 }} ({{ slide.name }})</div>
+              <div v-for="(slide, idx) in store.heroSlides" :key="idx" class="border border-[#1E3E62]/15 rounded-2xl p-5 bg-[#1E3E62]/5 relative">
+                <div class="absolute top-4 right-4">
+                  <button
+                    @click="removeHeroSlide(idx)"
+                    class="p-2 bg-red-50 hover:bg-red-600 text-white rounded-xl border-none cursor-pointer flex items-center justify-center"
+                    title="Hapus Slide"
+                    style="background-color: rgb(239, 68, 68); color: white;"
+                  >
+                    <q-icon name="delete" size="18px" />
+                  </button>
+                </div>
+
+                <div class="font-extrabold text-sm text-red-600 mb-4 uppercase tracking-wider">Slide {{ idx + 1 }}</div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div class="md:col-span-2">
@@ -925,69 +944,6 @@
             </div>
           </div>
 
-          <!-- Media Sosial Editor -->
-          <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
-            <div class="flex justify-between items-center mb-6">
-              <h3 class="text-lg font-extrabold text-slate-900 m-0 flex items-center">
-                <q-icon name="share" class="text-red-500 mr-2" size="22px" />
-                Kelola Media Sosial
-              </h3>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <!-- Instagram -->
-              <div>
-                <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide flex items-center">
-                  <q-icon name="photo_camera" class="text-pink-500 mr-1" size="16px" />
-                  Link Instagram
-                </label>
-                <input
-                  v-model="store.socialLinks.instagram"
-                  type="text"
-                  placeholder="Contoh: https://www.instagram.com/username"
-                  class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
-                />
-              </div>
-
-              <!-- TikTok -->
-              <div>
-                <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide flex items-center">
-                  <q-icon name="music_note" class="text-black mr-1" size="16px" />
-                  Link TikTok
-                </label>
-                <input
-                  v-model="store.socialLinks.tiktok"
-                  type="text"
-                  placeholder="Contoh: https://www.tiktok.com/@username"
-                  class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
-                />
-              </div>
-
-              <!-- Facebook -->
-              <div>
-                <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide flex items-center">
-                  <q-icon name="facebook" class="text-blue-600 mr-1" size="16px" />
-                  Link Facebook
-                </label>
-                <input
-                  v-model="store.socialLinks.facebook"
-                  type="text"
-                  placeholder="Contoh: https://www.facebook.com/page-name"
-                  class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:outline-none focus:border-red-500"
-                />
-              </div>
-
-            </div>
-
-            <div class="flex justify-end mt-6">
-              <button
-                @click="saveGeneralData"
-                class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-sm rounded-xl transition-all duration-200 border-none cursor-pointer shadow-md hover:shadow-lg hover:shadow-red-600/20"
-              >
-                Simpan Media Sosial
-              </button>
-            </div>
-          </div>
         </div>
 
         <!-- TAB PANEL: PORTOFOLIO -->
@@ -1100,7 +1056,7 @@
                     <q-icon name="cloud_upload" size="18px" />
                     <span>Upload Logo</span>
                   </label>
-                  
+
                   <input
                     v-model="clientForm.image"
                     type="text"
@@ -1169,97 +1125,41 @@
             </button>
           </div>
 
-          <!-- Desktop Table Layout -->
-          <div class="hidden md:block bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
-            <div class="overflow-x-auto">
-              <table class="w-full border-collapse text-left text-xs font-medium text-slate-700">
-                <thead>
-                  <tr class="border-b border-slate-200 bg-slate-50/80 text-slate-500 font-bold uppercase tracking-wider">
-                    <th class="p-4 sm:p-5 w-24">Ikon Preview</th>
-                    <th class="p-4 sm:p-5">Nama Solusi</th>
-                    <th class="p-4 sm:p-5">Deskripsi</th>
-                    <th class="p-4 sm:p-5">Warna Tema</th>
-                    <th class="p-4 sm:p-5 text-right">Aksi</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                   <tr v-for="sol in store.solutions" :key="sol.id" class="hover:bg-slate-50/50 transition-colors">
-                    <td class="p-4 sm:p-5">
-                      <div
-                        :class="[
-                          'w-10 h-10 rounded-xl flex items-center justify-center border',
-                          getSolutionStyles(sol.color).iconBg
-                        ]"
-                      >
-                        <q-icon :name="sol.icon" size="20px" />
-                      </div>
-                    </td>
-                    <td class="p-4 sm:p-5 font-bold text-slate-900 whitespace-nowrap">{{ sol.name }}</td>
-                    <td class="p-4 sm:p-5 text-slate-650 font-semibold leading-relaxed">{{ sol.description }}</td>
-                    <td class="p-4 sm:p-5">
-                      <span
-                        class="px-2.5 py-1 text-[10px] font-extrabold uppercase rounded-full tracking-wider border"
-                        :class="getSolutionStyles(sol.color).badge"
-                      >
-                        {{ sol.color }}
-                      </span>
-                    </td>
-                    <td class="p-4 sm:p-5 text-right space-x-2">
-                      <button
-                        @click="openSolutionDialog(sol)"
-                        class="px-3 py-1.5 bg-slate-100 hover:bg-slate-900 hover:text-white text-slate-800 border border-slate-200 rounded-lg text-[10px] font-bold cursor-pointer transition-colors"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        @click="deleteSolution(sol.id, sol.name)"
-                        class="px-3 py-1.5 bg-red-50 hover:bg-red-600 hover:text-white text-red-600 border border-red-100 rounded-lg text-[10px] font-bold cursor-pointer transition-colors"
-                      >
-                        Hapus
-                      </button>
-                    </td>
-                  </tr>
-                  <tr v-if="!store.solutions || store.solutions.length === 0">
-                    <td colspan="5" class="p-8 text-center text-slate-400 font-semibold">Belum ada solusi bangunan ditambahkan.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Mobile Card Layout -->
-          <div class="block md:hidden space-y-4">
+          <!-- Solutions Grid Layout -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div
               v-for="sol in store.solutions"
               :key="sol.id"
               :class="[
-                'border rounded-2xl p-5 space-y-3 relative transition-all duration-300',
+                'border rounded-2xl p-5 relative transition-all duration-300 flex flex-col justify-between h-full',
                 getSolutionStyles(sol.color).cardBg
               ]"
             >
-              <div class="flex items-center space-x-3.5">
-                <div
-                  :class="[
-                    'w-11 h-11 rounded-xl flex items-center justify-center border shrink-0',
-                    getSolutionStyles(sol.color).iconBg
-                  ]"
-                >
-                  <q-icon :name="sol.icon" size="22px" />
-                </div>
-                <div>
-                  <h5 class="text-sm font-extrabold text-[#0B192C] leading-none mb-1.5">{{ sol.name }}</h5>
-                  <span
-                    class="px-2 py-0.5 text-[9px] font-extrabold uppercase rounded-full tracking-wider border inline-block mt-0.5"
-                    :class="getSolutionStyles(sol.color).badge"
+              <div class="space-y-3">
+                <div class="flex items-center space-x-3.5">
+                  <div
+                    :class="[
+                      'w-11 h-11 rounded-xl flex items-center justify-center border shrink-0',
+                      getSolutionStyles(sol.color).iconBg
+                    ]"
                   >
-                    {{ sol.color }}
-                  </span>
+                    <q-icon :name="sol.icon" size="22px" />
+                  </div>
+                  <div>
+                    <h5 class="text-sm font-extrabold text-[#0B192C] leading-none mb-1.5">{{ sol.name }}</h5>
+                    <span
+                      class="px-2 py-0.5 text-[9px] font-extrabold uppercase rounded-full tracking-wider border inline-block mt-0.5"
+                      :class="getSolutionStyles(sol.color).badge"
+                    >
+                      {{ sol.color }}
+                    </span>
+                  </div>
                 </div>
+                <p class="text-xs text-slate-555 leading-relaxed font-semibold">
+                  {{ sol.description }}
+                </p>
               </div>
-              <p class="text-xs text-slate-550 leading-relaxed font-semibold">
-                {{ sol.description }}
-              </p>
-              <div class="flex justify-end pt-3 border-t border-slate-100 space-x-2">
+              <div class="flex justify-end pt-3 border-t border-slate-100 space-x-2 mt-4">
                 <button
                   @click="openSolutionDialog(sol)"
                   class="px-3.5 py-2 bg-slate-100 hover:bg-slate-900 hover:text-white text-slate-800 border border-slate-200 rounded-xl text-[10px] font-extrabold cursor-pointer transition-all duration-200"
@@ -1274,7 +1174,7 @@
                 </button>
               </div>
             </div>
-            <div v-if="!store.solutions || store.solutions.length === 0" class="p-8 text-center text-slate-400 font-semibold bg-white border border-slate-200 rounded-2xl">
+            <div v-if="!store.solutions || store.solutions.length === 0" class="col-span-full p-8 text-center text-slate-400 font-semibold bg-white border border-slate-200 rounded-2xl">
               Belum ada solusi bangunan ditambahkan.
             </div>
           </div>
@@ -1328,34 +1228,40 @@
           </div>
 
           <!-- Mobile Card Layout (Visible only on mobile/tablet) -->
-          <div class="block md:hidden space-y-4">
-            <div v-for="review in store.reviews" :key="review.id" class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3 relative">
-              <!-- Header: Name & Rating -->
-              <div class="flex items-start justify-between">
-                <div>
-                  <h5 class="text-sm font-extrabold text-[#0B192C] leading-none mb-1.5">{{ review.name }}</h5>
-                  <div class="text-[10px] font-bold text-slate-400 tracking-wider">
-                    {{ review.date }}
+          <div class="grid md:hidden grid-cols-1 sm:grid-cols-2 gap-4">
+            <div
+              v-for="review in store.reviews"
+              :key="review.id"
+              class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm relative flex flex-col justify-between h-full"
+            >
+              <div class="space-y-3">
+                <!-- Header: Name & Rating -->
+                <div class="flex items-start justify-between">
+                  <div>
+                    <h5 class="text-sm font-extrabold text-[#0B192C] leading-none mb-1.5">{{ review.name }}</h5>
+                    <div class="text-[10px] font-bold text-slate-400 tracking-wider">
+                      {{ review.date }}
+                    </div>
+                  </div>
+                  <!-- Stars -->
+                  <div class="flex items-center space-x-0.5 text-amber-500 shrink-0">
+                    <q-icon
+                      v-for="star in 5"
+                      :key="star"
+                      :name="star <= review.rating ? 'star' : 'star_border'"
+                      size="12px"
+                    />
                   </div>
                 </div>
-                <!-- Stars -->
-                <div class="flex items-center space-x-0.5 text-amber-500 shrink-0">
-                  <q-icon
-                    v-for="star in 5"
-                    :key="star"
-                    :name="star <= review.rating ? 'star' : 'star_border'"
-                    size="12px"
-                  />
-                </div>
+
+                <!-- Review Text -->
+                <p class="text-xs text-slate-600 leading-relaxed font-semibold">
+                  "{{ review.comment }}"
+                </p>
               </div>
-              
-              <!-- Review Text -->
-              <p class="text-xs text-slate-600 leading-relaxed font-semibold">
-                "{{ review.comment }}"
-              </p>
 
               <!-- Footer Actions -->
-              <div class="flex justify-end pt-3 border-t border-slate-100">
+              <div class="flex justify-end pt-3 border-t border-slate-100 mt-4">
                 <button
                   @click="deleteReview(review.id, review.name)"
                   class="px-3.5 py-2 bg-red-50 hover:bg-red-600 hover:text-white text-red-600 border border-red-100 rounded-xl text-[10px] font-extrabold cursor-pointer transition-all duration-200 flex items-center space-x-1"
@@ -1365,13 +1271,13 @@
                 </button>
               </div>
             </div>
-            <div v-if="store.reviews.length === 0" class="p-8 text-center text-slate-400 font-semibold bg-white border border-slate-200 rounded-2xl">
+            <div v-if="store.reviews.length === 0" class="col-span-full p-8 text-center text-slate-400 font-semibold bg-white border border-slate-200 rounded-2xl">
               Belum ada ulasan masuk.
             </div>
           </div>
         </div>
         <!-- Floating Back to Top Button -->
-        <button 
+        <button
           @click="scrollToTop"
           class="fixed bottom-6 right-6 z-[999] w-12 h-12 bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 cursor-pointer select-none hover:-translate-y-1 hover:scale-105 active:scale-95"
           :class="showBackToTop ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' : 'opacity-0 translate-y-4 scale-75 pointer-events-none'"
@@ -1721,6 +1627,19 @@ const handleHeroUpload = (event, index) => {
   reader.readAsDataURL(file)
 }
 
+const addHeroSlide = () => {
+  store.heroSlides.push({
+    name: `slide_${Date.now()}`,
+    title: 'Judul Slide Baru',
+    subtitle: 'Deskripsi Slide Baru',
+    image: 'images/placeholder.png'
+  })
+}
+
+const removeHeroSlide = (index) => {
+  store.heroSlides.splice(index, 1)
+}
+
 // Upload & Slide Helpers for Workspace Slider Editor
 const handleOfficeUpload = (event, index) => {
   const file = event.target.files[0]
@@ -1961,7 +1880,17 @@ const handleLogout = () => {
 }
 
 // General Home Page Settings Saving
-const saveGeneralData = () => {
+const saveGeneralData = async () => {
+  // Jalankan semua update database secara paralel agar proses simpan jauh lebih cepat!
+  await Promise.all([
+    store.updateHeroSlides(),
+    store.updateCompanyProfile(),
+    store.updateVisiMisiDB(),
+    store.updateOfficeSlidesDB(),
+    store.updateAdvantagesDB(),
+    store.updateServicesDB(),
+    store.updateArtisansDB()
+  ])
   store.saveStore()
   triggerToast('Perubahan halaman beranda berhasil disimpan.')
 }
@@ -2009,7 +1938,7 @@ const removeGalleryRow = (idx) => {
   projectForm.value.gallery.splice(idx, 1)
 }
 
-const savePortfolio = () => {
+const savePortfolio = async () => {
   if (!projectForm.value.title.trim() || !projectForm.value.location.trim()) {
     alert('Nama proyek dan lokasi wajib diisi!')
     return
@@ -2026,19 +1955,19 @@ const savePortfolio = () => {
   }
 
   if (isEditing.value) {
-    store.updatePortfolioItem(editingId.value, submission)
+    await store.updatePortfolioItem(editingId.value, submission)
     triggerToast(`Proyek "${submission.title}" berhasil diperbarui.`)
   } else {
-    store.addPortfolioItem(submission)
+    await store.addPortfolioItem(submission)
     triggerToast(`Proyek baru "${submission.title}" berhasil ditambahkan.`)
   }
 
   portfolioDialog.value = false
 }
 
-const deleteProject = (id, title) => {
+const deleteProject = async (id, title) => {
   if (confirm(`Apakah Anda yakin ingin menghapus proyek "${title}" dari portofolio?`)) {
-    store.deletePortfolioItem(id)
+    await store.deletePortfolioItem(id)
     triggerToast(`Proyek "${title}" telah dihapus.`)
   }
 }

@@ -2028,6 +2028,10 @@ onMounted(() => {
   // Load database store from localStorage + defaults
   store.initializeStore()
 
+  if (store.heroSlides && store.heroSlides.length) {
+    activeSlide.value = store.heroSlides[0].name
+  }
+
   // Ambil data jumlah pengunjung asli dari API
   fetch('https://countapi.mileshilliard.com/api/v1/hit/website-agraabhinayaperkasa-visitors')
     .then((res) => res.json())

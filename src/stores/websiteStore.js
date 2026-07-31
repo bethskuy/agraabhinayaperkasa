@@ -25,6 +25,148 @@ const defaultSolutions = [
   { id: 8, name: 'Plafon', description: 'Atap Indah, Ruangan Megah', icon: 'roofing', color: 'indigo' }
 ]
 
+const defaultHeroSlides = [
+  {
+    name: 'konstruksi',
+    title: 'Pembangunan Gedung & <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-600">Rumah Berkualitas</span>',
+    subtitle: 'Mulai dari pondasi hingga finishing akhir, kami membangun dengan struktur kokoh, material terbaik, dan pengawasan profesional dari tim ahli kami.',
+    image: 'images/construction_hero.png'
+  },
+  {
+    name: 'renovasi',
+    title: 'Renovasi Rumah & Ruko <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-600">Secara Transparan</span>',
+    subtitle: 'Perbaikan kebocoran, pengecatan ulang, perluasan lantai, hingga sekat interior ruang dengan rincian Rencana Anggaran Biaya (RAB) yang transparan dan jujur.',
+    image: 'images/renovation_hero.png'
+  },
+  {
+    name: 'concrete',
+    title: 'Lantai Beton Dekoratif <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-600">Motif Batu</span>',
+    subtitle: 'Solusi lantai carport, teras, halaman, dan pedestrian yang indah bermotif batu alam dengan daya tahan beton cor yang kokoh.',
+    image: 'images/stamp_concrete_hero.png'
+  }
+]
+
+const defaultVisiMisi = {
+  visi: 'Menjadi perusahaan General Contractor dan General Supplier yang profesional, terpercaya, dan berdaya saing, serta berkontribusi dalam pembangunan berkelanjutan di Indonesia',
+  misi: [
+    'Memberikan layanan berkualitas dan tepat waktu',
+    'Mengutamakan keselamatan kerja dan mutu',
+    'Meningkatkan kompetensi SDM',
+    'Menjaga kepercayaan dan kepuasan klien'
+  ]
+}
+
+const defaultAboutTitle = 'General Contractor & Supplier PT Agra Abhinaya Perkasa'
+const defaultAboutText = 'PT AGRA ABHINAYA PERKASA adalah perusahaan yang bergerak di bidang General Contractor dan General Supplier, didirikan pada tahun 2022.\n\nKami menyediakan layanan pelaksanaan konstruksi serta pengadaan barang dan material pendukung proyek dengan mengutamakan kualitas, ketepatan waktu, dan keselamatan kerja.\n\nDengan dukungan sumber daya manusia yang kompeten dan manajemen yang profesional, PT AGRA ABHINAYA PERKASA berkomitmen menjadi mitra terpercaya bagi klien dari sektor swasta maupun pemerintah.'
+
+const defaultCompanyStats = [
+  {
+    icon: 'map',
+    title: 'Proyek Selesai',
+    desc: 'Berbagai proyek konstruksi rumah mewah, ruko, gedung, dan perkerasan jalan di area Jabodetabek.'
+  },
+  {
+    icon: 'assignment_turned_in',
+    title: 'Kepuasan Klien',
+    desc: 'Mengutamakan kualitas material terbaik, pengawasan ketat, serta rencana anggaran biaya yang transparan.'
+  },
+  {
+    icon: 'gradient',
+    title: 'Stamp Concrete',
+    desc: 'Pakar pengerjaan lantai beton dekoratif bermotif batu alam dan kayu yang kokoh, berestetika tinggi, dan awet.'
+  }
+]
+
+const defaultOfficeSlides = [
+  {
+    image: 'images/halamandepan.jpeg',
+    title: 'Halaman Depan Kantor',
+    desc: 'Area halaman dan akses masuk utama kantor pusat PT Agra Abhinaya Perkasa yang bersih, rapi, dan berlokasi strategis di Cikarang Timur.'
+  },
+  {
+    image: 'images/ruang meeting.jpeg',
+    title: 'Ruang Rapat & Kolaborasi',
+    desc: 'Ruang meeting yang representatif untuk berdiskusi dengan klien, membahas detail teknis gambar kerja, serta visualisasi rencana pembangunan.'
+  },
+  {
+    image: 'images/ruangadmin.jpeg',
+    title: 'Ruang Admin & Operasional',
+    desc: 'Area operasional administrasi untuk pengelolaan dokumen proyek, estimasi anggaran biaya (RAB), dan layanan pelanggan.'
+  },
+  {
+    image: 'images/ruangkoridor.jpeg',
+    title: 'Ruang Koridor Kantor',
+    desc: 'Koridor penghubung antar ruangan kerja di dalam kantor pusat kami yang bersih dan tertata rapi demi kenyamanan aktivitas harian.'
+  }
+]
+
+const defaultAdvantagesBubble = 'Halo! Saya siap membantu mewujudkan proyek impian Anda dengan kualitas terbaik. Yuk, lihat keunggulan kami di samping!'
+const defaultAdvantagesMascot = 'images/mascot_illustration.jpg'
+const defaultAdvantagesList = [
+  {
+    icon: 'verified_user',
+    title: 'Profesional & Berpengalaman',
+    desc: 'Didukung tim ahli teknik sipil dan arsitek profesional yang berdedikasi tinggi.'
+  },
+  {
+    icon: 'schedule',
+    title: 'Kualitas & Ketepatan Waktu',
+    desc: 'Menjamin mutu material konstruksi standar SNI dengan jadwal pengerjaan yang terencana rapi.'
+  },
+  {
+    icon: 'health_and_safety',
+    title: 'Komitmen Keselamatan Kerja (K3)',
+    desc: 'Keselamatan dan kesehatan kerja menjadi prioritas utama dalam seluruh aktivitas proyek.'
+  },
+  {
+    icon: 'task_alt',
+    title: 'Manajemen Proyek yang Terstruktur',
+    desc: 'Perencanaan, pelaksanaan, dan pengawasan proyek dilakukan secara sistematis dan terkontrol.'
+  },
+  {
+    icon: 'handshake',
+    title: 'Mitra yang Dapat Dipercaya',
+    desc: 'Kami membangun hubungan kerja jangka panjang berdasarkan kepercayaan dan komunikasi yang baik dengan klien.'
+  }
+]
+
+const defaultServicesTitle = 'Solusi Konstruksi Terbaik Untuk Kebutuhan Anda'
+const defaultServicesList = [
+  {
+    title: 'Konstruksi',
+    desc: 'Agra melayani pembangunan baru rumah, ruko, gedung, dan gudang dengan struktur kokoh, material teruji, serta pengawasan mandor berpengalaman.',
+    image: 'images/kontruksi.png',
+    detailTitle: 'Konstruksi',
+    detailDesc: 'Melayani pembangunan baru dari nol untuk rumah tinggal, ruko komersial, gedung perkantoran, dan gudang industri dengan standar mutu tinggi.',
+    bulletsText: 'Struktur SNI Kokoh\nRAB Transparan\nArsitek & Sipil Profesional',
+    link: '/konstruksi',
+    badge: '',
+    activeBg: 'bg-[#0B192C]'
+  },
+  {
+    title: 'Borongan',
+    desc: 'Agra menyediakan solusi layanan borongan menyeluruh untuk kelancaran pembangunan dan renovasi besar agar prosesnya jadi mudah.',
+    image: 'images/borongan.png',
+    detailTitle: 'Borongan',
+    detailDesc: 'Mengerjakan perbaikan bangunan secara borongan untuk rumah, kantor, ruko, apartemen dan lainnya. Termasuk survey + jasa + material + pengawasan.',
+    bulletsText: 'Harga Transparan\nBertanggung jawab\nBergaransi',
+    link: '/borongan',
+    badge: 'Full Service',
+    activeBg: 'bg-[#4E201B]'
+  },
+  {
+    title: 'Tukang Harian',
+    desc: 'Agra menyediakan solusi perbaikan rumah terencana oleh tenaga tukang berpengalaman agar kamu dan keluarga dapat hidup nyaman.',
+    image: 'images/harian.png',
+    detailTitle: 'Tukang Harian',
+    detailDesc: 'Penyediaan tenaga tukang terampil harian untuk perbaikan kecil/besar, perapihan dinding, kusen pintu, pipa bocor, instalasi listrik, dan lainnya.',
+    bulletsText: 'Tenaga Tukang Profesional\nHarga Flat Transparan\nTanpa Minimum Order',
+    link: '/tukang-harian',
+    badge: '',
+    activeBg: 'bg-[#6B1D1D]'
+  }
+]
+
 const autoAssignIconAndColor = (name) => {
   const cleanName = (name || '').toLowerCase()
   if (cleanName.includes('bocor') || cleanName.includes('kebocoran') || cleanName.includes('leak')) {
@@ -57,35 +199,8 @@ const autoAssignIconAndColor = (name) => {
 export const useWebsiteStore = defineStore('websiteStore', {
   state: () => ({
     initialized: false,
-    heroSlides: [
-      {
-        name: 'konstruksi',
-        title: 'Pembangunan Gedung & <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-600">Rumah Berkualitas</span>',
-        subtitle: 'Mulai dari pondasi hingga finishing akhir, kami membangun dengan struktur kokoh, material terbaik, dan pengawasan profesional dari tim ahli kami.',
-        image: 'images/construction_hero.png'
-      },
-      {
-        name: 'renovasi',
-        title: 'Renovasi Rumah & Ruko <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-600">Secara Transparan</span>',
-        subtitle: 'Perbaikan kebocoran, pengecatan ulang, perluasan lantai, hingga sekat interior ruang dengan rincian Rencana Anggaran Biaya (RAB) yang transparan dan jujur.',
-        image: 'images/renovation_hero.png'
-      },
-      {
-        name: 'concrete',
-        title: 'Lantai Beton Dekoratif <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-600">Motif Batu</span>',
-        subtitle: 'Solusi lantai carport, teras, halaman, dan pedestrian yang indah bermotif batu alam dengan daya tahan beton cor yang kokoh.',
-        image: 'images/stamp_concrete_hero.png'
-      }
-    ],
-    visiMisi: {
-      visi: 'Menjadi perusahaan General Contractor dan General Supplier yang profesional, terpercaya, dan berdaya saing, serta berkontribusi dalam pembangunan berkelanjutan di Indonesia',
-      misi: [
-        'Memberikan layanan berkualitas dan tepat waktu',
-        'Mengutamakan keselamatan kerja dan mutu',
-        'Meningkatkan kompetensi SDM',
-        'Menjaga kepercayaan dan kepuasan klien'
-      ]
-    },
+    heroSlides: [...defaultHeroSlides],
+    visiMisi: { ...defaultVisiMisi },
     portfolioItems: [],
     clients: [...defaultClients],
     reviews: [
@@ -119,112 +234,15 @@ export const useWebsiteStore = defineStore('websiteStore', {
       }
     ],
     solutions: [...defaultSolutions],
-    aboutTitle: 'General Contractor & Supplier PT Agra Abhinaya Perkasa',
-    aboutText: 'PT AGRA ABHINAYA PERKASA adalah perusahaan yang bergerak di bidang General Contractor dan General Supplier, didirikan pada tahun 2022.\n\nKami menyediakan layanan pelaksanaan konstruksi serta pengadaan barang dan material pendukung proyek dengan mengutamakan kualitas, ketepatan waktu, dan keselamatan kerja.\n\nDengan dukungan sumber daya manusia yang kompeten dan manajemen yang profesional, PT AGRA ABHINAYA PERKASA berkomitmen menjadi mitra terpercaya bagi klien dari sektor swasta maupun pemerintah.',
-    companyStats: [
-      {
-        icon: 'map',
-        title: 'Proyek Selesai',
-        desc: 'Berbagai proyek konstruksi rumah mewah, ruko, gedung, dan perkerasan jalan di area Jabodetabek.'
-      },
-      {
-        icon: 'assignment_turned_in',
-        title: 'Kepuasan Klien',
-        desc: 'Mengutamakan kualitas material terbaik, pengawasan ketat, serta rencana anggaran biaya yang transparan.'
-      },
-      {
-        icon: 'gradient',
-        title: 'Stamp Concrete',
-        desc: 'Pakar pengerjaan lantai beton dekoratif bermotif batu alam dan kayu yang kokoh, berestetika tinggi, dan awet.'
-      }
-    ],
-    officeSlides: [
-      {
-        image: 'images/halamandepan.jpeg',
-        title: 'Halaman Depan Kantor',
-        desc: 'Area halaman dan akses masuk utama kantor pusat PT Agra Abhinaya Perkasa yang bersih, rapi, dan berlokasi strategis di Cikarang Timur.'
-      },
-      {
-        image: 'images/ruang meeting.jpeg',
-        title: 'Ruang Rapat & Kolaborasi',
-        desc: 'Ruang meeting yang representatif untuk berdiskusi dengan klien, membahas detail teknis gambar kerja, serta visualisasi rencana pembangunan.'
-      },
-      {
-        image: 'images/ruangadmin.jpeg',
-        title: 'Ruang Admin & Operasional',
-        desc: 'Area operasional administrasi untuk pengelolaan dokumen proyek, estimasi anggaran biaya (RAB), dan layanan pelanggan.'
-      },
-      {
-        image: 'images/ruangkoridor.jpeg',
-        title: 'Ruang Koridor Kantor',
-        desc: 'Koridor penghubung antar ruangan kerja di dalam kantor pusat kami yang bersih dan tertata rapi demi kenyamanan aktivitas harian.'
-      }
-    ],
-    advantagesBubble: 'Halo! Saya siap membantu mewujudkan proyek impian Anda dengan kualitas terbaik. Yuk, lihat keunggulan kami di samping!',
-    advantagesMascot: 'images/mascot_illustration.jpg',
-    advantagesList: [
-      {
-        icon: 'verified_user',
-        title: 'Profesional & Berpengalaman',
-        desc: 'Didukung tim ahli teknik sipil dan arsitek profesional yang berdedikasi tinggi.'
-      },
-      {
-        icon: 'schedule',
-        title: 'Kualitas & Ketepatan Waktu',
-        desc: 'Menjamin mutu material konstruksi standar SNI dengan jadwal pengerjaan yang terencana rapi.'
-      },
-      {
-        icon: 'health_and_safety',
-        title: 'Komitmen Keselamatan Kerja (K3)',
-        desc: 'Keselamatan dan kesehatan kerja menjadi prioritas utama dalam seluruh aktivitas proyek.'
-      },
-      {
-        icon: 'task_alt',
-        title: 'Manajemen Proyek yang Terstruktur',
-        desc: 'Perencanaan, pelaksanaan, dan pengawasan proyek dilakukan secara sistematis dan terkontrol.'
-      },
-      {
-        icon: 'handshake',
-        title: 'Mitra yang Dapat Dipercaya',
-        desc: 'Kami membangun hubungan kerja jangka panjang berdasarkan kepercayaan dan komunikasi yang baik dengan klien.'
-      }
-    ],
-    servicesTitle: 'Solusi Konstruksi Terbaik Untuk Kebutuhan Anda',
-    servicesList: [
-      {
-        title: 'Konstruksi',
-        desc: 'Agra melayani pembangunan baru rumah, ruko, gedung, dan gudang dengan struktur kokoh, material teruji, serta pengawasan mandor berpengalaman.',
-        image: 'images/kontruksi.png',
-        detailTitle: 'Konstruksi',
-        detailDesc: 'Melayani pembangunan baru dari nol untuk rumah tinggal, ruko komersial, gedung perkantoran, dan gudang industri dengan standar mutu tinggi.',
-        bulletsText: 'Struktur SNI Kokoh\nRAB Transparan\nArsitek & Sipil Profesional',
-        link: '/konstruksi',
-        badge: '',
-        activeBg: 'bg-[#0B192C]'
-      },
-      {
-        title: 'Borongan',
-        desc: 'Agra menyediakan solusi layanan borongan menyeluruh untuk kelancaran pembangunan dan renovasi besar agar prosesnya jadi mudah.',
-        image: 'images/borongan.png',
-        detailTitle: 'Borongan',
-        detailDesc: 'Mengerjakan perbaikan bangunan secara borongan untuk rumah, kantor, ruko, apartemen dan lainnya. Termasuk survey + jasa + material + pengawasan.',
-        bulletsText: 'Harga Transparan\nBertanggung jawab\nBergaransi',
-        link: '/borongan',
-        badge: 'Full Service',
-        activeBg: 'bg-[#4E201B]'
-      },
-      {
-        title: 'Tukang Harian',
-        desc: 'Agra menyediakan solusi perbaikan rumah terencana oleh tenaga tukang berpengalaman agar kamu dan keluarga dapat hidup nyaman.',
-        image: 'images/harian.png',
-        detailTitle: 'Tukang Harian',
-        detailDesc: 'Penyediaan tenaga tukang terampil harian untuk perbaikan kecil/besar, perapihan dinding, kusen pintu, pipa bocor, instalasi listrik, dan lainnya.',
-        bulletsText: 'Tenaga Tukang Profesional\nHarga Flat Transparan\nTanpa Minimum Order',
-        link: '/tukang-harian',
-        badge: '',
-        activeBg: 'bg-[#6B1D1D]'
-      }
-    ],
+    aboutTitle: defaultAboutTitle,
+    aboutText: defaultAboutText,
+    companyStats: [...defaultCompanyStats],
+    officeSlides: [...defaultOfficeSlides],
+    advantagesBubble: defaultAdvantagesBubble,
+    advantagesMascot: defaultAdvantagesMascot,
+    advantagesList: [...defaultAdvantagesList],
+    servicesTitle: defaultServicesTitle,
+    servicesList: [...defaultServicesList],
     contactInfo: {
       phone: '+62 856-9566-0902',
       phoneRaw: '6285695660902',
@@ -266,6 +284,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
       const stored = localStorage.getItem('website-agraabhinayaperkasa-store-data')
       let localClients = []
       let localSolutions = []
+      let localPortfolio = []
       if (stored) {
         try {
           const parsed = JSON.parse(stored)
@@ -282,8 +301,11 @@ export const useWebsiteStore = defineStore('websiteStore', {
           this.visiMisi = parsed.visiMisi || this.visiMisi
           this.portfolioItems = parsed.portfolioItems || this.portfolioItems
           this.clients = parsed.clients || this.clients
+          if (parsed && parsed.portfolioItems && parsed.portfolioItems.length) {
+            localPortfolio = parsed.portfolioItems
+          }
           this.reviews = parsed.reviews || this.reviews
-          
+
           this.aboutTitle = parsed.aboutTitle && parsed.aboutTitle.trim() !== '' ? parsed.aboutTitle : this.aboutTitle
           this.aboutText = parsed.aboutText && parsed.aboutText.trim() !== '' ? parsed.aboutText : this.aboutText
           this.companyStats = parsed.companyStats && parsed.companyStats.length ? parsed.companyStats : this.companyStats
@@ -302,13 +324,13 @@ export const useWebsiteStore = defineStore('websiteStore', {
             this.socialLinks.tiktok = 'https://www.tiktok.com/@agraabhinayaperkasa'
           }
           this.visitorCount = typeof parsed.visitorCount === 'number' ? parsed.visitorCount : this.visitorCount
-          
+
           this.artisansSubHeader = parsed.artisansSubHeader && parsed.artisansSubHeader.trim() !== '' ? parsed.artisansSubHeader : this.artisansSubHeader
           this.artisansTitle = parsed.artisansTitle && parsed.artisansTitle.trim() !== '' ? parsed.artisansTitle : this.artisansTitle
           this.artisansDesc = parsed.artisansDesc && parsed.artisansDesc.trim() !== '' ? parsed.artisansDesc : this.artisansDesc
           this.artisansSlides = parsed.artisansSlides && parsed.artisansSlides.length ? parsed.artisansSlides : this.artisansSlides
           this.artisansPoints = parsed.artisansPoints && parsed.artisansPoints.length ? parsed.artisansPoints : this.artisansPoints
-          
+
           if (!this.companyStats || !this.companyStats.length) {
             this.companyStats = [
               {
@@ -418,14 +440,14 @@ export const useWebsiteStore = defineStore('websiteStore', {
             } else {
               const wrongNames = ['PT Waskita Karya', 'PT Wijaya Karya', 'PT Adhi Karya']
               const rawDbClients = data || []
-              
+
               // Filter out wrong names and any default client names
               const dbClients = rawDbClients.filter(c => {
                 const isWrong = wrongNames.includes(c.name)
                 const isDefault = defaultClients.some(d => d.name.toLowerCase() === c.name.toLowerCase())
                 return !isWrong && !isDefault
               })
-              
+
               // Trigger background delete for any wrong or duplicate default clients in Supabase
               const toDelete = rawDbClients.filter(c => {
                 return wrongNames.includes(c.name) || defaultClients.some(d => d.name.toLowerCase() === c.name.toLowerCase())
@@ -536,7 +558,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
                 color: s.color
               }))
               await supabase.from('solutions').insert(seedData)
-              
+
               // Refetch
               const { data: seededData } = await supabase
                 .from('solutions')
@@ -551,6 +573,30 @@ export const useWebsiteStore = defineStore('websiteStore', {
           } catch (err) {
             console.error('Failed to load solutions from Supabase:', err)
           }
+
+          // Fetch and migrate portfolio items from Supabase
+          await this.fetchAndMigratePortfolio(localPortfolio)
+
+          // Fetch and migrate banners from Supabase
+          await this.fetchAndMigrateBanners()
+
+          // Fetch and migrate company profile from Supabase
+          await this.fetchAndMigrateCompanyProfile()
+
+          // Fetch and migrate visi_misi from Supabase
+          await this.fetchAndMigrateVisiMisi()
+
+          // Fetch and migrate office slides from Supabase
+          await this.fetchAndMigrateOfficeSlides()
+
+          // Fetch and migrate advantages from Supabase
+          await this.fetchAndMigrateAdvantages()
+
+          // Fetch and migrate services from Supabase
+          await this.fetchAndMigrateServices()
+
+          // Fetch and migrate artisans from Supabase
+          await this.fetchAndMigrateArtisans()
           
           this.saveStore()
           this.initialized = true
@@ -602,14 +648,14 @@ export const useWebsiteStore = defineStore('websiteStore', {
         } else {
           const wrongNames = ['PT Waskita Karya', 'PT Wijaya Karya', 'PT Adhi Karya']
           const rawDbClients = data || []
-          
+
           // Filter out wrong names and any default client names
           const dbClients = rawDbClients.filter(c => {
             const isWrong = wrongNames.includes(c.name)
             const isDefault = defaultClients.some(d => d.name.toLowerCase() === c.name.toLowerCase())
             return !isWrong && !isDefault
           })
-          
+
           // Trigger background delete for any wrong or duplicate default clients in Supabase
           const toDelete = rawDbClients.filter(c => {
             return wrongNames.includes(c.name) || defaultClients.some(d => d.name.toLowerCase() === c.name.toLowerCase())
@@ -720,7 +766,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
             color: s.color
           }))
           await supabase.from('solutions').insert(seedData)
-          
+
           // Refetch
           const { data: seededData } = await supabase
             .from('solutions')
@@ -735,6 +781,30 @@ export const useWebsiteStore = defineStore('websiteStore', {
       } catch (err) {
         console.error('Failed to load solutions from Supabase:', err)
       }
+
+      // Fetch and migrate portfolio items from Supabase
+      await this.fetchAndMigratePortfolio(localPortfolio)
+
+      // Fetch and migrate banners from Supabase
+      await this.fetchAndMigrateBanners()
+
+      // Fetch and migrate company profile from Supabase
+      await this.fetchAndMigrateCompanyProfile()
+
+      // Fetch and migrate visi_misi from Supabase
+      await this.fetchAndMigrateVisiMisi()
+
+      // Fetch and migrate office slides from Supabase
+      await this.fetchAndMigrateOfficeSlides()
+
+      // Fetch and migrate advantages from Supabase
+      await this.fetchAndMigrateAdvantages()
+
+      // Fetch and migrate services from Supabase
+      await this.fetchAndMigrateServices()
+
+      // Fetch and migrate artisans from Supabase
+      await this.fetchAndMigrateArtisans()
 
       this.initialized = true
       this.saveStore()
@@ -780,6 +850,371 @@ export const useWebsiteStore = defineStore('websiteStore', {
     },
 
     // Hero actions
+    async fetchAndMigrateBanners() {
+      try {
+        const { data, error } = await supabase
+          .from('banners')
+          .select('*')
+          .order('id', { ascending: true })
+        if (error) {
+          console.error('Error fetching banners from Supabase:', error)
+        } else if (data && data.length) {
+          this.heroSlides = data.map(b => ({
+            id: b.id,
+            name: b.name,
+            title: b.title,
+            subtitle: b.subtitle,
+            image: b.image
+          }))
+        } else {
+          console.log('Seeding default banners to Supabase...')
+          const seedData = defaultHeroSlides.map(s => ({
+            name: s.name,
+            title: s.title,
+            subtitle: s.subtitle,
+            image: s.image
+          }))
+          await supabase.from('banners').insert(seedData)
+          
+          const { data: seededData } = await supabase
+            .from('banners')
+            .select('*')
+            .order('id', { ascending: true })
+          if (seededData && seededData.length) {
+            this.heroSlides = seededData.map(b => ({
+              id: b.id,
+              name: b.name,
+              title: b.title,
+              subtitle: b.subtitle,
+              image: b.image
+            }))
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load banners from Supabase:', err)
+      }
+    },
+
+    async updateHeroSlides() {
+      try {
+        // Delete all rows in banners table using the guaranteed 'name' column
+        const { error: deleteError } = await supabase
+          .from('banners')
+          .delete()
+          .neq('name', 'dummy_value_to_delete_all')
+        if (deleteError) {
+          console.error('Error deleting banners in Supabase:', deleteError)
+        }
+
+        // Re-insert all current slides
+        if (this.heroSlides.length) {
+          const insertData = this.heroSlides.map(s => ({
+            name: s.name,
+            title: s.title,
+            subtitle: s.subtitle,
+            image: s.image
+          }))
+          const { error: insertError } = await supabase
+            .from('banners')
+            .insert(insertData)
+          if (insertError) {
+            console.error('Error inserting banners in Supabase:', insertError)
+          }
+        }
+        
+        // Refetch to sync state
+        const { data } = await supabase
+          .from('banners')
+          .select('*')
+          .order('id', { ascending: true })
+        if (data) {
+          this.heroSlides = data.map(b => ({
+            id: b.id,
+            name: b.name,
+            title: b.title,
+            subtitle: b.subtitle,
+            image: b.image
+          }))
+        }
+      } catch (err) {
+        console.error('Failed to update hero slides in Supabase:', err)
+      }
+      this.saveStore()
+    },
+
+    async fetchAndMigrateCompanyProfile() {
+      try {
+        const { data, error } = await supabase
+          .from('company_profile')
+          .select('*')
+        if (error) {
+          console.error('Error fetching company profile from Supabase:', error)
+        } else if (data && data.length) {
+          const titleRow = data.find(r => r.key === 'about_title')
+          const textRow = data.find(r => r.key === 'about_text')
+          const statsRow = data.find(r => r.key === 'company_stats')
+          
+          if (titleRow) this.aboutTitle = titleRow.value
+          if (textRow) this.aboutText = textRow.value
+          if (statsRow) this.companyStats = statsRow.value
+        } else {
+          console.log('Seeding default company profile to Supabase...')
+          const seedData = [
+            { key: 'about_title', value: this.aboutTitle },
+            { key: 'about_text', value: this.aboutText },
+            { key: 'company_stats', value: this.companyStats }
+          ]
+          await supabase.from('company_profile').insert(seedData)
+        }
+      } catch (err) {
+        console.error('Failed to load company profile from Supabase:', err)
+      }
+    },
+
+    async updateCompanyProfile() {
+      try {
+        const { error } = await supabase
+          .from('company_profile')
+          .upsert([
+            { key: 'about_title', value: this.aboutTitle },
+            { key: 'about_text', value: this.aboutText },
+            { key: 'company_stats', value: this.companyStats }
+          ])
+        if (error) {
+          console.error('Error updating company profile in Supabase:', error)
+        }
+      } catch (err) {
+        console.error('Failed to update company profile in Supabase:', err)
+      }
+      this.saveStore()
+    },
+
+    async fetchAndMigrateAdvantages() {
+      try {
+        const { data, error } = await supabase
+          .from('advantages')
+          .select('*')
+        if (error) {
+          console.error('Error fetching advantages from Supabase:', error)
+        } else if (data && data.length) {
+          const bubbleRow = data.find(r => r.key === 'bubble')
+          const mascotRow = data.find(r => r.key === 'mascot')
+          const listRow = data.find(r => r.key === 'list')
+          
+          if (bubbleRow) this.advantagesBubble = bubbleRow.value
+          if (mascotRow) this.advantagesMascot = mascotRow.value
+          if (listRow) this.advantagesList = listRow.value
+        } else {
+          console.log('Seeding default advantages to Supabase...')
+          const seedData = [
+            { key: 'bubble', value: this.advantagesBubble },
+            { key: 'mascot', value: this.advantagesMascot },
+            { key: 'list', value: this.advantagesList }
+          ]
+          await supabase.from('advantages').insert(seedData)
+        }
+      } catch (err) {
+        console.error('Failed to load advantages from Supabase:', err)
+      }
+    },
+
+    async updateAdvantagesDB() {
+      try {
+        const { error } = await supabase
+          .from('advantages')
+          .upsert([
+            { key: 'bubble', value: this.advantagesBubble },
+            { key: 'mascot', value: this.advantagesMascot },
+            { key: 'list', value: this.advantagesList }
+          ])
+        if (error) {
+          console.error('Error updating advantages in Supabase:', error)
+        }
+      } catch (err) {
+        console.error('Failed to update advantages in Supabase:', err)
+      }
+      this.saveStore()
+    },
+
+    async fetchAndMigrateServices() {
+      try {
+        const { data, error } = await supabase
+          .from('services')
+          .select('*')
+          .order('id', { ascending: true })
+        if (error) {
+          console.error('Error fetching services from Supabase:', error)
+        } else if (data && data.length) {
+          // Set section title from the first row
+          if (data[0].section_title) {
+            this.servicesTitle = data[0].section_title
+          }
+          this.servicesList = data.map(s => ({
+            id: s.id,
+            title: s.title,
+            desc: s.desc,
+            image: s.image,
+            detailTitle: s.detail_title,
+            detailDesc: s.detail_desc,
+            bulletsText: s.bullets_text,
+            link: s.link,
+            badge: s.badge,
+            activeBg: s.active_bg
+          }))
+        } else {
+          console.log('Seeding default services to Supabase...')
+          const seedData = defaultServicesList.map(s => ({
+            title: s.title,
+            desc: s.desc,
+            image: s.image,
+            detail_title: s.detailTitle,
+            detail_desc: s.detailDesc,
+            bullets_text: s.bulletsText,
+            link: s.link,
+            badge: s.badge,
+            active_bg: s.activeBg,
+            section_title: this.servicesTitle
+          }))
+          await supabase.from('services').insert(seedData)
+          
+          const { data: seededData } = await supabase
+            .from('services')
+            .select('*')
+            .order('id', { ascending: true })
+          if (seededData && seededData.length) {
+            this.servicesList = seededData.map(s => ({
+              id: s.id,
+              title: s.title,
+              desc: s.desc,
+              image: s.image,
+              detailTitle: s.detail_title,
+              detailDesc: s.detail_desc,
+              bulletsText: s.bullets_text,
+              link: s.link,
+              badge: s.badge,
+              activeBg: s.active_bg
+            }))
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load services from Supabase:', err)
+      }
+    },
+
+    async updateServicesDB() {
+      try {
+        // Delete all rows in services table
+        const { error: deleteError } = await supabase
+          .from('services')
+          .delete()
+          .neq('id', 0)
+        if (deleteError) {
+          console.error('Error deleting services in Supabase:', deleteError)
+        }
+        
+        // Re-insert all current services, adding section_title to all rows
+        if (this.servicesList.length) {
+          const insertData = this.servicesList.map(s => ({
+            title: s.title,
+            desc: s.desc,
+            image: s.image,
+            detail_title: s.detailTitle,
+            detail_desc: s.detailDesc,
+            bullets_text: s.bulletsText,
+            link: s.link,
+            badge: s.badge,
+            active_bg: s.activeBg,
+            section_title: this.servicesTitle
+          }))
+          const { error: insertError } = await supabase
+            .from('services')
+            .insert(insertData)
+          if (insertError) {
+            console.error('Error inserting services in Supabase:', insertError)
+          }
+        }
+        
+        // Refetch to sync state
+        const { data } = await supabase
+          .from('services')
+          .select('*')
+          .order('id', { ascending: true })
+        if (data) {
+          this.servicesList = data.map(s => ({
+            id: s.id,
+            title: s.title,
+            desc: s.desc,
+            image: s.image,
+            detailTitle: s.detail_title,
+            detailDesc: s.detail_desc,
+            bulletsText: s.bullets_text,
+            link: s.link,
+            badge: s.badge,
+            activeBg: s.active_bg
+          }))
+        }
+      } catch (err) {
+        console.error('Failed to update services in Supabase:', err)
+      }
+      this.saveStore()
+    },
+
+    async fetchAndMigrateArtisans() {
+      try {
+        const { data, error } = await supabase
+          .from('artisans')
+          .select('*')
+        if (error) {
+          console.error('Error fetching artisans from Supabase:', error)
+        } else if (data && data.length) {
+          const subHeaderRow = data.find(r => r.key === 'sub_header')
+          const titleRow = data.find(r => r.key === 'title')
+          const descRow = data.find(r => r.key === 'desc')
+          const slidesRow = data.find(r => r.key === 'slides')
+          const pointsRow = data.find(r => r.key === 'points')
+          
+          if (subHeaderRow) this.artisansSubHeader = subHeaderRow.value
+          if (titleRow) this.artisansTitle = titleRow.value
+          if (descRow) this.artisansDesc = descRow.value
+          if (slidesRow) this.artisansSlides = slidesRow.value
+          if (pointsRow) this.artisansPoints = pointsRow.value
+        } else {
+          console.log('Seeding default artisans to Supabase...')
+          const seedData = [
+            { key: 'sub_header', value: this.artisansSubHeader },
+            { key: 'title', value: this.artisansTitle },
+            { key: 'desc', value: this.artisansDesc },
+            { key: 'slides', value: this.artisansSlides },
+            { key: 'points', value: this.artisansPoints }
+          ]
+          await supabase.from('artisans').insert(seedData)
+        }
+      } catch (err) {
+        console.error('Failed to load artisans from Supabase:', err)
+      }
+    },
+
+    async updateArtisansDB() {
+      try {
+        const { error } = await supabase
+          .from('artisans')
+          .upsert([
+            { key: 'sub_header', value: this.artisansSubHeader },
+            { key: 'title', value: this.artisansTitle },
+            { key: 'desc', value: this.artisansDesc },
+            { key: 'slides', value: this.artisansSlides },
+            { key: 'points', value: this.artisansPoints }
+          ])
+        if (error) {
+          console.error('Error updating artisans in Supabase:', error)
+        }
+      } catch (err) {
+        console.error('Failed to update artisans in Supabase:', err)
+      }
+      this.saveStore()
+    },
+
+
     updateHeroSlide(index, slideData) {
       if (this.heroSlides[index]) {
         this.heroSlides[index] = { ...this.heroSlides[index], ...slideData }
@@ -788,34 +1223,368 @@ export const useWebsiteStore = defineStore('websiteStore', {
     },
 
     // Visi Misi actions
+    async fetchAndMigrateVisiMisi() {
+      try {
+        const { data, error } = await supabase
+          .from('visi_misi')
+          .select('*')
+          .eq('id', 1)
+          .single()
+        if (error && error.code !== 'PGRST116') {
+          console.error('Error fetching visi_misi from Supabase:', error)
+        } else if (data) {
+          this.visiMisi = {
+            visi: data.visi,
+            misi: data.misi
+          }
+        } else {
+          console.log('Seeding default visi_misi to Supabase...')
+          await supabase.from('visi_misi').insert({
+            id: 1,
+            visi: this.visiMisi.visi,
+            misi: this.visiMisi.misi
+          })
+        }
+      } catch (err) {
+        console.error('Failed to load visi_misi from Supabase:', err)
+      }
+    },
+
+    async updateVisiMisiDB() {
+      try {
+        const { error } = await supabase
+          .from('visi_misi')
+          .upsert({
+            id: 1,
+            visi: this.visiMisi.visi,
+            misi: this.visiMisi.misi
+          })
+        if (error) {
+          console.error('Error updating visi_misi in Supabase:', error)
+        }
+      } catch (err) {
+        console.error('Failed to update visi_misi in Supabase:', err)
+      }
+      this.saveStore()
+    },
+
     updateVisiMisi(data) {
       this.visiMisi = { ...this.visiMisi, ...data }
       this.saveStore()
     },
 
-    // Portfolio actions
-    addPortfolioItem(item) {
-      const newId = this.portfolioItems.length
-        ? Math.max(...this.portfolioItems.map(p => p.id)) + 1
-        : 0
-      this.portfolioItems.unshift({
-        id: newId,
-        ...item
-      })
-      this.saveStore()
-      return newId
-    },
-
-    updatePortfolioItem(id, updatedItem) {
-      const idx = this.portfolioItems.findIndex(p => p.id === id)
-      if (idx !== -1) {
-        this.portfolioItems[idx] = { ...this.portfolioItems[idx], ...updatedItem }
-        this.saveStore()
+    async fetchAndMigrateOfficeSlides() {
+      try {
+        const { data, error } = await supabase
+          .from('office_slides')
+          .select('*')
+          .order('id', { ascending: true })
+        if (error) {
+          console.error('Error fetching office slides from Supabase:', error)
+        } else if (data && data.length) {
+          this.officeSlides = data.map(o => ({
+            id: o.id,
+            image: o.image,
+            title: o.title,
+            desc: o.desc
+          }))
+        } else {
+          console.log('Seeding default office slides to Supabase...')
+          const seedData = defaultOfficeSlides.map(o => ({
+            image: o.image,
+            title: o.title,
+            desc: o.desc
+          }))
+          await supabase.from('office_slides').insert(seedData)
+          
+          const { data: seededData } = await supabase
+            .from('office_slides')
+            .select('*')
+            .order('id', { ascending: true })
+          if (seededData && seededData.length) {
+            this.officeSlides = seededData.map(o => ({
+              id: o.id,
+              image: o.image,
+              title: o.title,
+              desc: o.desc
+            }))
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load office slides from Supabase:', err)
       }
     },
 
-    deletePortfolioItem(id) {
-      this.portfolioItems = this.portfolioItems.filter(p => p.id !== id)
+    async updateOfficeSlidesDB() {
+      try {
+        // Delete all rows in office_slides
+        const { error: deleteError } = await supabase
+          .from('office_slides')
+          .delete()
+          .neq('id', 0)
+        if (deleteError) {
+          console.error('Error deleting office slides in Supabase:', deleteError)
+        }
+        
+        // Re-insert all current office slides
+        if (this.officeSlides.length) {
+          const insertData = this.officeSlides.map(o => ({
+            image: o.image,
+            title: o.title,
+            desc: o.desc
+          }))
+          const { error: insertError } = await supabase
+            .from('office_slides')
+            .insert(insertData)
+          if (insertError) {
+            console.error('Error inserting office slides in Supabase:', insertError)
+          }
+        }
+        
+        // Refetch to populate IDs
+        const { data } = await supabase
+          .from('office_slides')
+          .select('*')
+          .order('id', { ascending: true })
+        if (data) {
+          this.officeSlides = data.map(o => ({
+            id: o.id,
+            image: o.image,
+            title: o.title,
+            desc: o.desc
+          }))
+        }
+      } catch (err) {
+        console.error('Failed to update office slides in Supabase:', err)
+      }
+      this.saveStore()
+    },
+
+    // Portfolio actions
+    async fetchAndMigratePortfolio(localPortfolio = []) {
+      try {
+        const { data, error } = await supabase
+          .from('portfolio')
+          .select('*')
+          .order('id', { ascending: false })
+        if (error) {
+          console.error('Error fetching portfolio from Supabase:', error)
+          if (!this.portfolioItems || this.portfolioItems.length === 0) {
+            this.portfolioItems = JSON.parse(JSON.stringify(defaultPortfolioItems))
+          }
+        } else if (data && data.length) {
+          const dbPortfolio = (data || []).map(p => ({
+            id: p.id,
+            title: p.title,
+            category: p.category,
+            categoryLabel: p.categorylabel, // Map database lowercase to JS camelCase
+            location: p.location,
+            image: p.image,
+            desc: p.desc,
+            fullDesc: p.fulldesc, // Map database lowercase to JS camelCase
+            specifications: p.specifications,
+            gallery: p.gallery
+          }))
+          const userAddedLocal = localPortfolio.filter(p => {
+            const isDefaultId = Number(p.id) >= 0 && Number(p.id) <= 9
+            const isUuid = typeof p.id === 'string' && p.id.includes('-')
+            return !isDefaultId && !isUuid
+          })
+          const pendingUploads = userAddedLocal.filter(localP => {
+            return !dbPortfolio.some(dbP => dbP.title.toLowerCase() === localP.title.toLowerCase())
+          })
+          if (pendingUploads.length > 0) {
+            console.log('Migrating local portfolio items to Supabase:', pendingUploads)
+            for (const item of pendingUploads) {
+              try {
+                await supabase
+                  .from('portfolio')
+                  .insert([{
+                    title: item.title,
+                    category: item.category,
+                    categorylabel: item.categoryLabel, // Map JS camelCase to database lowercase
+                    location: item.location,
+                    image: item.image,
+                    desc: item.desc,
+                    fulldesc: item.fullDesc, // Map JS camelCase to database lowercase
+                    specifications: item.specifications,
+                    gallery: item.gallery
+                  }])
+              } catch (uploadErr) {
+                console.error('Failed to auto-migrate portfolio item:', item.title, uploadErr)
+              }
+            }
+            const { data: refreshedData } = await supabase
+              .from('portfolio')
+              .select('*')
+              .order('id', { ascending: false })
+            if (refreshedData && refreshedData.length) {
+              this.portfolioItems = refreshedData.map(p => ({
+                id: p.id,
+                title: p.title,
+                category: p.category,
+                categoryLabel: p.categorylabel,
+                location: p.location,
+                image: p.image,
+                desc: p.desc,
+                fullDesc: p.fulldesc,
+                specifications: p.specifications,
+                gallery: p.gallery
+              }))
+            } else {
+              this.portfolioItems = dbPortfolio
+            }
+          } else {
+            this.portfolioItems = dbPortfolio
+          }
+        } else {
+          console.log('Seeding default portfolio items to Supabase...')
+          const seedData = defaultPortfolioItems.map(p => ({
+            id: p.id,
+            title: p.title,
+            category: p.category,
+            categorylabel: p.categoryLabel, // Map JS camelCase to database lowercase
+            location: p.location,
+            image: p.image,
+            desc: p.desc,
+            fulldesc: p.fullDesc, // Map JS camelCase to database lowercase
+            specifications: p.specifications,
+            gallery: p.gallery
+          }))
+          await supabase.from('portfolio').insert(seedData)
+          
+          const { data: seededData } = await supabase
+            .from('portfolio')
+            .select('*')
+            .order('id', { ascending: false })
+          if (seededData && seededData.length) {
+            this.portfolioItems = seededData.map(p => ({
+              id: p.id,
+              title: p.title,
+              category: p.category,
+              categoryLabel: p.categorylabel,
+              location: p.location,
+              image: p.image,
+              desc: p.desc,
+              fullDesc: p.fulldesc,
+              specifications: p.specifications,
+              gallery: p.gallery
+            }))
+          } else {
+            this.portfolioItems = JSON.parse(JSON.stringify(defaultPortfolioItems))
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load portfolio from Supabase:', err)
+      }
+    },
+
+    async addPortfolioItem(item) {
+      try {
+        const { error } = await supabase
+          .from('portfolio')
+          .insert([
+            {
+              title: item.title,
+              category: item.category,
+              categorylabel: item.categoryLabel, // Map JS camelCase to database lowercase
+              location: item.location,
+              image: item.image,
+              desc: item.desc,
+              fulldesc: item.fullDesc, // Map JS camelCase to database lowercase
+              specifications: item.specifications,
+              gallery: item.gallery
+            }
+          ])
+        
+        if (error) {
+          console.error('Error inserting portfolio item into Supabase:', error)
+        } else {
+          const { data } = await supabase
+            .from('portfolio')
+            .select('*')
+            .order('id', { ascending: false })
+          if (data && data.length) {
+            this.portfolioItems = data.map(p => ({
+              id: p.id,
+              title: p.title,
+              category: p.category,
+              categoryLabel: p.categorylabel,
+              location: p.location,
+              image: p.image,
+              desc: p.desc,
+              fullDesc: p.fulldesc,
+              specifications: p.specifications,
+              gallery: p.gallery
+            }))
+          }
+        }
+      } catch (err) {
+        console.error('Failed to add portfolio item to Supabase:', err)
+      }
+      this.saveStore()
+    },
+
+    async updatePortfolioItem(id, updatedItem) {
+      try {
+        const { error } = await supabase
+          .from('portfolio')
+          .update({
+            title: updatedItem.title,
+            category: updatedItem.category,
+            categorylabel: updatedItem.categoryLabel, // Map JS camelCase to database lowercase
+            location: updatedItem.location,
+            image: updatedItem.image,
+            desc: updatedItem.desc,
+            fulldesc: updatedItem.fullDesc, // Map JS camelCase to database lowercase
+            specifications: updatedItem.specifications,
+            gallery: updatedItem.gallery
+          })
+          .eq('id', id)
+        
+        if (error) {
+          console.error('Error updating portfolio item in Supabase:', error)
+        } else {
+          const { data } = await supabase
+            .from('portfolio')
+            .select('*')
+            .order('id', { ascending: false })
+          if (data && data.length) {
+            this.portfolioItems = data.map(p => ({
+              id: p.id,
+              title: p.title,
+              category: p.category,
+              categoryLabel: p.categorylabel,
+              location: p.location,
+              image: p.image,
+              desc: p.desc,
+              fullDesc: p.fulldesc,
+              specifications: p.specifications,
+              gallery: p.gallery
+            }))
+          }
+        }
+      } catch (err) {
+        console.error('Failed to update portfolio item in Supabase:', err)
+      }
+      this.saveStore()
+    },
+
+    async deletePortfolioItem(id) {
+      try {
+        const { error } = await supabase
+          .from('portfolio')
+          .delete()
+          .eq('id', id)
+        
+        if (error) {
+          console.error('Error deleting portfolio item from Supabase:', error)
+        } else {
+          this.portfolioItems = this.portfolioItems.filter(p => p.id !== id)
+        }
+      } catch (err) {
+        console.error('Failed to delete portfolio item from Supabase:', err)
+      }
       this.saveStore()
     },
 
@@ -830,7 +1599,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
               image: client.image
             }
           ])
-        
+
         if (error) {
           console.error('Error inserting client into Supabase:', error)
         } else {
@@ -879,7 +1648,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
               date: review.date
             }
           ])
-        
+
         if (error) {
           console.error('Error inserting review into Supabase:', error)
         } else {
@@ -925,7 +1694,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
         // Edit Solution
         const target = this.solutions.find(s => s.id === solution.id)
         const targetName = target ? target.name : ''
-        
+
         try {
           const { error } = await supabase
             .from('solutions')
@@ -953,7 +1722,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
           icon: solution.icon,
           color: solution.color
         }
-        
+
         try {
           const { error } = await supabase
             .from('solutions')
@@ -979,7 +1748,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
         } catch (err) {
           console.error('Failed to insert solution into Supabase:', err)
         }
-        
+
         this.solutions.push(newSol)
       }
       this.saveStore()
