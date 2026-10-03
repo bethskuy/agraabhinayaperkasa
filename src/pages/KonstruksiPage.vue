@@ -15,7 +15,7 @@
       >
         <!-- Dynamic Slides -->
         <q-carousel-slide
-          v-for="slide in slides"
+          v-for="slide in store.konstruksiHeroSlides"
           :key="slide.name"
           :name="slide.name"
           class="p-0 overflow-hidden relative"
@@ -48,7 +48,7 @@
               </p>
               <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
                 <a
-                  href="https://api.whatsapp.com/send/?phone=6285695660902&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20ingin%20konsultasi%20mengenai%20layanan%20konstruksi."
+                  :href="'https://api.whatsapp.com/send/?phone=' + store.konstruksiSupport.whatsappRaw + '&text=' + encodeURIComponent(store.konstruksiSupport.waMessage)"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-full text-center shadow-lg transition-all duration-300 hover:scale-105 no-underline flex items-center justify-center space-x-2"
@@ -88,7 +88,7 @@
       <!-- Carousel Custom Dot Indicators on top of the slide -->
       <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex items-center space-x-2.5">
         <button
-          v-for="slide in slides"
+          v-for="slide in store.konstruksiHeroSlides"
           :key="slide.name"
           @click="currentSlide = slide.name"
           class="h-2 rounded-full transition-all duration-300"
@@ -131,12 +131,10 @@
 
             <!-- Right side: Text and Button -->
             <div class="col-span-1 md:col-span-8 text-left space-y-6">
-              <h2 class="text-lg sm:text-xl md:text-2xl font-heading font-semibold text-[#0B192C] leading-tight">
-                Layanan jasa yang <span class="text-red-600 font-black">selalu tersedia dan transparan</span> untuk aset bangunan yang butuh pemeliharaan berkala
-              </h2>
+              <h2 class="text-lg sm:text-xl md:text-2xl font-heading font-semibold text-[#0B192C] leading-tight" v-html="store.konstruksiSolutionTitle"></h2>
               <div class="pt-2">
                 <a
-                  href="https://api.whatsapp.com/send/?phone=6285695660902&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20ingin%20konsultasi%20mengenai%20pemeliharaan%20aset%20bangunan."
+                  :href="'https://api.whatsapp.com/send/?phone=' + store.konstruksiSupport.whatsappRaw + '&text=' + encodeURIComponent(store.konstruksiSupport.waMessage)"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-extrabold px-8 py-3.5 rounded-full text-center shadow-lg hover:shadow-red-600/30 transition-all duration-300 hover:scale-105 no-underline"
@@ -161,7 +159,7 @@
         </svg>
       </div>
 
-      <!-- Left red side decoration (near Jagoan Cut and Fill - Row 1) -->
+      <!-- Left red side decoration -->
       <div class="absolute left-8 sm:left-24 top-[20%] pointer-events-none select-none z-20 max-md:hidden">
         <svg class="w-8 h-24 sm:w-16 sm:h-48" viewBox="0 0 60 180" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0,0 C40,30 60,67 60,90 C60,113 40,150 0,180 Z" fill="url(#red-grad-side-1)"/>
@@ -174,7 +172,7 @@
         </svg>
       </div>
 
-      <!-- Right red side decoration (near Jagoan Stamp Concrete - Row 2) -->
+      <!-- Right red side decoration -->
       <div class="absolute right-8 sm:right-24 top-[60%] pointer-events-none select-none z-20 max-md:hidden">
         <svg class="w-8 h-24 sm:w-16 sm:h-48" viewBox="0 0 60 180" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M60,0 C20,30 0,67 0,90 C0,113 20,150 60,180 Z" fill="url(#red-grad-side-2)"/>
@@ -190,41 +188,35 @@
       <div class="relative z-10 max-w-6xl mx-auto px-6 space-y-24">
         <!-- Section Title -->
         <div class="text-center">
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading scroll-animate anim-up">
-            Jagoan <span class="text-red-600">Kontruksi</span>
-          </h2>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading scroll-animate anim-up" v-html="store.konstruksiServicesTitle"></h2>
         </div>
 
-        <!-- Jagoan Cut and Fill (Image Left, Text Right) -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center max-w-5xl mx-auto">
-          <div class="md:col-span-6 flex justify-center scroll-animate anim-left">
+        <!-- Dynamic Loop Jagoan Konstruksi -->
+        <div 
+          v-for="(service, idx) in store.konstruksiServices"
+          :key="idx"
+          class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center max-w-5xl mx-auto"
+        >
+          <!-- Image Column -->
+          <div 
+            class="md:col-span-6 flex justify-center scroll-animate"
+            :class="idx % 2 === 0 ? 'anim-left' : 'md:order-2 anim-right'"
+          >
             <div class="relative w-full max-w-[480px] aspect-[16/10] rounded-[40px] overflow-hidden shadow-lg border border-slate-100/80 bg-white p-2">
               <div class="w-full h-full rounded-[32px] overflow-hidden">
-                <img src="images/cut fil.jpg" alt="Jagoan Cut and Fill" class="w-full h-full object-cover"/>
+                <img :src="service.image" :alt="service.title" class="w-full h-full object-cover"/>
               </div>
             </div>
           </div>
-          <div class="md:col-span-6 space-y-4 scroll-animate anim-right delay-150">
-            <h3 class="text-2xl font-extrabold text-[#0B192C] font-heading">Jagoan Cut and Fill</h3>
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
-              Layanan jasa cut and fill kami didukung oleh alat berat modern dan operator berpengalaman untuk meratakan, menguruk, serta memadatkan lahan proyek konstruksi Anda secara presisi. Kami memastikan elevasi tanah yang stabil dan siap bangun.
-            </p>
-          </div>
-        </div>
 
-        <!-- Jagoan Stamp Concrete (Text Left, Image Right) -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center max-w-5xl mx-auto">
-          <div class="md:col-span-6 md:order-2 flex justify-center scroll-animate anim-right">
-            <div class="relative w-full max-w-[480px] aspect-[16/10] rounded-[40px] overflow-hidden shadow-lg border border-slate-100/80 bg-white p-2">
-              <div class="w-full h-full rounded-[32px] overflow-hidden">
-                <img src="images/stamp_concrete_hero.png" alt="Jagoan Stamp Concrete" class="w-full h-full object-cover"/>
-              </div>
-            </div>
-          </div>
-          <div class="md:col-span-6 md:order-1 space-y-4 scroll-animate anim-left delay-150">
-            <h3 class="text-2xl font-extrabold text-[#0B192C] font-heading">Jagoan Stamp Concrete</h3>
+          <!-- Text Column -->
+          <div 
+            class="md:col-span-6 space-y-4 scroll-animate"
+            :class="idx % 2 === 0 ? 'anim-right delay-150' : 'md:order-1 anim-left delay-150'"
+          >
+            <h3 class="text-2xl font-extrabold text-[#0B192C] font-heading">{{ service.title }}</h3>
             <p class="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
-              Layanan lantai stamp concrete (beton dekoratif bergaya batu alam) dengan cetakan presisi, warna tahan cuaca, serta ketahanan beban tinggi. Sangat cocok untuk area luar ruang seperti jalan perumahan, halaman, maupun carport Anda.
+              {{ service.desc }}
             </p>
           </div>
         </div>
@@ -240,74 +232,36 @@
         <!-- Section Header -->
         <div class="text-center max-w-3xl mx-auto mb-16">
           <p class="text-xs font-bold text-red-600 uppercase tracking-widest mb-3 scroll-animate anim-up">
-            Standar Kerja Kami
+            {{ store.konstruksiStandardsHeader }}
           </p>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0B192C] leading-tight scroll-animate anim-up delay-75">
-            Keamanan & Mutu Sipil <br class="hidden sm:inline" />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-700">Teruji Secara Ilmiah</span>
-          </h2>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0B192C] leading-tight scroll-animate anim-up delay-75" v-html="store.konstruksiStandardsTitle"></h2>
           <p class="text-slate-500 text-sm sm:text-base mt-4 leading-relaxed font-semibold scroll-animate anim-up delay-150">
-            PT Agra Abhinaya Perkasa tidak berkompromi dalam aspek keselamatan kerja dan hasil akhir pengujian kepadatan struktur proyek Anda.
+            {{ store.konstruksiStandardsDesc }}
           </p>
         </div>
 
         <!-- 3-Column Modern Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <!-- Card 1: Sand Cone Test -->
-          <div class="scroll-animate anim-up">
+          <!-- Card Loops -->
+          <div 
+            v-for="(card, cardIdx) in store.konstruksiStandardsCards"
+            :key="cardIdx"
+            class="scroll-animate anim-up"
+            :class="'delay-' + (cardIdx * 150)"
+          >
             <div class="bg-gradient-to-br from-red-600 to-red-800 rounded-[32px] p-8 shadow-xl border border-red-500/10 text-white h-full flex flex-col justify-between hover:-translate-y-4 hover:scale-[1.03] transition-all duration-500 cursor-pointer hover:shadow-red-600/30 group">
               <div>
                 <div class="w-14 h-14 bg-white text-red-600 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110">
-                  <q-icon name="grid_goldenratio" size="28px" />
+                  <q-icon :name="card.icon" size="28px" />
                 </div>
                 <span class="text-[11px] font-extrabold text-red-100 uppercase tracking-wider">
-                  Mutu Sipil
+                  {{ card.tag }}
                 </span>
                 <h3 class="text-xl font-extrabold text-white font-heading mt-4 mb-3">
-                  Uji Kepadatan Tanah (Sand Cone)
+                  {{ card.title }}
                 </h3>
                 <p class="text-white/90 text-sm leading-relaxed font-medium">
-                  Pengujian laboratorium langsung di lapangan untuk menjamin setiap lapis pemadatan timbunan tanah urug mencapai densitas 95%+ aman dari resiko penurunan lahan.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2: Sondir & Lab Lahan -->
-          <div class="scroll-animate anim-up delay-150">
-            <div class="bg-gradient-to-br from-red-600 to-red-800 rounded-[32px] p-8 shadow-xl border border-red-500/10 text-white h-full flex flex-col justify-between hover:-translate-y-4 hover:scale-[1.03] transition-all duration-500 cursor-pointer hover:shadow-red-600/30 group">
-              <div>
-                <div class="w-14 h-14 bg-white text-red-600 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110">
-                  <q-icon name="biotech" size="28px" />
-                </div>
-                <span class="text-[11px] font-extrabold text-red-100 uppercase tracking-wider">
-                  Daya Dukung
-                </span>
-                <h3 class="text-xl font-extrabold text-white font-heading mt-4 mb-3">
-                  Uji Sondir & Lab Tanah
-                </h3>
-                <p class="text-white/90 text-sm leading-relaxed font-medium">
-                  Pengukuran ilmiah kapasitas beban dukung tanah keras di lab geoteknik untuk menentukan spesifikasi kedalaman pondasi cakar ayam atau tiang pancang yang kokoh.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3: Keselamatan K3 -->
-          <div class="scroll-animate anim-up delay-300">
-            <div class="bg-gradient-to-br from-red-600 to-red-800 rounded-[32px] p-8 shadow-xl border border-red-500/10 text-white h-full flex flex-col justify-between hover:-translate-y-4 hover:scale-[1.03] transition-all duration-500 cursor-pointer hover:shadow-red-600/30 group">
-              <div>
-                <div class="w-14 h-14 bg-white text-red-600 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110">
-                  <q-icon name="health_and_safety" size="28px" />
-                </div>
-                <span class="text-[11px] font-extrabold text-red-100 uppercase tracking-wider">
-                  Protokol K3
-                </span>
-                <h3 class="text-xl font-extrabold text-white font-heading mt-4 mb-3">
-                  Keselamatan Kerja Ketat (K3)
-                </h3>
-                <p class="text-white/90 text-sm leading-relaxed font-medium">
-                  Penerapan Alat Pelindung Diri (APD) lengkap dan manajemen resiko proyek secara profesional guna memastikan kelancaran pembangunan tanpa kendala kecelakaan kerja.
+                  {{ card.desc }}
                 </p>
               </div>
             </div>
@@ -334,21 +288,21 @@
       <div class="max-w-6xl mx-auto px-6 relative z-10">
         <div class="text-center max-w-3xl mx-auto mb-20">
           <p class="text-xs font-bold text-red-600 uppercase tracking-widest mb-3 scroll-animate anim-up">
-            Langkah Eksekusi
+            {{ store.konstruksiStepsHeader }}
           </p>
           <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0B192C] leading-tight font-heading scroll-animate anim-up delay-75">
-            Alur Kerja Pengerjaan Konstruksi
+            {{ store.konstruksiStepsTitle }}
           </h2>
           <p class="text-slate-500 text-sm sm:text-base mt-4 leading-relaxed font-semibold scroll-animate anim-up delay-150">
-            Transparansi penuh di setiap tahapan proyek konstruksi sipil untuk hasil yang presisi dan tepat waktu.
+            {{ store.konstruksiStepsDesc }}
           </p>
         </div>
 
         <!-- 4-Step Timeline Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 relative">
           <div
-            v-for="(step, idx) in constructionSteps"
-            :key="step.number"
+            v-for="(step, idx) in store.konstruksiSteps"
+            :key="idx"
             class="relative flex flex-col items-center text-center group scroll-animate anim-up"
             :style="{ transitionDelay: (idx * 150) + 'ms' }"
           >
@@ -386,16 +340,16 @@
         <!-- Section Header -->
         <div class="text-center max-w-3xl mx-auto mb-16">
           <p class="text-xs font-bold text-red-600 uppercase tracking-widest mb-3 scroll-animate anim-up">
-            Dokumentasi Lapangan
+            {{ store.konstruksiVideosHeader }}
           </p>
           <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0B192C] leading-tight font-heading scroll-animate anim-up delay-75">
-            Proyek Sekolah Rakyat Indramayu
+            {{ store.konstruksiVideosTitle }}
           </h2>
           <p class="text-xs sm:text-sm font-extrabold text-slate-400 mt-2 uppercase tracking-widest scroll-animate anim-up delay-100">
-            Proyek Yang Sedang Berjalan
+            {{ store.konstruksiVideosSubtitle }}
           </p>
           <p class="text-slate-500 text-sm sm:text-base mt-4 leading-relaxed font-semibold scroll-animate anim-up delay-150">
-            Tonton langsung cuplikan singkat pengerjaan tim sipil PT Agra Abhinaya Perkasa di lapangan secara transparan.
+            {{ store.konstruksiVideosDesc }}
           </p>
         </div>
 
@@ -425,7 +379,7 @@
             class="flex flex-row flex-nowrap gap-6 overflow-x-auto scroll-smooth pb-8 px-4 scrollbar-none snap-x snap-mandatory"
           >
             <div
-              v-for="(video, idx) in projectVideos"
+              v-for="(video, idx) in store.konstruksiVideos"
               :key="idx"
               class="flex-shrink-0 w-[270px] sm:w-[280px] snap-start scroll-animate anim-up"
               :style="{ transitionDelay: (idx * 100) + 'ms' }"
@@ -513,9 +467,9 @@
 
           <!-- Top Overlay: Title and Close -->
           <div class="absolute top-6 left-6 right-6 flex items-start justify-between z-20">
-            <h4 class="text-sm font-extrabold text-white uppercase tracking-wider drop-shadow-md leading-tight max-w-[80%]">
-              {{ projectVideos[activeVideoIndex].titleHeader }} <br />
-              <span class="text-red-500">{{ projectVideos[activeVideoIndex].titleHighlight }}</span>
+            <h4 class="text-sm font-extrabold text-white uppercase tracking-wider drop-shadow-md leading-tight max-w-[80%]" v-if="store.konstruksiVideos[activeVideoIndex]">
+              {{ store.konstruksiVideos[activeVideoIndex].titleHeader }} <br />
+              <span class="text-red-500">{{ store.konstruksiVideos[activeVideoIndex].titleHighlight }}</span>
             </h4>
             <button
               @click="showVideoModal = false"
@@ -526,17 +480,17 @@
           </div>
 
           <!-- Bottom Text and Custom Tag Overlay -->
-          <div class="absolute bottom-8 left-6 right-6 z-20 space-y-4 text-white">
+          <div class="absolute bottom-8 left-6 right-6 z-20 space-y-4 text-white" v-if="store.konstruksiVideos[activeVideoIndex]">
             <p class="text-white text-xs sm:text-sm font-semibold leading-relaxed drop-shadow-md">
-              {{ projectVideos[activeVideoIndex].desc }}
+              {{ store.konstruksiVideos[activeVideoIndex].desc }}
             </p>
             <!-- Avatar / Brand Tag -->
             <div class="flex items-center gap-2 pt-3 border-t border-white/20">
               <div class="w-6 h-6 rounded-full bg-red-600 flex items-center justify-center text-white">
-                <q-icon :name="projectVideos[activeVideoIndex].icon" size="12px" />
+                <q-icon :name="store.konstruksiVideos[activeVideoIndex].icon" size="12px" />
               </div>
               <span class="text-[11px] font-extrabold text-white/95 uppercase tracking-wider">
-                {{ projectVideos[activeVideoIndex].tag }}
+                {{ store.konstruksiVideos[activeVideoIndex].tag }}
               </span>
             </div>
           </div>
@@ -567,19 +521,16 @@
           <div class="absolute inset-0 bg-[#0B192C] opacity-5 rounded-[60px] sm:rounded-[100px] -rotate-3 transform scale-95 pointer-events-none z-0"></div>
           
           <div class="relative z-10 w-full max-w-[360px] aspect-square rounded-[40px] overflow-hidden p-2 flex items-center justify-center">
-            <img src="images/customer_support.png" alt="Customer Support Agra" class="w-full h-full object-contain filter drop-shadow-md"/>
+            <img :src="store.konstruksiSupport.image || 'images/customer_support.png'" alt="Customer Support Agra" class="w-full h-full object-contain filter drop-shadow-md"/>
           </div>
         </div>
 
         <!-- Right Column: Text & Contact Options -->
         <div class="md:col-span-6 space-y-6 sm:space-y-8 text-left scroll-animate anim-right delay-150">
           <div class="space-y-3">
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading leading-tight">
-              Butuh Bantuan?<br/>
-              Tanya <span class="text-red-600">Agra</span>
-            </h2>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading leading-tight" v-html="store.konstruksiSupport.title"></h2>
             <p class="text-slate-500 text-sm sm:text-base font-medium leading-relaxed">
-              Punya pertanyaan atau ingin konsultasi, kami siap membantu
+              {{ store.konstruksiSupport.bubbleText }}
             </p>
           </div>
 
@@ -587,7 +538,7 @@
           <div class="space-y-4">
             <!-- Phone/WhatsApp -->
             <a 
-              href="https://api.whatsapp.com/send/?phone=6285695660902&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20butuh%20bantuan%20mengenai%20layanan%20konstruksi."
+              :href="'https://api.whatsapp.com/send/?phone=' + store.konstruksiSupport.whatsappRaw + '&text=' + encodeURIComponent(store.konstruksiSupport.waMessage)"
               target="_blank"
               rel="noopener noreferrer"
               class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-red-50/40 border border-slate-100 hover:border-red-100/50 transition-all duration-300 group no-underline"
@@ -597,13 +548,13 @@
               </div>
               <div class="min-w-0">
                 <div class="text-xs font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">WhatsApp / Call</div>
-                <div class="text-sm sm:text-base font-extrabold text-slate-700 tracking-wide leading-normal">0856-9566-0902</div>
+                <div class="text-sm sm:text-base font-extrabold text-slate-700 tracking-wide leading-normal">{{ store.konstruksiSupport.whatsapp }}</div>
               </div>
             </a>
 
             <!-- Email -->
             <a 
-              href="mailto:agraabhinayaadm@gmail.com"
+              :href="'mailto:' + store.konstruksiSupport.email"
               class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-red-50/40 border border-slate-100 hover:border-red-100/50 transition-all duration-300 group no-underline"
             >
               <div class="w-10 h-10 rounded-full bg-red-100/50 flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 flex-shrink-0">
@@ -611,7 +562,7 @@
               </div>
               <div class="min-w-0">
                 <div class="text-xs font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Email Support</div>
-                <div class="text-sm sm:text-base font-extrabold text-slate-700 tracking-wide truncate leading-normal">agraabhinayaadm@gmail.com</div>
+                <div class="text-sm sm:text-base font-extrabold text-slate-700 tracking-wide truncate leading-normal">{{ store.konstruksiSupport.email }}</div>
               </div>
             </a>
           </div>
@@ -619,7 +570,7 @@
           <!-- Primary CTA Button -->
           <div class="pt-2">
             <a 
-              href="https://api.whatsapp.com/send/?phone=6285695660902&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20butuh%20bantuan%20mengenai%20layanan%20konstruksi."
+              :href="'https://api.whatsapp.com/send/?phone=' + store.konstruksiSupport.whatsappRaw + '&text=' + encodeURIComponent(store.konstruksiSupport.waMessage)"
               target="_blank"
               rel="noopener noreferrer"
               class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-full text-center shadow-lg hover:shadow-red-600/20 hover:scale-105 transition-all duration-300 no-underline text-sm sm:text-base"
@@ -635,122 +586,45 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useWebsiteStore } from 'src/stores/websiteStore'
+
+const store = useWebsiteStore()
 
 // Carousel state
-const currentSlide = ref('video1')
+const currentSlide = ref('')
 
-// Slides data with Mixkit construction video links
-const slides = ref([
-  {
-    name: 'video1',
-    src: 'images/video-slide1.MP4',
-    title: 'Konstruksi Pembangunan Baru',
-    desc: 'Layanan bangun rumah, ruko, gedung, hingga gudang dari nol dengan konstruksi kokoh, presisi, dan diawasi tim ahli.'
-  },
-  {
-    name: 'video2',
-    src: 'images/video-slide2.mp4',
-    title: 'Perencanaan Detail & RAB Transparan',
-    desc: 'Desain arsitektur modern terintegrasi dengan Rencana Anggaran Biaya terinci, menjamin kepastian budget pembangunan Anda.'
-  },
-  {
-    name: 'video3',
-    src: 'images/video-slide3.mp4',
-    title: 'Tenaga Kerja Ahli & Bergaransi',
-    desc: 'Pekerjaan di lapangan ditangani oleh tukang terlatih di bawah pengawasan ketat untuk memastikan struktur bangunan yang kokoh.'
+// Initialize currentSlide to first slide name
+onMounted(() => {
+  if (store.konstruksiHeroSlides && store.konstruksiHeroSlides.length) {
+    currentSlide.value = store.konstruksiHeroSlides[0].name
+  } else {
+    currentSlide.value = 'video1'
   }
-])
+})
 
 const prevSlide = () => {
-  if (currentSlide.value === 'video1') currentSlide.value = 'video3'
-  else if (currentSlide.value === 'video2') currentSlide.value = 'video1'
-  else if (currentSlide.value === 'video3') currentSlide.value = 'video2'
+  const slides = store.konstruksiHeroSlides
+  if (!slides || !slides.length) return
+  const idx = slides.findIndex(s => s.name === currentSlide.value)
+  if (idx !== -1) {
+    const prevIdx = (idx - 1 + slides.length) % slides.length
+    currentSlide.value = slides[prevIdx].name
+  }
 }
 
 const nextSlide = () => {
-  if (currentSlide.value === 'video1') currentSlide.value = 'video2'
-  else if (currentSlide.value === 'video2') currentSlide.value = 'video3'
-  else if (currentSlide.value === 'video3') currentSlide.value = 'video1'
-}
-
-const constructionSteps = [
-  {
-    number: 1,
-    title: 'Konsultasi Proyek',
-    desc: 'Diskusikan rencana pengerjaan, spesifikasi teknis, dan luasan lahan proyek Anda bersama konsultan kami.',
-    image: 'images/callcenter.png'
-  },
-  {
-    number: 2,
-    title: 'Survei & Analisis',
-    desc: 'Tim sipil Agra melakukan survei topografi lahan, elevasi tanah, serta uji sondir tanah di lokasi.',
-    image: 'images/survei.png'
-  },
-  {
-    number: 3,
-    title: 'RAB & Kontrak Kerja',
-    desc: 'Penyusunan penawaran rencana anggaran biaya yang detail, mengikat, dan transparan beserta timeline kerja.',
-    image: 'images/penawaran.png'
-  },
-  {
-    number: 4,
-    title: 'Eksekusi & Handover',
-    desc: 'Mobilisasi alat berat dan pengerjaan konstruksi secara presisi hingga serah terima lahan siap bangun.',
-    image: 'images/beres.png'
+  const slides = store.konstruksiHeroSlides
+  if (!slides || !slides.length) return
+  const idx = slides.findIndex(s => s.name === currentSlide.value)
+  if (idx !== -1) {
+    const nextIdx = (idx + 1) % slides.length
+    currentSlide.value = slides[nextIdx].name
   }
-]
+}
 
 const showVideoModal = ref(false)
 const selectedVideoSrc = ref('')
 const selectedVideoTitle = ref('')
-
-const projectVideos = [
-  {
-    titleHeader: 'Pekerjaan',
-    titleHighlight: 'Cut & Fill',
-    desc: 'Proses land clearing, perataan tanah, dan pengurukan timbunan menggunakan excavator sipil profesional.',
-    tag: 'Jagoan Cut & Fill',
-    thumbnail: 'images/cutandfill.jpg',
-    src: 'images/video-cutandfil.mp4',
-    icon: 'terrain'
-  },
-  {
-    titleHeader: 'Pengerjaan',
-    titleHighlight: 'Stamp Concrete',
-    desc: 'Cetak lantai beton bermotif batu alam yang kokoh, rapi, dan tahan cuaca ekstrim untuk jalan perumahan.',
-    tag: 'Jagoan Stamp Concrete',
-    thumbnail: 'images/stamp_concrete_hero.png',
-    src: 'images/stampconcrete.mp4',
-    icon: 'texture'
-  },
-  {
-    titleHeader: 'Pemasangan',
-    titleHighlight: 'U-Ditch Beton',
-    desc: 'Instalasi precast u-ditch beton pracetak saluran air pembuangan pemukiman anti-amblas dan rapi.',
-    tag: 'Jagoan U-Ditch',
-    thumbnail: 'images/kontruksi.png',
-    src: 'images/video-masangudtich.mp4',
-    icon: 'waves'
-  },
-  {
-    titleHeader: 'Perapihan',
-    titleHighlight: 'Disposal',
-    desc: 'Proses pembuangan, penataan, dan perapihan tanah sisa galian (disposal) menggunakan alat berat secara efisien.',
-    tag: 'Perapihan Disposal',
-    thumbnail: 'images/construction_hero.png',
-    src: 'images/video-disposal.mp4',
-    icon: 'agriculture'
-  },
-  {
-    titleHeader: 'Hasil Akhir',
-    titleHighlight: 'Stamp Concrete',
-    desc: 'Hasil cetak lantai beton motif batu alam yang kokoh, rapi, estetik, dan siap digunakan.',
-    tag: 'Hasil Kerja',
-    thumbnail: 'images/jalan.png',
-    src: 'images/hasil-concrete.mp4',
-    icon: 'verified'
-  }
-]
 
 const videoScrollContainer = ref(null)
 const canScrollLeft = ref(false)
@@ -796,24 +670,28 @@ const toggleVideoPlay = () => {
 }
 
 const playNextVideo = () => {
-  if (activeVideoIndex.value < projectVideos.length - 1) {
+  const videos = store.konstruksiVideos
+  if (!videos || !videos.length) return
+  if (activeVideoIndex.value < videos.length - 1) {
     activeVideoIndex.value++
   } else {
     activeVideoIndex.value = 0
   }
-  const nextVideo = projectVideos[activeVideoIndex.value]
+  const nextVideo = videos[activeVideoIndex.value]
   selectedVideoSrc.value = nextVideo.src
   selectedVideoTitle.value = `${nextVideo.titleHeader} ${nextVideo.titleHighlight}`
   videoProgress.value = 0
 }
 
 const playPrevVideo = () => {
+  const videos = store.konstruksiVideos
+  if (!videos || !videos.length) return
   if (activeVideoIndex.value > 0) {
     activeVideoIndex.value--
   } else {
-    activeVideoIndex.value = projectVideos.length - 1
+    activeVideoIndex.value = videos.length - 1
   }
-  const prevVideo = projectVideos[activeVideoIndex.value]
+  const prevVideo = videos[activeVideoIndex.value]
   selectedVideoSrc.value = prevVideo.src
   selectedVideoTitle.value = `${prevVideo.titleHeader} ${prevVideo.titleHighlight}`
   videoProgress.value = 0

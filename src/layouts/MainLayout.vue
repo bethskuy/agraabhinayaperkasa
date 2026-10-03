@@ -63,7 +63,7 @@
         <!-- Right: CTA Button (Order Sekarang style) -->
         <div>
           <a 
-            href="https://api.whatsapp.com/send?phone=6285695660902&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20ingin%20berkonsultasi%20mengenai%20proyek%20konstruksi/renovasi."
+            href="https://api.whatsapp.com/send?phone=6282113079456&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20ingin%20berkonsultasi%20mengenai%20proyek%20konstruksi/renovasi."
             target="_blank"
             rel="noopener noreferrer"
             class="bg-red-600 hover:bg-red-700 text-white font-bold text-xs px-5 py-2.5 rounded-full transition-all duration-300 hover:scale-105 shadow-md no-underline block"
@@ -94,7 +94,7 @@
           </a>
 
           <!-- Phone CTA Icon (Right) -->
-          <a href="tel:+6285695660902" class="p-1 text-red-600 hover:text-red-700 transition-colors duration-200 flex items-center justify-center">
+          <a href="tel:+6282113079456" class="p-1 text-red-600 hover:text-red-700 transition-colors duration-200 flex items-center justify-center">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
               <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
             </svg>
@@ -189,7 +189,7 @@
           <!-- Bottom Area: CTA -->
           <div class="border-t border-slate-800 pt-6">
             <a
-              href="https://api.whatsapp.com/send/?phone=6285695660902&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20ingin%20berkonsultasi%20mengenai%20proyek%20konstruksi/renovasi."
+              href="https://api.whatsapp.com/send/?phone=6282113079456&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20ingin%20berkonsultasi%20mengenai%20proyek%20konstruksi/renovasi."
               target="_blank"
               rel="noopener noreferrer"
               class="block bg-red-600 hover:bg-red-700 text-white text-center py-3.5 rounded-xl font-bold text-sm transition-colors duration-200 no-underline shadow-md"
@@ -348,7 +348,7 @@
                   <svg class="w-5 h-5 text-red-600 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.665.989 3.3 1.472 4.97 1.473 5.466 0 9.911-4.45 9.916-9.925.002-2.653-1.03-5.147-2.908-7.027-1.879-1.879-4.381-2.914-7.036-2.915-5.474 0-9.922 4.451-9.926 9.929-.001 1.77.472 3.5 1.367 5.034l-1.01 3.693 3.793-.993zm11.233-7.518c-.3-.152-1.773-.875-2.047-.975-.274-.1-.474-.15-.674.15-.2.3-.775.975-.95 1.175-.175.2-.35.225-.65.075-.3-.15-1.264-.467-2.408-1.487-.889-.793-1.49-1.77-1.665-2.07-.175-.3-.019-.462.13-.611.135-.135.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.589-.491-.51-.674-.519-.174-.009-.373-.01-.572-.01-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.11 3.224 5.112 4.521.714.309 1.272.494 1.707.633.717.228 1.368.196 1.883.119.574-.085 1.773-.725 2.022-1.425.249-.7.249-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" />
                   </svg>
-                  <a href="https://api.whatsapp.com/send/?phone=6285695660902" target="_blank" rel="noopener noreferrer" class="hover:text-red-600 transition-colors duration-200 text-slate-600 no-underline">+62 856-9566-0902</a>
+                  <a href="https://api.whatsapp.com/send/?phone=6282113079456" target="_blank" rel="noopener noreferrer" class="hover:text-red-600 transition-colors duration-200 text-slate-600 no-underline">+62 821-1307-9456</a>
                 </li>
                 <li class="flex items-center space-x-2.5">
                   <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -388,7 +388,7 @@
 
       <!-- Floating WhatsApp Button -->
       <a 
-        href="https://api.whatsapp.com/send/?phone=6285695660902&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20ingin%20berkonsultasi%20mengenai%20proyek%20konstruksi/renovasi."
+        href="https://api.whatsapp.com/send/?phone=6282113079456&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20ingin%20berkonsultasi%20mengenai%20proyek%20konstruksi/renovasi."
         target="_blank"
         rel="noopener noreferrer"
         class="fixed bottom-6 right-6 z-[999] w-14 h-14 bg-[#25D366] hover:bg-[#20ba5a] text-white rounded-full flex items-center justify-center shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300 hover:scale-110 hover:-translate-y-1 group"

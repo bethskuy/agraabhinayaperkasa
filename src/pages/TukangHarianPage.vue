@@ -14,29 +14,15 @@
         class="absolute inset-0 z-0 w-full h-full"
         style="height: 100%"
       >
-        <!-- Slide 1 -->
-        <q-carousel-slide name="slide1" class="p-0 overflow-hidden">
+        <q-carousel-slide
+          v-for="(slide, index) in store.tukangHarianSlides"
+          :key="index"
+          :name="index"
+          class="p-0 overflow-hidden"
+        >
           <img
-            src="images/tukang_harian_hero.png"
+            :src="slide"
             alt="Layanan Tukang Harian Agra"
-            class="w-full h-full object-cover"
-          />
-        </q-carousel-slide>
-
-        <!-- Slide 2 -->
-        <q-carousel-slide name="slide2" class="p-0 overflow-hidden">
-          <img
-            src="images/tukang_harian_hero2.png"
-            alt="Tukang Harian Agra - Profesional"
-            class="w-full h-full object-cover"
-          />
-        </q-carousel-slide>
-
-        <!-- Slide 3 -->
-        <q-carousel-slide name="slide3" class="p-0 overflow-hidden">
-          <img
-            src="images/tukang_harian_hero3.png"
-            alt="Tukang Harian Agra - Berpengalaman"
             class="w-full h-full object-cover"
           />
         </q-carousel-slide>
@@ -52,12 +38,11 @@
       <div class="max-w-5xl mx-auto px-6 relative z-20 text-center mt-8 fade-in-section">
         <h1
           class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-none mb-6 font-heading scroll-animate anim-up"
-        >
-          Semua Perbaikan Rumah Beres Bersama <span class="text-red-500">Agra</span>
-        </h1>
+          v-html="store.tukangHarianTitle"
+        ></h1>
         <div class="flex flex-col sm:flex-row items-center gap-4 justify-center scroll-animate anim-up delay-200">
           <a
-            href="https://api.whatsapp.com/send/?phone=6285695660902&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20ingin%20tanya%20mengenai%20jasa%20tukang%20harian."
+            href="https://api.whatsapp.com/send/?phone=6282113079456&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20ingin%20tanya%20mengenai%20jasa%20tukang%20harian."
             target="_blank"
             rel="noopener noreferrer"
             class="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-full text-center shadow-lg transition-all duration-300 hover:scale-105 no-underline flex items-center justify-center space-x-2"
@@ -70,12 +55,12 @@
       <!-- Slide Dot Indicators -->
       <div class="absolute bottom-8 left-0 right-0 z-20 flex justify-center gap-2.5">
         <button
-          v-for="slide in ['slide1','slide2','slide3']"
-          :key="slide"
-          @click="heroSlide = slide"
+          v-for="(slide, index) in store.tukangHarianSlides"
+          :key="index"
+          @click="heroSlide = index"
           :class="[
             'w-2.5 h-2.5 rounded-full transition-all duration-300 border-0 p-0 cursor-pointer',
-            heroSlide === slide ? 'bg-white scale-125' : 'bg-white/40 hover:bg-white/70'
+            heroSlide === index ? 'bg-white scale-125' : 'bg-white/40 hover:bg-white/70'
           ]"
         ></button>
       </div>
@@ -192,7 +177,7 @@
         <!-- Expanded Cards (shown when showMoreLayanan is true) -->
         <transition name="expand-fade">
           <div v-if="showMoreLayanan" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mb-4">
-            <div v-for="svc in extraLayanan" :key="svc.title"
+            <div v-for="svc in store.tukangHarianExtra" :key="svc.title"
               class="relative bg-white rounded-2xl p-5 shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer group overflow-hidden">
               <!-- Blob top-right -->
               <div class="absolute -top-6 -right-6 w-20 h-20 bg-red-100 rounded-full opacity-60 pointer-events-none"></div>
@@ -348,42 +333,21 @@
 
       <!-- Content -->
       <div class="relative z-10 py-14 px-6 max-w-5xl mx-auto text-center">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-3 font-heading">
-          Titip Beli Material Bangunan
-        </h2>
-        <p class="text-red-100 text-sm sm:text-base mb-10 max-w-xl mx-auto leading-relaxed">
-          Gak perlu repot cari material sendiri! Titip langsung ke Tukang Agra lewat kami.
-        </p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-3 font-heading" v-html="store.tukangHarianMaterial.title"></h2>
+        <p class="text-red-100 text-sm sm:text-base mb-10 max-w-xl mx-auto leading-relaxed" v-html="store.tukangHarianMaterial.subtitle"></p>
 
         <!-- 4 Features -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div class="flex flex-col items-center gap-3 group cursor-pointer hover:-translate-y-2 transition-all duration-300">
+          <div
+            v-for="(feature, idx) in store.tukangHarianMaterial.features"
+            :key="idx"
+            class="flex flex-col items-center gap-3 group cursor-pointer hover:-translate-y-2 transition-all duration-300"
+          >
             <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:shadow-2xl group-hover:scale-110 transition-all duration-300">
-              <img src="images/ikon.png" alt="Mudah" class="w-14 h-14 object-contain group-hover:scale-110 transition-transform duration-300"/>
+              <img :src="feature.image" :alt="feature.title" class="w-14 h-14 object-contain group-hover:scale-110 transition-transform duration-300"/>
             </div>
-            <h3 class="text-white font-extrabold text-sm group-hover:text-yellow-200 transition-colors duration-300">Mudah</h3>
-            <p class="text-red-100 text-xs leading-relaxed text-center">Jenis barang akan direkomendasikan langsung oleh Tukang Agra</p>
-          </div>
-          <div class="flex flex-col items-center gap-3 group cursor-pointer hover:-translate-y-2 transition-all duration-300">
-            <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:shadow-2xl group-hover:scale-110 transition-all duration-300">
-              <img src="images/ikon2.png" alt="Transparan" class="w-14 h-14 object-contain group-hover:scale-110 transition-transform duration-300"/>
-            </div>
-            <h3 class="text-white font-extrabold text-sm group-hover:text-yellow-200 transition-colors duration-300">Transparan</h3>
-            <p class="text-red-100 text-xs leading-relaxed text-center">Jumlah dan harga material diketahui sebelum dibeli</p>
-          </div>
-          <div class="flex flex-col items-center gap-3 group cursor-pointer hover:-translate-y-2 transition-all duration-300">
-            <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:shadow-2xl group-hover:scale-110 transition-all duration-300">
-              <img src="images/ikon3.png" alt="Aman" class="w-14 h-14 object-contain group-hover:scale-110 transition-transform duration-300"/>
-            </div>
-            <h3 class="text-white font-extrabold text-sm group-hover:text-yellow-200 transition-colors duration-300">Aman</h3>
-            <p class="text-red-100 text-xs leading-relaxed text-center">Tidak beresiko karena pembayaran melalui konfirmasi Anda</p>
-          </div>
-          <div class="flex flex-col items-center gap-3 group cursor-pointer hover:-translate-y-2 transition-all duration-300">
-            <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:shadow-2xl group-hover:scale-110 transition-all duration-300">
-              <img src="images/ikon4.png" alt="Nyaman" class="w-14 h-14 object-contain group-hover:scale-110 transition-transform duration-300"/>
-            </div>
-            <h3 class="text-white font-extrabold text-sm group-hover:text-yellow-200 transition-colors duration-300">Nyaman</h3>
-            <p class="text-red-100 text-xs leading-relaxed text-center">Tidak perlu cari toko dan beli material sendiri</p>
+            <h3 class="text-white font-extrabold text-sm group-hover:text-yellow-200 transition-colors duration-300">{{ feature.title }}</h3>
+            <p class="text-red-100 text-xs leading-relaxed text-center">{{ feature.desc }}</p>
           </div>
         </div>
       </div>
@@ -453,58 +417,28 @@
       <div class="relative z-10 max-w-6xl mx-auto px-6 space-y-24">
         <!-- Section Title -->
         <div class="text-center">
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading">
-            Tukang <span class="text-red-600">Jagoan</span>
-          </h2>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading" v-html="store.tukangHarianJagoan.title"></h2>
         </div>
 
-        <!-- Jagoan Cat (Image Left, Text Right) -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center max-w-5xl mx-auto">
-          <div class="md:col-span-6 flex justify-center scroll-animate anim-left">
+        <!-- Dynamic Jagoan list (Alternating Image/Text orders) -->
+        <div 
+          v-for="(jagoan, idx) in store.tukangHarianJagoan.list" 
+          :key="idx"
+          class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center max-w-5xl mx-auto"
+        >
+          <!-- Image Column (order-2 on odd indexes when md screen) -->
+          <div :class="['md:col-span-6 flex justify-center scroll-animate', idx % 2 === 1 ? 'md:order-2 anim-right' : 'anim-left']">
             <div class="relative w-full max-w-[480px] aspect-[16/10] rounded-[40px] overflow-hidden shadow-lg border border-slate-100/80 bg-white p-2">
               <div class="w-full h-full rounded-[32px] overflow-hidden">
-                <img src="images/cat.png" alt="Jagoan Cat" class="w-full h-full object-cover"/>
+                <img :src="jagoan.image" :alt="jagoan.title" class="w-full h-full object-cover"/>
               </div>
             </div>
           </div>
-          <div class="md:col-span-6 space-y-4 scroll-animate anim-right delay-150">
-            <h3 class="text-2xl font-extrabold text-[#0B192C] font-heading">Jagoan Cat</h3>
+          <!-- Text Column (order-1 on odd indexes when md screen) -->
+          <div :class="['md:col-span-6 space-y-4 scroll-animate delay-150', idx % 2 === 1 ? 'md:order-1 anim-left' : 'anim-right']">
+            <h3 class="text-2xl font-extrabold text-[#0B192C] font-heading">{{ jagoan.title }}</h3>
             <p class="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
-              Cat rumah sudah kusam or terkelupas? Layanan tukang cat kami bantu membuang cat lama, melakukan cat dasar, finishing dan segala permasalahan cat lainnya. Melayani cat di dinding, plafon, pintu dan jendela kayu.
-            </p>
-          </div>
-        </div>
-
-        <!-- Jagoan Keramik (Text Left, Image Right) -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center max-w-5xl mx-auto">
-          <div class="md:col-span-6 md:order-2 flex justify-center scroll-animate anim-right">
-            <div class="relative w-full max-w-[480px] aspect-[16/10] rounded-[40px] overflow-hidden shadow-lg border border-slate-100/80 bg-white p-2">
-              <div class="w-full h-full rounded-[32px] overflow-hidden">
-                <img src="images/keramik.png" alt="Jagoan Keramik" class="w-full h-full object-cover"/>
-              </div>
-            </div>
-          </div>
-          <div class="md:col-span-6 md:order-1 space-y-4 scroll-animate anim-left delay-150">
-            <h3 class="text-2xl font-extrabold text-[#0B192C] font-heading">Jagoan Keramik</h3>
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
-              Keramik rumah rusak ingin diganti? Layanan tukang keramik kami ahli dalam bongkar pasang keramik/porselen untuk lantai maupun dinding secara presisi.
-            </p>
-          </div>
-        </div>
-
-        <!-- Jagoan Listrik (Image Left, Text Right) -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center max-w-5xl mx-auto">
-          <div class="md:col-span-6 flex justify-center scroll-animate anim-left">
-            <div class="relative w-full max-w-[480px] aspect-[16/10] rounded-[40px] overflow-hidden shadow-lg border border-slate-100/80 bg-white p-2">
-              <div class="w-full h-full rounded-[32px] overflow-hidden">
-                <img src="images/listrik.png" alt="Jagoan Listrik" class="w-full h-full object-cover"/>
-              </div>
-            </div>
-          </div>
-          <div class="md:col-span-6 space-y-4 scroll-animate anim-right delay-150">
-            <h3 class="text-2xl font-extrabold text-[#0B192C] font-heading">Jagoan Listrik</h3>
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
-              Listrik rumah bermasalah? Layanan tukang listrik kami siap melayani segala kebutuhan listrik seperti memasang stop kontak, fitting lampu, mengatasi konslet dan permasalahan listrik lainnya.
+              {{ jagoan.desc }}
             </p>
           </div>
         </div>
@@ -517,19 +451,19 @@
 
           <div class="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap md:justify-center gap-2.5 sm:gap-3.5 max-w-4xl mx-auto px-4 sm:px-0">
             <div
-              v-for="(item, idx) in jagoanLainnya"
+              v-for="(item, idx) in store.tukangHarianJagoanLainnya"
               :key="idx"
               :class="[
                 'flex flex-nowrap items-center gap-2 px-2.5 py-1.5 sm:px-5 sm:py-2.5 rounded-2xl sm:rounded-full shadow-sm sm:shadow-md border hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 cursor-default min-w-0 scroll-animate anim-up',
-                item.bg || 'bg-white',
-                item.border || 'border-slate-100/80'
+                autoAssignJagoanBadge(item.title).bg,
+                autoAssignJagoanBadge(item.title).border
               ]"
               :style="{ transitionDelay: (idx * 45) + 'ms' }"
             >
-              <div :class="['w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0', item.iconBg || 'bg-slate-50']">
-                <q-icon :name="item.icon" :class="item.color" size="16px" />
+              <div :class="['w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0', autoAssignJagoanBadge(item.title).iconBg]">
+                <q-icon :name="autoAssignJagoanBadge(item.title).icon" :class="autoAssignJagoanBadge(item.title).color" size="16px" />
               </div>
-              <span :class="['text-[11px] sm:text-sm font-extrabold tracking-wide truncate', item.text || 'text-slate-700']">{{ item.title }}</span>
+              <span :class="['text-[11px] sm:text-sm font-extrabold tracking-wide truncate', autoAssignJagoanBadge(item.title).text]">{{ item.title }}</span>
             </div>
           </div>
         </div>
@@ -546,27 +480,22 @@
           <div class="absolute inset-0 bg-[#0B192C] opacity-5 rounded-[60px] sm:rounded-[100px] -rotate-3 transform scale-95 pointer-events-none z-0"></div>
           
           <div class="relative z-10 w-full max-w-[360px] aspect-square rounded-[40px] overflow-hidden p-2 flex items-center justify-center">
-            <img src="images/customer_support.png" alt="Customer Support Agra" class="w-full h-full object-contain filter drop-shadow-md"/>
+            <img :src="store.tukangHarianSupport.image" alt="Customer Support Agra" class="w-full h-full object-contain filter drop-shadow-md"/>
           </div>
         </div>
 
         <!-- Right Column: Text & Contact Options -->
         <div class="md:col-span-6 space-y-6 sm:space-y-8 text-left scroll-animate anim-right delay-150">
           <div class="space-y-3">
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading leading-tight">
-              Butuh Bantuan?<br/>
-              Tanya <span class="text-red-600">Agra</span>
-            </h2>
-            <p class="text-slate-500 text-sm sm:text-base font-medium leading-relaxed">
-              Punya pertanyaan atau ingin konsultasi, kami siap membantu
-            </p>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading leading-tight" v-html="store.tukangHarianSupport.title"></h2>
+            <p class="text-slate-500 text-sm sm:text-base font-medium leading-relaxed" v-html="store.tukangHarianSupport.subtitle"></p>
           </div>
 
           <!-- Contact Channels List -->
           <div class="space-y-4">
             <!-- Phone/WhatsApp -->
             <a 
-              href="https://api.whatsapp.com/send/?phone=6285695660902&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20butuh%20bantuan%20mengenai%20layanan%20tukang%20harian."
+              :href="'https://api.whatsapp.com/send/?phone=' + cleanPhoneForWa(store.tukangHarianSupport.whatsapp) + '&text=' + encodeURIComponent(store.tukangHarianSupport.waMessage)"
               target="_blank"
               rel="noopener noreferrer"
               class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-red-50/40 border border-slate-100 hover:border-red-100/50 transition-all duration-300 group no-underline"
@@ -576,13 +505,13 @@
               </div>
               <div class="min-w-0">
                 <div class="text-xs font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">WhatsApp / Call</div>
-                <div class="text-sm sm:text-base font-extrabold text-slate-700 tracking-wide leading-normal">0856-9566-0902</div>
+                <div class="text-sm sm:text-base font-extrabold text-slate-700 tracking-wide leading-normal">{{ store.tukangHarianSupport.whatsapp }}</div>
               </div>
             </a>
 
             <!-- Email -->
             <a 
-              href="mailto:agraabhinayaadm@gmail.com"
+              :href="'mailto:' + store.tukangHarianSupport.email"
               class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-red-50/40 border border-slate-100 hover:border-red-100/50 transition-all duration-300 group no-underline"
             >
               <div class="w-10 h-10 rounded-full bg-red-100/50 flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 flex-shrink-0">
@@ -590,7 +519,7 @@
               </div>
               <div class="min-w-0">
                 <div class="text-xs font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Email Support</div>
-                <div class="text-sm sm:text-base font-extrabold text-slate-700 tracking-wide truncate leading-normal">agraabhinayaadm@gmail.com</div>
+                <div class="text-sm sm:text-base font-extrabold text-slate-700 tracking-wide truncate leading-normal">{{ store.tukangHarianSupport.email }}</div>
               </div>
             </a>
           </div>
@@ -598,7 +527,7 @@
           <!-- Primary CTA Button -->
           <div class="pt-2">
             <a 
-              href="https://api.whatsapp.com/send/?phone=6285695660902&text=Halo%20Agra%20Abhinaya%20Perkasa%2C%20saya%20butuh%20bantuan%20mengenai%20layanan%20tukang%20harian."
+              :href="'https://api.whatsapp.com/send/?phone=' + cleanPhoneForWa(store.tukangHarianSupport.whatsapp) + '&text=' + encodeURIComponent(store.tukangHarianSupport.waMessage)"
               target="_blank"
               rel="noopener noreferrer"
               class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-full text-center shadow-lg hover:shadow-red-600/20 hover:scale-105 transition-all duration-300 no-underline text-sm sm:text-base"
@@ -615,70 +544,98 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useWebsiteStore } from 'src/stores/websiteStore'
 
-const heroSlide = ref('slide1')
-const heroSlides = ['slide1', 'slide2', 'slide3']
+const store = useWebsiteStore()
+
+const heroSlide = ref(0)
 const prevHeroSlide = () => {
-  const idx = heroSlides.indexOf(heroSlide.value)
-  heroSlide.value = heroSlides[(idx - 1 + heroSlides.length) % heroSlides.length]
+  const len = store.tukangHarianSlides.length
+  if (len === 0) return
+  heroSlide.value = (heroSlide.value - 1 + len) % len
 }
 const nextHeroSlide = () => {
-  const idx = heroSlides.indexOf(heroSlide.value)
-  heroSlide.value = heroSlides[(idx + 1) % heroSlides.length]
+  const len = store.tukangHarianSlides.length
+  if (len === 0) return
+  heroSlide.value = (heroSlide.value + 1) % len
 }
 
 const showMoreLayanan = ref(false)
 
-const jagoanLainnya = [
-  { title: 'Jagoan Cat', icon: 'brush', color: 'text-red-600', bg: 'bg-red-50/70', border: 'border-red-100', text: 'text-red-700', iconBg: 'bg-red-100/50' },
-  { title: 'Jagoan Keramik', icon: 'grid_on', color: 'text-orange-600', bg: 'bg-orange-50/70', border: 'border-orange-100', text: 'text-orange-700', iconBg: 'bg-orange-100/50' },
-  { title: 'Jagoan Listrik', icon: 'bolt', color: 'text-emerald-600', bg: 'bg-emerald-50/70', border: 'border-emerald-100', text: 'text-emerald-700', iconBg: 'bg-emerald-100/50' },
-  { title: 'Kenek', icon: 'handyman', color: 'text-amber-600', bg: 'bg-amber-50/70', border: 'border-amber-100', text: 'text-amber-700', iconBg: 'bg-amber-100/50' },
-  { title: 'Jagoan Aluminium', icon: 'window', color: 'text-indigo-600', bg: 'bg-indigo-50/70', border: 'border-indigo-100', text: 'text-indigo-700', iconBg: 'bg-indigo-100/50' },
-  { title: 'Jagoan Batu', icon: 'gavel', color: 'text-rose-600', bg: 'bg-rose-50/70', border: 'border-rose-100', text: 'text-rose-700', iconBg: 'bg-rose-100/50' },
-  { title: 'Jagoan Pipa', icon: 'water', color: 'text-blue-600', bg: 'bg-blue-50/70', border: 'border-blue-100', text: 'text-blue-700', iconBg: 'bg-blue-100/50' },
-  { title: 'Jagoan Waterproofing', icon: 'shield', color: 'text-sky-600', bg: 'bg-sky-50/70', border: 'border-sky-100', text: 'text-sky-700', iconBg: 'bg-sky-100/50' },
-  { title: 'Jagoan Gali', icon: 'handyman', color: 'text-amber-700', bg: 'bg-amber-50/60', border: 'border-amber-200/50', text: 'text-amber-800', iconBg: 'bg-amber-100/60' },
-  { title: 'Jagoan Besi (Las)', icon: 'construction', color: 'text-purple-600', bg: 'bg-purple-50/70', border: 'border-purple-100', text: 'text-purple-700', iconBg: 'bg-purple-100/50' },
-  { title: 'Jagoan Genteng', icon: 'roofing', color: 'text-orange-600', bg: 'bg-orange-50/60', border: 'border-orange-200/50', text: 'text-orange-800', iconBg: 'bg-orange-100/50' },
-  { title: 'Jagoan Plafon', icon: 'roofing', color: 'text-blue-600', bg: 'bg-blue-50/60', border: 'border-blue-200/50', text: 'text-blue-800', iconBg: 'bg-blue-100/50' },
-  { title: 'Konsultan', icon: 'engineering', color: 'text-yellow-600', bg: 'bg-yellow-50/70', border: 'border-yellow-100', text: 'text-yellow-800', iconBg: 'bg-yellow-100/50' },
-  { title: 'Jagoan Sanitair', icon: 'bathroom', color: 'text-cyan-600', bg: 'bg-cyan-50/70', border: 'border-cyan-100', text: 'text-cyan-700', iconBg: 'bg-cyan-100/50' },
-  { title: 'Jagoan Angkat', icon: 'move_to_inbox', color: 'text-orange-600', bg: 'bg-orange-50/70', border: 'border-orange-100', text: 'text-orange-700', iconBg: 'bg-orange-100/50' },
-  { title: 'Jagoan Listrik Perapihan', icon: 'electrical_services', color: 'text-teal-600', bg: 'bg-teal-50/70', border: 'border-teal-100', text: 'text-teal-700', iconBg: 'bg-teal-100/50' },
-  { title: 'Jagoan Pipa Perapihan', icon: 'plumbing', color: 'text-blue-500', bg: 'bg-blue-50/70', border: 'border-blue-100', text: 'text-blue-700', iconBg: 'bg-blue-100/50' }
-]
+const autoAssignJagoanBadge = (title) => {
+  const name = (title || '').toLowerCase()
+  let theme = { icon: 'build', color: 'text-blue-600', bg: 'bg-blue-50/70', border: 'border-blue-100', text: 'text-blue-700', iconBg: 'bg-blue-100/50' }
 
-const extraLayanan = [
-  { title: 'Pipa', desc: 'Air Mengalir Lancar', icon: 'water', color: 'bg-gradient-to-br from-cyan-400 to-cyan-600' },
-  { title: 'Toilet', desc: 'Kamar Mandi Bersih dan Nyaman', icon: 'bathroom', color: 'bg-gradient-to-br from-teal-400 to-teal-600' },
-  { title: 'Konsultan', desc: 'Bantu Rencanakan Proyekmu', icon: 'engineering', color: 'bg-gradient-to-br from-amber-400 to-amber-600' },
-  { title: 'Plafon', desc: 'Kebutuhan Langit-langit Rumahmu', icon: 'roofing', color: 'bg-gradient-to-br from-indigo-400 to-indigo-600' },
-  { title: 'Dinding/Tembok', desc: 'Dinding Kokoh dan Terjaga', icon: 'foundation', color: 'bg-gradient-to-br from-red-400 to-red-600' },
-  { title: 'Pintu/Jendela', desc: 'Kreasi Pintu dan Jendela Rumahmu', icon: 'door_front', color: 'bg-gradient-to-br from-purple-400 to-purple-600' },
-  { title: 'Atap/Dak Beton', desc: 'Atap Pelindung Rumahmu', icon: 'roofing', color: 'bg-gradient-to-br from-sky-400 to-sky-600' },
-  { title: 'Dapur', desc: 'Biar Lebih Semangat Memasak', icon: 'kitchen', color: 'bg-gradient-to-br from-violet-400 to-violet-600' },
-  { title: 'Jasa Angkat', desc: 'Bantu Pindahkan Barang-barangmu', icon: 'move_to_inbox', color: 'bg-gradient-to-br from-orange-400 to-orange-600' },
-  { title: 'Conblock', desc: 'Agar Pekarangan Rumahmu Indah', icon: 'grid_on', color: 'bg-gradient-to-br from-yellow-500 to-orange-500' },
-  { title: 'Aluminium Aksesoris', desc: 'Percantik Interior Rumahmu', icon: 'window', color: 'bg-gradient-to-br from-purple-500 to-pink-500' },
-  { title: 'Exhaust Fan', desc: 'Udara Ruangan Segar dan Bersih', icon: 'air', color: 'bg-gradient-to-br from-emerald-400 to-green-600' },
-  { title: 'Kipas Angin', desc: 'Biar Rumahmu Lebih Adem', icon: 'air', color: 'bg-gradient-to-br from-green-400 to-teal-500' },
-  { title: 'Batu Alam', desc: 'Sentuhan Alam di Rumahmu', icon: 'landscape', color: 'bg-gradient-to-br from-stone-400 to-red-700' },
-  { title: 'Lemari', desc: 'Jaga Barang-barang Pentingmu', icon: 'inventory_2', color: 'bg-gradient-to-br from-violet-500 to-purple-700' },
-  { title: 'Tangki Air Toren', desc: 'Pasang Tangki Air di Rumahmu', icon: 'water_drop', color: 'bg-gradient-to-br from-blue-400 to-blue-600' },
-  { title: 'Tangki Bawah Tanah', desc: 'Solusi Penampungan Air Bawah Tanah', icon: 'storage', color: 'bg-gradient-to-br from-sky-500 to-blue-700' },
-  { title: 'Water Heater', desc: 'Air Mandi Hangat dan Nyaman', icon: 'local_fire_department', color: 'bg-gradient-to-br from-blue-400 to-cyan-500' },
-  { title: 'Kanopi', desc: 'Lindungi Bagian Luar Rumahmu', icon: 'deck', color: 'bg-gradient-to-br from-sky-400 to-indigo-500' },
-  { title: 'Lantai', desc: 'Agar Lantai Rumah Mulus', icon: 'square_foot', color: 'bg-gradient-to-br from-amber-500 to-orange-600' },
-  { title: 'Cuci Toren', desc: 'Toren Kotor Jadi Bersih', icon: 'cleaning_services', color: 'bg-gradient-to-br from-orange-400 to-red-500' },
-  { title: 'Kenek', desc: 'Bantu Pekerjaan Cepat Selesai', icon: 'handyman', color: 'bg-gradient-to-br from-yellow-500 to-amber-600' },
-]
+  if (name.includes('cat') || name.includes('paint') || name.includes('warna')) {
+    theme = { icon: 'brush', color: 'text-red-600', bg: 'bg-red-50/70', border: 'border-red-100', text: 'text-red-700', iconBg: 'bg-red-100/50' }
+  } else if (name.includes('keramik') || name.includes('lantai') || name.includes('ubin') || name.includes('granit')) {
+    theme = { icon: 'grid_on', color: 'text-orange-600', bg: 'bg-orange-50/70', border: 'border-orange-100', text: 'text-orange-700', iconBg: 'bg-orange-100/50' }
+  } else if (name.includes('listrik') || name.includes('kabel') || name.includes('lampu') || name.includes('konslet')) {
+    theme = { icon: 'bolt', color: 'text-emerald-600', bg: 'bg-emerald-50/70', border: 'border-emerald-100', text: 'text-emerald-700', iconBg: 'bg-emerald-100/50' }
+  } else if (name.includes('kenek') || name.includes('bantu') || name.includes('asisten')) {
+    theme = { icon: 'handyman', color: 'text-amber-600', bg: 'bg-amber-50/70', border: 'border-amber-100', text: 'text-amber-700', iconBg: 'bg-amber-100/50' }
+  } else if (name.includes('aluminium') || name.includes('kaca') || name.includes('kusen') || name.includes('window')) {
+    theme = { icon: 'window', color: 'text-indigo-600', bg: 'bg-indigo-50/70', border: 'border-indigo-100', text: 'text-indigo-700', iconBg: 'bg-indigo-100/50' }
+  } else if (name.includes('batu') || name.includes('fondasi') || name.includes('taman') || name.includes('semen')) {
+    theme = { icon: 'gavel', color: 'text-rose-600', bg: 'bg-rose-50/70', border: 'border-rose-100', text: 'text-rose-700', iconBg: 'bg-rose-100/50' }
+  } else if (name.includes('pipa') || name.includes('bocor') || name.includes('saluran') || name.includes('keran') || name.includes('toren')) {
+    theme = { icon: 'water', color: 'text-blue-600', bg: 'bg-blue-50/70', border: 'border-blue-100', text: 'text-blue-700', iconBg: 'bg-blue-100/50' }
+  } else if (name.includes('waterproofing') || name.includes('dak') || name.includes('rembes') || name.includes('bocor atap')) {
+    theme = { icon: 'shield', color: 'text-sky-600', bg: 'bg-sky-50/70', border: 'border-sky-100', text: 'text-sky-700', iconBg: 'bg-sky-100/50' }
+  } else if (name.includes('gali') || name.includes('tanah') || name.includes('sumur')) {
+    theme = { icon: 'handyman', color: 'text-amber-700', bg: 'bg-amber-50/60', border: 'border-amber-200/50', text: 'text-amber-800', iconBg: 'bg-amber-100/60' }
+  } else if (name.includes('besi') || name.includes('las') || name.includes('welder') || name.includes('pagar')) {
+    theme = { icon: 'construction', color: 'text-purple-600', bg: 'bg-purple-50/70', border: 'border-purple-100', text: 'text-purple-700', iconBg: 'bg-purple-100/50' }
+  } else if (name.includes('genteng') || name.includes('seng') || name.includes('atap rumah')) {
+    theme = { icon: 'roofing', color: 'text-orange-600', bg: 'bg-orange-50/60', border: 'border-orange-200/50', text: 'text-orange-800', iconBg: 'bg-orange-100/50' }
+  } else if (name.includes('plafon') || name.includes('ceiling') || name.includes('gypsum')) {
+    theme = { icon: 'roofing', color: 'text-blue-600', bg: 'bg-blue-50/60', border: 'border-blue-200/50', text: 'text-blue-800', iconBg: 'bg-blue-100/50' }
+  } else if (name.includes('konsultan') || name.includes('arsitek') || name.includes('gambar') || name.includes('tanya')) {
+    theme = { icon: 'engineering', color: 'text-yellow-600', bg: 'bg-yellow-50/70', border: 'border-yellow-100', text: 'text-yellow-800', iconBg: 'bg-yellow-100/50' }
+  } else if (name.includes('sanitair') || name.includes('toilet') || name.includes('closet') || name.includes('wc')) {
+    theme = { icon: 'bathroom', color: 'text-cyan-600', bg: 'bg-cyan-50/70', border: 'border-cyan-100', text: 'text-cyan-700', iconBg: 'bg-cyan-100/50' }
+  } else if (name.includes('angkat') || name.includes('pindah') || name.includes('barang') || name.includes('box')) {
+    theme = { icon: 'move_to_inbox', color: 'text-orange-600', bg: 'bg-orange-50/70', border: 'border-orange-100', text: 'text-orange-700', iconBg: 'bg-orange-100/50' }
+  } else if (name.includes('listrik perapihan')) {
+    theme = { icon: 'electrical_services', color: 'text-teal-600', bg: 'bg-teal-50/70', border: 'border-teal-100', text: 'text-teal-700', iconBg: 'bg-teal-100/50' }
+  } else if (name.includes('pipa perapihan')) {
+    theme = { icon: 'plumbing', color: 'text-blue-500', bg: 'bg-blue-50/70', border: 'border-blue-100', text: 'text-blue-700', iconBg: 'bg-blue-100/50' }
+  } else {
+    // Random fallback color
+    const colors = [
+      { icon: 'build', color: 'text-blue-600', bg: 'bg-blue-50/70', border: 'border-blue-100', text: 'text-blue-700', iconBg: 'bg-blue-100/50' },
+      { icon: 'handyman', color: 'text-red-600', bg: 'bg-red-50/70', border: 'border-red-100', text: 'text-red-700', iconBg: 'bg-red-100/50' },
+      { icon: 'construction', color: 'text-purple-600', bg: 'bg-purple-50/70', border: 'border-purple-100', text: 'text-purple-700', iconBg: 'bg-purple-100/50' },
+      { icon: 'hardware', color: 'text-orange-600', bg: 'bg-orange-50/70', border: 'border-orange-100', text: 'text-orange-700', iconBg: 'bg-orange-100/50' }
+    ]
+    const hash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    theme = colors[hash % colors.length]
+  }
+
+  return theme
+}
+
+const cleanPhoneForWa = (phone) => {
+  if (!phone) return ''
+  let clean = phone.replace(/\D/g, '')
+  if (clean.startsWith('0')) {
+    clean = '62' + clean.slice(1)
+  }
+  if (!clean.startsWith('62') && clean.length > 0) {
+    clean = '62' + clean
+  }
+  return clean
+}
+
+
 
 
 
 
 
 onMounted(() => {
+  store.initializeStore()
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
