@@ -1,5 +1,8 @@
 <template>
   <q-page class="bg-slate-50 min-h-screen">
+    <!-- Primary H1 for Google Search Site Name -->
+    <h1 class="sr-only">PT Agra Abhinaya Perkasa | Jasa Konstruksi, Kontraktor & Renovasi Profesional</h1>
+
     <!-- Hero Carousel Section -->
     <section id="hero" class="relative">
       <q-carousel
